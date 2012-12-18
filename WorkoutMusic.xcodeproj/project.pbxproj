@@ -1,0 +1,685 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		522E6F5F1667EFAF0036C5DA /* SongTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E6F5E1667EFAF0036C5DA /* SongTableCell.m */; };
+		522E6F611667EFCB0036C5DA /* SongTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522E6F601667EFCB0036C5DA /* SongTableCell.xib */; };
+		523F8F731671827000251C91 /* FilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523F8F721671827000251C91 /* FilterView.xib */; };
+		52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 52449ED51667DA93000A146F /* MusicLibraryTableVC.m */; };
+		52449ED81667DA94000A146F /* MusicLibraryTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52449ED61667DA93000A146F /* MusicLibraryTableVC.xib */; };
+		52449EDF1667E523000A146F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52449EDE1667E523000A146F /* MediaPlayer.framework */; };
+		524B970216691ABC003E39B6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970116691ABC003E39B6 /* CFNetwork.framework */; };
+		524B970416691AD4003E39B6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970316691AD4003E39B6 /* AVFoundation.framework */; };
+		524B970616691AEF003E39B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970516691AEF003E39B6 /* SystemConfiguration.framework */; };
+		5271505C1651DF0200111078 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505B1651DF0200111078 /* UIKit.framework */; };
+		5271505E1651DF0200111078 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505D1651DF0200111078 /* Foundation.framework */; };
+		527150601651DF0200111078 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505F1651DF0200111078 /* CoreGraphics.framework */; };
+		527150661651DF0200111078 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527150641651DF0200111078 /* InfoPlist.strings */; };
+		527150681651DF0200111078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150671651DF0200111078 /* main.m */; };
+		5271506C1651DF0200111078 /* workoutmusicAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */; };
+		5271506E1651DF0200111078 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271506D1651DF0200111078 /* Default.png */; };
+		527150701651DF0200111078 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271506F1651DF0200111078 /* Default@2x.png */; };
+		527150721651DF0300111078 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150711651DF0300111078 /* Default-568h@2x.png */; };
+		527150751651DF0300111078 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527150731651DF0300111078 /* MainStoryboard.storyboard */; };
+		527150781651DF0300111078 /* workoutmusicFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150771651DF0300111078 /* workoutmusicFirstViewController.m */; };
+		5271507A1651DF0300111078 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150791651DF0300111078 /* first.png */; };
+		5271507C1651DF0300111078 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271507B1651DF0300111078 /* first@2x.png */; };
+		5271507F1651DF0300111078 /* CategorizedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271507E1651DF0300111078 /* CategorizedVC.m */; };
+		527150811651DF0300111078 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150801651DF0300111078 /* second.png */; };
+		527150831651DF0300111078 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150821651DF0300111078 /* second@2x.png */; };
+		5271508B1651DF0300111078 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271508A1651DF0300111078 /* SenTestingKit.framework */; };
+		5271508C1651DF0300111078 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505B1651DF0200111078 /* UIKit.framework */; };
+		5271508D1651DF0300111078 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505D1651DF0200111078 /* Foundation.framework */; };
+		527150951651DF0300111078 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527150931651DF0300111078 /* InfoPlist.strings */; };
+		527150981651DF0300111078 /* WorkoutMusicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150971651DF0300111078 /* WorkoutMusicTests.m */; };
+		527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150A21655D15200111078 /* MusicLibraryBPMs.m */; };
+		52D2BBCB166A799600EBCAB8 /* libechonest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCA166A799600EBCAB8 /* libechonest.a */; };
+		52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970716691B14003E39B6 /* libz.dylib */; };
+		52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */; };
+		52D2BBEF166A9E8600EBCAB8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */; };
+		52D2BBF0166A9E8600EBCAB8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */; };
+		52D2BBF1166A9E8600EBCAB8 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */; };
+		52D2BBF2166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */; };
+		52D2BBF3166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */; };
+		52D2BBF4166A9E8600EBCAB8 /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */; };
+		52D2BBF5166A9E8600EBCAB8 /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */; };
+		52D2BBF6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */; };
+		52D2BBF7166A9E8600EBCAB8 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */; };
+		52D2BBF8166A9E8600EBCAB8 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */; };
+		52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */; };
+		52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */; };
+		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5271508E1651DF0300111078 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5271504E1651DF0200111078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 527150561651DF0200111078;
+			remoteInfo = WorkoutMusic;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		522E6F5D1667EFAF0036C5DA /* SongTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongTableCell.h; sourceTree = "<group>"; };
+		522E6F5E1667EFAF0036C5DA /* SongTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongTableCell.m; sourceTree = "<group>"; };
+		522E6F601667EFCB0036C5DA /* SongTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongTableCell.xib; sourceTree = "<group>"; };
+		522E6F701669172C0036C5DA /* ENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAPI.h; sourceTree = "<group>"; };
+		523F8F721671827000251C91 /* FilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterView.xib; sourceTree = "<group>"; };
+		52449ED41667DA93000A146F /* MusicLibraryTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLibraryTableVC.h; sourceTree = "<group>"; };
+		52449ED51667DA93000A146F /* MusicLibraryTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryTableVC.m; sourceTree = "<group>"; };
+		52449ED61667DA93000A146F /* MusicLibraryTableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicLibraryTableVC.xib; sourceTree = "<group>"; };
+		52449EDE1667E523000A146F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		524B96F816691A82003E39B6 /* ENAPI_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAPI_utils.h; sourceTree = "<group>"; };
+		524B96F916691A82003E39B6 /* ENAPIPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAPIPostRequest.h; sourceTree = "<group>"; };
+		524B96FA16691A82003E39B6 /* ENAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAPIRequest.h; sourceTree = "<group>"; };
+		524B96FB16691A82003E39B6 /* ENParamDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENParamDictionary.h; sourceTree = "<group>"; };
+		524B96FC16691A82003E39B6 /* ENSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENSigner.h; sourceTree = "<group>"; };
+		524B96FD16691A82003E39B6 /* NSArray+ENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ENAPI.h"; sourceTree = "<group>"; };
+		524B96FE16691A82003E39B6 /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
+		524B96FF16691A82003E39B6 /* NSMutableDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+QueryString.h"; sourceTree = "<group>"; };
+		524B970116691ABC003E39B6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		524B970316691AD4003E39B6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		524B970516691AEF003E39B6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		524B970716691B14003E39B6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		527150571651DF0200111078 /* WorkoutMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5271505B1651DF0200111078 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5271505D1651DF0200111078 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5271505F1651DF0200111078 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		527150631651DF0200111078 /* WorkoutMusic-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WorkoutMusic-Info.plist"; sourceTree = "<group>"; };
+		527150651651DF0200111078 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		527150671651DF0200111078 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		527150691651DF0200111078 /* WorkoutMusic-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WorkoutMusic-Prefix.pch"; sourceTree = "<group>"; };
+		5271506A1651DF0200111078 /* workoutmusicAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = workoutmusicAppDelegate.h; sourceTree = "<group>"; };
+		5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = workoutmusicAppDelegate.m; sourceTree = "<group>"; };
+		5271506D1651DF0200111078 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		5271506F1651DF0200111078 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		527150711651DF0300111078 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		527150741651DF0300111078 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		527150761651DF0300111078 /* workoutmusicFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = workoutmusicFirstViewController.h; sourceTree = "<group>"; };
+		527150771651DF0300111078 /* workoutmusicFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = workoutmusicFirstViewController.m; sourceTree = "<group>"; };
+		527150791651DF0300111078 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		5271507B1651DF0300111078 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		5271507D1651DF0300111078 /* CategorizedVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategorizedVC.h; sourceTree = "<group>"; };
+		5271507E1651DF0300111078 /* CategorizedVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategorizedVC.m; sourceTree = "<group>"; };
+		527150801651DF0300111078 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		527150821651DF0300111078 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		527150891651DF0300111078 /* WorkoutMusicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutMusicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5271508A1651DF0300111078 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		527150921651DF0300111078 /* WorkoutMusicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WorkoutMusicTests-Info.plist"; sourceTree = "<group>"; };
+		527150941651DF0300111078 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		527150961651DF0300111078 /* WorkoutMusicTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkoutMusicTests.h; sourceTree = "<group>"; };
+		527150971651DF0300111078 /* WorkoutMusicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkoutMusicTests.m; sourceTree = "<group>"; };
+		527150A11655D15200111078 /* MusicLibraryBPMs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLibraryBPMs.h; sourceTree = "<group>"; };
+		527150A21655D15200111078 /* MusicLibraryBPMs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryBPMs.m; sourceTree = "<group>"; };
+		52D2BBCA166A799600EBCAB8 /* libechonest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libechonest.a; path = "../../libechonest/build/Release-iphoneos/libechonest.a"; sourceTree = "<group>"; };
+		52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		52D2BBD6166A9E8600EBCAB8 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
+		52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
+		52D2BBD8166A9E8600EBCAB8 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
+		52D2BBD9166A9E8600EBCAB8 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		52D2BBDB166A9E8600EBCAB8 /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
+		52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
+		52D2BBDD166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
+		52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAccumulator.m; sourceTree = "<group>"; };
+		52D2BBDF166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
+		52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
+		52D2BBE1166A9E8600EBCAB8 /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
+		52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
+		52D2BBE3166A9E8600EBCAB8 /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
+		52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
+		52D2BBE5166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterAccumulator.h; sourceTree = "<group>"; };
+		52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterAccumulator.m; sourceTree = "<group>"; };
+		52D2BBE7166A9E8600EBCAB8 /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
+		52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
+		52D2BBE9166A9E8600EBCAB8 /* SBJsonTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonTokeniser.h; sourceTree = "<group>"; };
+		52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonTokeniser.m; sourceTree = "<group>"; };
+		52D2BBEB166A9E8600EBCAB8 /* SBJsonUTF8Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonUTF8Stream.h; sourceTree = "<group>"; };
+		52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
+		52D2BBED166A9E8600EBCAB8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		527150541651DF0200111078 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */,
+				52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */,
+				524B970616691AEF003E39B6 /* SystemConfiguration.framework in Frameworks */,
+				524B970416691AD4003E39B6 /* AVFoundation.framework in Frameworks */,
+				524B970216691ABC003E39B6 /* CFNetwork.framework in Frameworks */,
+				52449EDF1667E523000A146F /* MediaPlayer.framework in Frameworks */,
+				5271505C1651DF0200111078 /* UIKit.framework in Frameworks */,
+				5271505E1651DF0200111078 /* Foundation.framework in Frameworks */,
+				527150601651DF0200111078 /* CoreGraphics.framework in Frameworks */,
+				52D2BBCB166A799600EBCAB8 /* libechonest.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527150851651DF0300111078 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5271508B1651DF0300111078 /* SenTestingKit.framework in Frameworks */,
+				5271508C1651DF0300111078 /* UIKit.framework in Frameworks */,
+				5271508D1651DF0300111078 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		522E6F76166919C90036C5DA /* ENAPI */ = {
+			isa = PBXGroup;
+			children = (
+				524B96F816691A82003E39B6 /* ENAPI_utils.h */,
+				524B96F916691A82003E39B6 /* ENAPIPostRequest.h */,
+				524B96FA16691A82003E39B6 /* ENAPIRequest.h */,
+				524B96FB16691A82003E39B6 /* ENParamDictionary.h */,
+				524B96FC16691A82003E39B6 /* ENSigner.h */,
+				524B96FD16691A82003E39B6 /* NSArray+ENAPI.h */,
+				524B96FE16691A82003E39B6 /* NSData+MD5.h */,
+				524B96FF16691A82003E39B6 /* NSMutableDictionary+QueryString.h */,
+				522E6F701669172C0036C5DA /* ENAPI.h */,
+			);
+			name = ENAPI;
+			sourceTree = "<group>";
+		};
+		526425771672B360000D6C01 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				527150731651DF0300111078 /* MainStoryboard.storyboard */,
+				52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */,
+				522E6F601667EFCB0036C5DA /* SongTableCell.xib */,
+			);
+			name = interface;
+			sourceTree = "<group>";
+		};
+		5271504C1651DF0200111078 = {
+			isa = PBXGroup;
+			children = (
+				526425771672B360000D6C01 /* interface */,
+				52D2BBD5166A9E8600EBCAB8 /* JSON */,
+				52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */,
+				524B970716691B14003E39B6 /* libz.dylib */,
+				524B970516691AEF003E39B6 /* SystemConfiguration.framework */,
+				524B970316691AD4003E39B6 /* AVFoundation.framework */,
+				524B970116691ABC003E39B6 /* CFNetwork.framework */,
+				522E6F76166919C90036C5DA /* ENAPI */,
+				522E6F5D1667EFAF0036C5DA /* SongTableCell.h */,
+				522E6F5E1667EFAF0036C5DA /* SongTableCell.m */,
+				527150611651DF0200111078 /* WorkoutMusic */,
+				527150901651DF0300111078 /* WorkoutMusicTests */,
+				5271505A1651DF0200111078 /* Frameworks */,
+				527150581651DF0200111078 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		527150581651DF0200111078 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				527150571651DF0200111078 /* WorkoutMusic.app */,
+				527150891651DF0300111078 /* WorkoutMusicTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5271505A1651DF0200111078 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52449EDE1667E523000A146F /* MediaPlayer.framework */,
+				5271505B1651DF0200111078 /* UIKit.framework */,
+				5271505D1651DF0200111078 /* Foundation.framework */,
+				5271505F1651DF0200111078 /* CoreGraphics.framework */,
+				5271508A1651DF0300111078 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		527150611651DF0200111078 /* WorkoutMusic */ = {
+			isa = PBXGroup;
+			children = (
+				5271506A1651DF0200111078 /* workoutmusicAppDelegate.h */,
+				5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */,
+				527150761651DF0300111078 /* workoutmusicFirstViewController.h */,
+				527150771651DF0300111078 /* workoutmusicFirstViewController.m */,
+				527150791651DF0300111078 /* first.png */,
+				5271507B1651DF0300111078 /* first@2x.png */,
+				5271507D1651DF0300111078 /* CategorizedVC.h */,
+				5271507E1651DF0300111078 /* CategorizedVC.m */,
+				527150801651DF0300111078 /* second.png */,
+				527150821651DF0300111078 /* second@2x.png */,
+				527150621651DF0200111078 /* Supporting Files */,
+				527150A11655D15200111078 /* MusicLibraryBPMs.h */,
+				527150A21655D15200111078 /* MusicLibraryBPMs.m */,
+				52449ED41667DA93000A146F /* MusicLibraryTableVC.h */,
+				52449ED51667DA93000A146F /* MusicLibraryTableVC.m */,
+				52449ED61667DA93000A146F /* MusicLibraryTableVC.xib */,
+				523F8F721671827000251C91 /* FilterView.xib */,
+			);
+			path = WorkoutMusic;
+			sourceTree = "<group>";
+		};
+		527150621651DF0200111078 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52D2BBCA166A799600EBCAB8 /* libechonest.a */,
+				527150631651DF0200111078 /* WorkoutMusic-Info.plist */,
+				527150641651DF0200111078 /* InfoPlist.strings */,
+				527150671651DF0200111078 /* main.m */,
+				527150691651DF0200111078 /* WorkoutMusic-Prefix.pch */,
+				5271506D1651DF0200111078 /* Default.png */,
+				5271506F1651DF0200111078 /* Default@2x.png */,
+				527150711651DF0300111078 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		527150901651DF0300111078 /* WorkoutMusicTests */ = {
+			isa = PBXGroup;
+			children = (
+				527150961651DF0300111078 /* WorkoutMusicTests.h */,
+				527150971651DF0300111078 /* WorkoutMusicTests.m */,
+				527150911651DF0300111078 /* Supporting Files */,
+			);
+			path = WorkoutMusicTests;
+			sourceTree = "<group>";
+		};
+		527150911651DF0300111078 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				527150921651DF0300111078 /* WorkoutMusicTests-Info.plist */,
+				527150931651DF0300111078 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52D2BBD5166A9E8600EBCAB8 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				52D2BBD6166A9E8600EBCAB8 /* NSObject+SBJson.h */,
+				52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */,
+				52D2BBD8166A9E8600EBCAB8 /* SBJson.h */,
+				52D2BBD9166A9E8600EBCAB8 /* SBJsonParser.h */,
+				52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */,
+				52D2BBDB166A9E8600EBCAB8 /* SBJsonStreamParser.h */,
+				52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */,
+				52D2BBDD166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.h */,
+				52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */,
+				52D2BBDF166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.h */,
+				52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */,
+				52D2BBE1166A9E8600EBCAB8 /* SBJsonStreamParserState.h */,
+				52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */,
+				52D2BBE3166A9E8600EBCAB8 /* SBJsonStreamWriter.h */,
+				52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */,
+				52D2BBE5166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.h */,
+				52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */,
+				52D2BBE7166A9E8600EBCAB8 /* SBJsonStreamWriterState.h */,
+				52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */,
+				52D2BBE9166A9E8600EBCAB8 /* SBJsonTokeniser.h */,
+				52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */,
+				52D2BBEB166A9E8600EBCAB8 /* SBJsonUTF8Stream.h */,
+				52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */,
+				52D2BBED166A9E8600EBCAB8 /* SBJsonWriter.h */,
+				52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		527150561651DF0200111078 /* WorkoutMusic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5271509B1651DF0300111078 /* Build configuration list for PBXNativeTarget "WorkoutMusic" */;
+			buildPhases = (
+				527150531651DF0200111078 /* Sources */,
+				527150541651DF0200111078 /* Frameworks */,
+				527150551651DF0200111078 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WorkoutMusic;
+			productName = WorkoutMusic;
+			productReference = 527150571651DF0200111078 /* WorkoutMusic.app */;
+			productType = "com.apple.product-type.application";
+		};
+		527150881651DF0300111078 /* WorkoutMusicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5271509E1651DF0300111078 /* Build configuration list for PBXNativeTarget "WorkoutMusicTests" */;
+			buildPhases = (
+				527150841651DF0300111078 /* Sources */,
+				527150851651DF0300111078 /* Frameworks */,
+				527150861651DF0300111078 /* Resources */,
+				527150871651DF0300111078 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5271508F1651DF0300111078 /* PBXTargetDependency */,
+			);
+			name = WorkoutMusicTests;
+			productName = WorkoutMusicTests;
+			productReference = 527150891651DF0300111078 /* WorkoutMusicTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5271504E1651DF0200111078 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = workoutmusic;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "John La Barge";
+			};
+			buildConfigurationList = 527150511651DF0200111078 /* Build configuration list for PBXProject "WorkoutMusic" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5271504C1651DF0200111078;
+			productRefGroup = 527150581651DF0200111078 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				527150561651DF0200111078 /* WorkoutMusic */,
+				527150881651DF0300111078 /* WorkoutMusicTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		527150551651DF0200111078 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527150661651DF0200111078 /* InfoPlist.strings in Resources */,
+				5271506E1651DF0200111078 /* Default.png in Resources */,
+				527150701651DF0200111078 /* Default@2x.png in Resources */,
+				527150721651DF0300111078 /* Default-568h@2x.png in Resources */,
+				527150751651DF0300111078 /* MainStoryboard.storyboard in Resources */,
+				5271507A1651DF0300111078 /* first.png in Resources */,
+				5271507C1651DF0300111078 /* first@2x.png in Resources */,
+				527150811651DF0300111078 /* second.png in Resources */,
+				527150831651DF0300111078 /* second@2x.png in Resources */,
+				52449ED81667DA94000A146F /* MusicLibraryTableVC.xib in Resources */,
+				522E6F611667EFCB0036C5DA /* SongTableCell.xib in Resources */,
+				52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */,
+				523F8F731671827000251C91 /* FilterView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527150861651DF0300111078 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527150951651DF0300111078 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		527150871651DF0300111078 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		527150531651DF0200111078 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527150681651DF0200111078 /* main.m in Sources */,
+				5271506C1651DF0200111078 /* workoutmusicAppDelegate.m in Sources */,
+				527150781651DF0300111078 /* workoutmusicFirstViewController.m in Sources */,
+				5271507F1651DF0300111078 /* CategorizedVC.m in Sources */,
+				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
+				52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */,
+				522E6F5F1667EFAF0036C5DA /* SongTableCell.m in Sources */,
+				52D2BBEF166A9E8600EBCAB8 /* NSObject+SBJson.m in Sources */,
+				52D2BBF0166A9E8600EBCAB8 /* SBJsonParser.m in Sources */,
+				52D2BBF1166A9E8600EBCAB8 /* SBJsonStreamParser.m in Sources */,
+				52D2BBF2166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m in Sources */,
+				52D2BBF3166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m in Sources */,
+				52D2BBF4166A9E8600EBCAB8 /* SBJsonStreamParserState.m in Sources */,
+				52D2BBF5166A9E8600EBCAB8 /* SBJsonStreamWriter.m in Sources */,
+				52D2BBF6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m in Sources */,
+				52D2BBF7166A9E8600EBCAB8 /* SBJsonStreamWriterState.m in Sources */,
+				52D2BBF8166A9E8600EBCAB8 /* SBJsonTokeniser.m in Sources */,
+				52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */,
+				52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527150841651DF0300111078 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527150981651DF0300111078 /* WorkoutMusicTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5271508F1651DF0300111078 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 527150561651DF0200111078 /* WorkoutMusic */;
+			targetProxy = 5271508E1651DF0300111078 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		527150641651DF0200111078 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				527150651651DF0200111078 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		527150731651DF0300111078 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				527150741651DF0300111078 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			path = WorkoutMusic;
+			sourceTree = "<group>";
+		};
+		527150931651DF0300111078 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				527150941651DF0300111078 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		527150991651DF0300111078 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				"OTHER_LDFLAGS[arch=*]" = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5271509A1651DF0300111078 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-objc",
+				);
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5271509C1651DF0300111078 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
+				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/WorkoutMusic\"",
+					"\"$(SRCROOT)/../libechonest/build/Release-iphoneos\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5271509D1651DF0300111078 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
+				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/WorkoutMusic\"",
+					"\"$(SRCROOT)/../libechonest/build/Release-iphoneos\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5271509F1651DF0300111078 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/WorkoutMusic.app/WorkoutMusic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
+				INFOPLIST_FILE = "WorkoutMusicTests/WorkoutMusicTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		527150A01651DF0300111078 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/WorkoutMusic.app/WorkoutMusic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
+				INFOPLIST_FILE = "WorkoutMusicTests/WorkoutMusicTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		527150511651DF0200111078 /* Build configuration list for PBXProject "WorkoutMusic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527150991651DF0300111078 /* Debug */,
+				5271509A1651DF0300111078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5271509B1651DF0300111078 /* Build configuration list for PBXNativeTarget "WorkoutMusic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5271509C1651DF0300111078 /* Debug */,
+				5271509D1651DF0300111078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5271509E1651DF0300111078 /* Build configuration list for PBXNativeTarget "WorkoutMusicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5271509F1651DF0300111078 /* Debug */,
+				527150A01651DF0300111078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5271504E1651DF0200111078 /* Project object */;
+}
