@@ -10,14 +10,17 @@
 
 @interface MusicLibraryBPMs()
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated:(void(^)(void))itemUpdated;
--(void) dispatchChanged;
+-(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
+-(void) saveMusicBPMEntryInCache:(NSString *)artist andTitle:(NSString *)title;
 @end
 @implementation MusicLibraryBPMs
 @synthesize libraryItems;
 @synthesize unfilteredItems;
+@synthesize managedObjectContext;
 
--(id) init
+-(id) initWithManagedObjectContext:(NSManagedObjectContext *)moc
 {
+    
     [ENAPI initWithApiKey:@"4N3RGRQDQPUETU3BV"];
     NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
     
@@ -26,11 +29,14 @@
     NSMutableArray * mutLibraryItems = (NSMutableArray *) self.libraryItems;
     for (MPMediaItem * item in mpItems)
     {
+        
         [mutLibraryItems addObject:[[MusicLibraryItem alloc] initWithMediaItem:item]];
     }
     self.unfilteredItems = libraryItems;
+    self.managedObjectContext = moc;
     return self;
 }
+
 
 -(void) filterWithMin:(NSInteger)min andMax:(NSInteger)max
 {
@@ -70,17 +76,76 @@
         }
     }
 }
+
+
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void ( ^ ) (void ) ) itemUpdated {
     
     NSString * artist = [item.mediaItem valueForProperty:MPMediaItemPropertyArtist];
     NSString * title  = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
-
     
+    MusicBPMEntry * entry =  [self findBPMEntryInCacheFor:artist andTitle:title];
+    if (entry != nil) {
+        item.bpm = [entry.bpm doubleValue];
+        itemUpdated();
+    } else {
+    
+        [self lookupBPMFromEchonest:item whenUpdated:itemUpdated artist:artist song:title];
+    
+    }
+
+ 
+    
+
+}
+
+
+-(void) saveMusicBPMEntryInCache:(NSString *)artist andTitle:(NSString *)title andBPM:(double)bpm
+{
+    MusicBPMEntry *entry = (MusicBPMEntry *)[NSEntityDescription insertNewObjectForEntityForName:@"MusicBPMEntry" inManagedObjectContext:managedObjectContext];
+    entry.bpm = [[NSNumber alloc ] initWithDouble:bpm];
+}
+
+-(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title
+{
+    MusicBPMEntry * entry = nil;
+    NSManagedObjectContext *moc = [self managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"MusicBPMEntry" inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"(artist LIKE[c] '%@') AND (title LIKE[c] '%@')", artist, title];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"artist" ascending:YES];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    NSError *error;
+    NSArray *array = [moc executeFetchRequest:request error:&error];
+   
+    if (array == nil)
+    {
+        NSLog(@" nil array from coredata request, error:", error.localizedDescription);
+    }
+    
+    if (array.count > 0) {
+        NSLog(@"Found %d matching musicBPM entries",array.count);
+        return  entry = (MusicBPMEntry *) [array objectAtIndex:0]; 
+    }
+
+   
+    return entry;
+}
+-(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:( void(^) (void) )itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
+
     ENAPIRequest *request = [ENAPIRequest requestWithEndpoint:@"song/search"];
     
     request.delegate = self;                              // our class implements ENAPIRequestDelegate
-    [request setValue:artist forParameter:@"artist"];
-    [request setValue:title forParameter:@"title"];
+    [request setValue:theArtist forParameter:@"artist"];
+    [request setValue:theSong forParameter:@"title"];
     [request setValue:@"audio_summary" forParameter:@"bucket"];
     [request setIntegerValue:1 forParameter:@"results"];
     
@@ -88,7 +153,7 @@
     [info setObject:[itemUpdated copy] forKey:@"itemUpdated"];
     void (^itemUpdated2)(void) = [info objectForKey:@"itemUpdated"];
     
-    [info setObject:item forKey:@"libraryItem"]; 
+    [info setObject:item forKey:@"libraryItem"];
     
     
     request.userInfo = info;

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MusicBPMEntry.h"
 #import "ENAPI.h"
 /*
  * Your API Key: 4N3RGRQDQPUETU3BV
@@ -28,8 +29,10 @@
 
 +(NSArray *) getMusicItems;
 @property (nonatomic, retain) NSArray * libraryItems;
-@property (nonatomic, retain) NSArray * unfilteredItems; 
--(id)init;
+@property (nonatomic, retain) NSArray * unfilteredItems;
+@property (nonatomic, retain) NSManagedObjectContext * managedObjectContext;
+
+-(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
 -(void) processItunesLibrary:(void (^)(void)) itemUpdated;
 - (void)requestFinished:(ENAPIRequest *)request;
 - (void)requestFailed:(ENAPIRequest *)request;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="11G56" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="MusicBPMEntry" representedClassName="MusicBPMEntry" syncable="YES">
+        <attribute name="artist" optional="YES" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="bpm" optional="YES" attributeType="Double" minValueString="1" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" minValueString="1" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="MusicBPMEntry" positionX="-63" positionY="-18" width="180" height="90"/>
+    </elements>
+</model>

@@ -46,7 +46,8 @@
 
 - (void) updateMusic
 {
-    self.library = [[MusicLibraryBPMs alloc] init];
+    NSManagedObjectContext * moc = [(WOMusicAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    self.library = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:moc];
     [self.library processItunesLibrary:^(void) { [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; }];
     [self.library addObserver:self forKeyPath:@"libraryItems" options:0 context:nil];
 }

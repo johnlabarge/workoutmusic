@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "workoutmusicAppDelegate.h"
+#import "WOMusicAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([workoutmusicAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([WOMusicAppDelegate class]));
     }
 }

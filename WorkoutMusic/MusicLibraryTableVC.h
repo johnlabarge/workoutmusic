@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "WOMusicAppDelegate.h"
 #import "SongTableCell.h"
 #import "MusicLibraryBPMS.h"
 

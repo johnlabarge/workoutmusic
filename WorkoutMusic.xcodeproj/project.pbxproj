@@ -21,7 +21,7 @@
 		527150601651DF0200111078 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271505F1651DF0200111078 /* CoreGraphics.framework */; };
 		527150661651DF0200111078 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527150641651DF0200111078 /* InfoPlist.strings */; };
 		527150681651DF0200111078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150671651DF0200111078 /* main.m */; };
-		5271506C1651DF0200111078 /* workoutmusicAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */; };
+		5271506C1651DF0200111078 /* WOMusicAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271506B1651DF0200111078 /* WOMusicAppDelegate.m */; };
 		5271506E1651DF0200111078 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271506D1651DF0200111078 /* Default.png */; };
 		527150701651DF0200111078 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271506F1651DF0200111078 /* Default@2x.png */; };
 		527150721651DF0300111078 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150711651DF0300111078 /* Default-568h@2x.png */; };
@@ -54,6 +54,9 @@
 		52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */; };
 		52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */; };
 		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
+		E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */; };
+		E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5EB5B10167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld */; };
+		E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EB5B6A1680BB1E00C3AA63 /* MusicBPMEntry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,8 +99,8 @@
 		527150651651DF0200111078 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		527150671651DF0200111078 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		527150691651DF0200111078 /* WorkoutMusic-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WorkoutMusic-Prefix.pch"; sourceTree = "<group>"; };
-		5271506A1651DF0200111078 /* workoutmusicAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = workoutmusicAppDelegate.h; sourceTree = "<group>"; };
-		5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = workoutmusicAppDelegate.m; sourceTree = "<group>"; };
+		5271506A1651DF0200111078 /* WOMusicAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOMusicAppDelegate.h; sourceTree = "<group>"; };
+		5271506B1651DF0200111078 /* WOMusicAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOMusicAppDelegate.m; sourceTree = "<group>"; };
 		5271506D1651DF0200111078 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5271506F1651DF0200111078 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		527150711651DF0300111078 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -146,6 +149,10 @@
 		52D2BBED166A9E8600EBCAB8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
+		E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E5EB5B11167FFDD300C3AA63 /* songbpmsmodel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = songbpmsmodel.xcdatamodel; sourceTree = "<group>"; };
+		E5EB5B691680BB1E00C3AA63 /* MusicBPMEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicBPMEntry.h; sourceTree = "<group>"; };
+		E5EB5B6A1680BB1E00C3AA63 /* MusicBPMEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicBPMEntry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */,
 				52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */,
 				52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */,
 				524B970616691AEF003E39B6 /* SystemConfiguration.framework in Frameworks */,
@@ -208,6 +216,7 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
+				E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */,
 				526425771672B360000D6C01 /* interface */,
 				52D2BBD5166A9E8600EBCAB8 /* JSON */,
 				52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */,
@@ -249,14 +258,14 @@
 		527150611651DF0200111078 /* WorkoutMusic */ = {
 			isa = PBXGroup;
 			children = (
-				5271506A1651DF0200111078 /* workoutmusicAppDelegate.h */,
-				5271506B1651DF0200111078 /* workoutmusicAppDelegate.m */,
+				5271506A1651DF0200111078 /* WOMusicAppDelegate.h */,
+				5271506B1651DF0200111078 /* WOMusicAppDelegate.m */,
 				527150761651DF0300111078 /* workoutmusicFirstViewController.h */,
 				527150771651DF0300111078 /* workoutmusicFirstViewController.m */,
 				527150791651DF0300111078 /* first.png */,
+				5271507E1651DF0300111078 /* CategorizedVC.m */,
 				5271507B1651DF0300111078 /* first@2x.png */,
 				5271507D1651DF0300111078 /* CategorizedVC.h */,
-				5271507E1651DF0300111078 /* CategorizedVC.m */,
 				527150801651DF0300111078 /* second.png */,
 				527150821651DF0300111078 /* second@2x.png */,
 				527150621651DF0200111078 /* Supporting Files */,
@@ -281,6 +290,9 @@
 				5271506D1651DF0200111078 /* Default.png */,
 				5271506F1651DF0200111078 /* Default@2x.png */,
 				527150711651DF0300111078 /* Default-568h@2x.png */,
+				E5EB5B10167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld */,
+				E5EB5B691680BB1E00C3AA63 /* MusicBPMEntry.h */,
+				E5EB5B6A1680BB1E00C3AA63 /* MusicBPMEntry.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -456,7 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				527150681651DF0200111078 /* main.m in Sources */,
-				5271506C1651DF0200111078 /* workoutmusicAppDelegate.m in Sources */,
+				5271506C1651DF0200111078 /* WOMusicAppDelegate.m in Sources */,
 				527150781651DF0300111078 /* workoutmusicFirstViewController.m in Sources */,
 				5271507F1651DF0300111078 /* CategorizedVC.m in Sources */,
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
@@ -474,6 +486,8 @@
 				52D2BBF8166A9E8600EBCAB8 /* SBJsonTokeniser.m in Sources */,
 				52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */,
 				52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */,
+				E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */,
+				E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +694,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E5EB5B10167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E5EB5B11167FFDD300C3AA63 /* songbpmsmodel.xcdatamodel */,
+			);
+			currentVersion = E5EB5B11167FFDD300C3AA63 /* songbpmsmodel.xcdatamodel */;
+			path = songbpmsmodel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5271504E1651DF0200111078 /* Project object */;
 }
