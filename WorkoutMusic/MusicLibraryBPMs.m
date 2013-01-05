@@ -11,7 +11,7 @@
 @interface MusicLibraryBPMs()
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated:(void(^)(void))itemUpdated;
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
--(void) saveMusicBPMEntryInCache:(NSString *)artist andTitle:(NSString *)title;
+-(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item;
 @end
 @implementation MusicLibraryBPMs
 @synthesize libraryItems;
@@ -99,14 +99,31 @@
 }
 
 
--(void) saveMusicBPMEntryInCache:(NSString *)artist andTitle:(NSString *)title andBPM:(double)bpm
+
+-(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item
 {
+    
+    NSString * artist = [item.mediaItem valueForProperty:MPMediaItemPropertyArtist];
+    NSString * title  = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
+    
+    NSLog(@"Saving song : %@ by %@", title, artist); 
+    
     MusicBPMEntry *entry = (MusicBPMEntry *)[NSEntityDescription insertNewObjectForEntityForName:@"MusicBPMEntry" inManagedObjectContext:managedObjectContext];
-    entry.bpm = [[NSNumber alloc ] initWithDouble:bpm];
+    entry.artist = artist;
+    entry.title = title;
+    entry.bpm = [[NSNumber alloc ] initWithDouble:item.bpm];
+    NSError *error = nil;
+    [self.managedObjectContext save:&error];
+    NSLog(@"total managed Objects: %d", self.managedObjectContext.registeredObjects.count);
+    if (error != nil) {
+        NSLog(@"error: %@", error.localizedDescription); 
+    }
 }
 
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title
 {
+    NSLog(@"****** finding BMP Entry in cache******");
+    NSLog(@"looking for artist=%@ and title=%@",artist,title);
     MusicBPMEntry * entry = nil;
     NSManagedObjectContext *moc = [self managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription
@@ -125,6 +142,7 @@
     
     NSError *error;
     NSArray *array = [moc executeFetchRequest:request error:&error];
+    NSLog(@"***** found %d entries matching %@ and %@", array.count, artist, title);
    
     if (array == nil)
     {
@@ -191,7 +209,13 @@
             
             NSLog(@"int value of tempo = %d",[[request.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
             
+            
+            
+            [self saveMusicBPMEntryInCache:musicLibraryItem];
+            
+            
             void (^itemUpdated)(void)  = (void(^)(void))[request.userInfo objectForKey:@"itemUpdated"];
+            
             itemUpdated();
     
         }
