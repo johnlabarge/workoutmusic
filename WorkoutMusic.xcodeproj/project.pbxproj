@@ -38,7 +38,6 @@
 		527150951651DF0300111078 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527150931651DF0300111078 /* InfoPlist.strings */; };
 		527150981651DF0300111078 /* WorkoutMusicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150971651DF0300111078 /* WorkoutMusicTests.m */; };
 		527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150A21655D15200111078 /* MusicLibraryBPMs.m */; };
-		52CF07941687E8A6007F67CA /* libechonest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52CF07931687E8A6007F67CA /* libechonest.a */; };
 		52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970716691B14003E39B6 /* libz.dylib */; };
 		52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */; };
 		52D2BBEF166A9E8600EBCAB8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */; };
@@ -57,6 +56,7 @@
 		E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */; };
 		E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5EB5B10167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld */; };
 		E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EB5B6A1680BB1E00C3AA63 /* MusicBPMEntry.m */; };
+		E5F8221C1698812600669093 /* libechonest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F8221B1698812600669093 /* libechonest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,7 +121,6 @@
 		527150971651DF0300111078 /* WorkoutMusicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkoutMusicTests.m; sourceTree = "<group>"; };
 		527150A11655D15200111078 /* MusicLibraryBPMs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLibraryBPMs.h; sourceTree = "<group>"; };
 		527150A21655D15200111078 /* MusicLibraryBPMs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryBPMs.m; sourceTree = "<group>"; };
-		52CF07931687E8A6007F67CA /* libechonest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libechonest.a; path = "../../../libechonest/build/Release-iphoneos/libechonest.a"; sourceTree = "<group>"; };
 		52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		52D2BBD6166A9E8600EBCAB8 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		E5EB5B11167FFDD300C3AA63 /* songbpmsmodel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = songbpmsmodel.xcdatamodel; sourceTree = "<group>"; };
 		E5EB5B691680BB1E00C3AA63 /* MusicBPMEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicBPMEntry.h; sourceTree = "<group>"; };
 		E5EB5B6A1680BB1E00C3AA63 /* MusicBPMEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicBPMEntry.m; sourceTree = "<group>"; };
+		E5F8221B1698812600669093 /* libechonest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libechonest.a; path = "../../libs/libechonest/build/Release-iphoneos/libechonest.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +170,7 @@
 				5271505C1651DF0200111078 /* UIKit.framework in Frameworks */,
 				5271505E1651DF0200111078 /* Foundation.framework in Frameworks */,
 				527150601651DF0200111078 /* CoreGraphics.framework in Frameworks */,
-				52CF07941687E8A6007F67CA /* libechonest.a in Frameworks */,
+				E5F8221C1698812600669093 /* libechonest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +282,7 @@
 		527150621651DF0200111078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52CF07931687E8A6007F67CA /* libechonest.a */,
+				E5F8221B1698812600669093 /* libechonest.a */,
 				527150631651DF0200111078 /* WorkoutMusic-Info.plist */,
 				527150641651DF0200111078 /* InfoPlist.strings */,
 				527150671651DF0200111078 /* main.m */,
@@ -608,6 +608,7 @@
 					"\"$(SRCROOT)/WorkoutMusic\"",
 					"\"$(SRCROOT)/../libechonest/build/Release-iphoneos\"",
 					"\"$(SRCROOT)/../../libechonest/build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../libs/libechonest/build/Release-iphoneos\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -625,6 +626,7 @@
 					"\"$(SRCROOT)/WorkoutMusic\"",
 					"\"$(SRCROOT)/../libechonest/build/Release-iphoneos\"",
 					"\"$(SRCROOT)/../../libechonest/build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../libs/libechonest/build/Release-iphoneos\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

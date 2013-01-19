@@ -42,9 +42,11 @@
     else if (self.categoryControl.selectedSegmentIndex == 1) {
         [self.musicLibraryTableVC.library filterWithMin:4 andMax:95];
     } else if (self.categoryControl.selectedSegmentIndex == 2) {
-        [self.musicLibraryTableVC.library filterWithMin:96 andMax:120];
+        [self.musicLibraryTableVC.library filterWithMin:96 andMax:125];
+    } else if (self.categoryControl.selectedSegmentIndex == 3) {
+        [self.musicLibraryTableVC.library filterWithMin:125 andMax:159];
     } else {
-        [self.musicLibraryTableVC.library filterWithMin:121 andMax:400]; 
+        [self.musicLibraryTableVC.library filterWithMin:160 andMax:400];
     }
     
 }

@@ -113,11 +113,28 @@
     entry.title = title;
     entry.bpm = [[NSNumber alloc ] initWithDouble:item.bpm];
     NSError *error = nil;
-    [self.managedObjectContext save:&error];
+    
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
+        NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        if(detailedErrors != nil && [detailedErrors count] > 0) {
+            for(NSError* detailedError in detailedErrors) {
+              NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+            }
+        }
+        else {
+          NSLog(@"  %@", [error userInfo]);
+        }
+    }
+
     NSLog(@"total managed Objects: %d", self.managedObjectContext.registeredObjects.count);
     if (error != nil) {
         NSLog(@"error: %@", error.localizedDescription); 
     }
+
+    NSFetchRequest * request = [NSFetchRequest fetchRequestWithEntityName:@"MusicBPMEntry"];
+    NSArray * entityObjs = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSLog(@"total entities in store : %d",entityObjs.count);
 }
 
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title
@@ -128,14 +145,15 @@
     NSManagedObjectContext *moc = [self managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription
                                               entityForName:@"MusicBPMEntry" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MusicBPMEntry"];
     [request setEntity:entityDescription];
     
+    NSString * predicateS = [NSString stringWithFormat:@"(artist like '%@') AND (title like '%@')", artist, title];
+    NSLog(@"predicate = %@",predicateS);
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"(artist LIKE[c] '%@') AND (title LIKE[c] '%@')", artist, title];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(artist like %@) AND (title like %@)",artist, title];
+    
     [request setPredicate:predicate];
-    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
                                         initWithKey:@"artist" ascending:YES];
     [request setSortDescriptors:@[sortDescriptor]];
