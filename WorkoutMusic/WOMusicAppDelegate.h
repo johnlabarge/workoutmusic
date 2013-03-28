@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TransitionController.h"
+#import "MusicLibraryBPMS.h"
+#import "WorkoutList.h"
 
 @interface WOMusicAppDelegate : UIResponder <UIApplicationDelegate> {
     NSManagedObjectModel *managedObjectModel;
@@ -14,9 +17,13 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 }
+- (NSManagedObjectContext *) managedObjectContext;
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong, readonly) WorkoutList * workout;
+@property (nonatomic, strong) MusicLibraryBPMs * musicBPMLibrary; 
+@property (nonatomic, strong) TransitionController * transitionController; 
 
 @end

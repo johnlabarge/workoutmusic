@@ -7,15 +7,54 @@
 //
 
 #import "WOMusicAppDelegate.h"
+#import "MusicLibraryBPMs.h"
+#import "WorkoutList.h"
+#import "Splash.h"
+
+@interface WOMusicAppDelegate ()
+@property (nonatomic, strong) WorkoutList * workout;
+@property (nonatomic, strong) Splash *splashScreen;
+@end
 
 @implementation WOMusicAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    [self splash];
+    __block WOMusicAppDelegate * me = self;
+    dispatch_queue_t processqueue = dispatch_queue_create("music processor", NULL);
+    dispatch_async(processqueue, ^{
+        [self.musicBPMLibrary processItunesLibrary:^{ NSLog(@"processed item");}];
+        NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@" killing splash screen...");
+            [me.splashScreen afterSplash]; 
+        });
+    });
+    //dispatch_release(processqueue);
+    self.workout = [[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary];
+    
+    return YES;
+   
+}
+
+
+
+-(BOOL) splash
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"workoutmusic" bundle:nil];
+    self.splashScreen = (Splash *) [storyboard instantiateViewControllerWithIdentifier:@"Splash"];
+    
+    //self.transitionController = [[TransitionController alloc] initWithViewController:vc];
+    self.window.rootViewController = self.splashScreen;
+   // [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

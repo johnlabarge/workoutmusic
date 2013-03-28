@@ -8,10 +8,18 @@
 
 #import "MusicLibraryBPMs.h"
 
+#define SLOW @"slow"
+#define MEDIUM @"medium"
+#define MEDIUMFAST @"mediumFast"
+#define FAST @"fast"
+#define SLOPSECONDS 60
+
 @interface MusicLibraryBPMs()
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated:(void(^)(void))itemUpdated;
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
 -(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item;
+@property (nonatomic, strong) NSDictionary *  TempoSelectors;
+@property (nonatomic, assign) BOOL processed;
 @end
 @implementation MusicLibraryBPMs
 @synthesize libraryItems;
@@ -20,6 +28,16 @@
 
 -(id) initWithManagedObjectContext:(NSManagedObjectContext *)moc
 {
+    
+    self.TempoSelectors = @{
+                              SLOW:NSStringFromSelector(@selector(slowFilter)),
+                              MEDIUM:NSStringFromSelector(@selector(mediumFilter)),
+                              MEDIUMFAST:NSStringFromSelector(@selector(medFastFilter)),
+                              FAST: NSStringFromSelector(@selector(fastFilter))
+    };
+    
+    
+    
     
     [ENAPI initWithApiKey:@"4N3RGRQDQPUETU3BV"];
     NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
@@ -34,38 +52,15 @@
     }
     self.unfilteredItems = libraryItems;
     self.managedObjectContext = moc;
+    self.processed = NO;
     return self;
 }
 
-
--(void) filterWithMin:(NSInteger)min andMax:(NSInteger)max
-{
-    NSLog(@"filtering with min:%d and max:%d", min, max);
-    
-    self.libraryItems = [self doFilter:self.unfilteredItems withMin:min andMax:max];
+-(SEL) filterSelectorForName:(NSString *)name {
+    return NSSelectorFromString([self.TempoSelectors objectForKey:name]);
 }
 
--(NSArray *) doFilter:(NSArray *)list withMin:(NSInteger)min andMax:(NSInteger)max
-{
-    
-    NSMutableArray * theFilteredItems = [[NSMutableArray alloc] initWithCapacity:[list count]];
-    
-    for (id theObj in list) {
-        MusicLibraryItem * theItem = (MusicLibraryItem *) theObj;
-        if (theItem.bpm >= min && theItem.bpm <= max ) {
-            [theFilteredItems addObject:theItem];
-        }
-    }
-    
-    
-    
-    return theFilteredItems;
-}
--(void) unfilter
-{
-    self.libraryItems = self.unfilteredItems;
 
-}
 
 -(void) processItunesLibrary:( void (^)(void) ) itemUpdated
 {
@@ -75,6 +70,7 @@
             [self lookupBPMFor:mi whenUpdated:itemUpdated];
         }
     }
+    self.processed = YES;
 }
 
 
@@ -90,12 +86,7 @@
     } else {
     
         [self lookupBPMFromEchonest:item whenUpdated:itemUpdated artist:artist song:title];
-    
     }
-
- 
-    
-
 }
 
 
@@ -237,6 +228,8 @@
             itemUpdated();
     
         }
+    } else {
+        NSLog(@"%d", request.responseStatusCode);
     }
     
 }
@@ -272,12 +265,166 @@
     return workoutItems;
     
 }
+#pragma mark ps
+-(void) filterWithMin:(NSInteger)min andMax:(NSInteger)max
+{
+    NSLog(@"filtering with min:%d and max:%d", min, max);
+    
+    self.libraryItems = [self doFilter:self.unfilteredItems withMin:min andMax:max];
+}
 
+-(void) slowFilter
+{
+    [self filterWithMin:60 andMax:95];
+
+}
+
+-(void) mediumFilter
+{
+    [self filterWithMin:96 andMax:125];
+}
+
+-(void) medFastFilter
+{
+    [self filterWithMin:125 andMax:159];
+}
+
+-(void) fastFilter
+{
+     [self filterWithMin:160 andMax:400];
+}
+
+-(NSArray *) doFilter:(NSArray *)list withMin:(NSInteger)min andMax:(NSInteger)max
+{
+    NSMutableArray * theFilteredItems = [[NSMutableArray alloc] initWithCapacity:[list count]];
+    if (!self.processed) {
+        [self processItunesLibrary:^{
+            NSLog(@"item updated..");
+        }];
+    }
+    for (id theObj in list) {
+        MusicLibraryItem * theItem = (MusicLibraryItem *) theObj;
+        if (theItem.bpm >= min && theItem.bpm <= max ) {
+            [theFilteredItems addObject:theItem];
+        }
+    }
+    return theFilteredItems;
+}
+-(void) unfilter
+{
+    self.libraryItems = self.unfilteredItems;
+}
+
+#pragma mark create workout lists
+
+#define APPROX_TIME @"approxTime"
+#define TEMPO @"tempo"
+#define DESC @"description"
+
+-(NSArray *) processIntervals:(NSArray *)intervals
+{
+    NSMutableArray *retList = [[NSMutableArray alloc] init];
+    NSLog(@"processing %d intervals", retList.count);
+    for (NSDictionary * interval in intervals) {
+        [retList addObjectsFromArray:[self songsForInterval:interval]];
+    }
+    NSLog(@"######WORKOUT LIST:######\n");
+    [retList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MusicLibraryItem * item = (MusicLibraryItem *) obj;
+        NSString * title = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
+        NSLog(@"%@", title);
+        
+    }];
+    return retList;
+}
+
+- (NSArray *) createPyramid:(NSInteger)approxTime {
+    
+    NSNumber  * sliceNumber = [NSNumber numberWithInt:approxTime/6];
+    NSNumber  * peakNumber  = [NSNumber numberWithInt:approxTime/3];
+    NSNumber  * warmDownNumber = [NSNumber numberWithInt:5];
+   
+    
+    NSArray * intervals = @[
+    @{DESC: @"Start Ascending", APPROX_TIME : sliceNumber,  TEMPO:@"medium"},
+    @{DESC: @"Ascecnd", APPROX_TIME : sliceNumber,  TEMPO:@"mediumFast"},
+    @{DESC: @"Peak", APPROX_TIME : peakNumber,   TEMPO:@"fast"},
+    @{DESC: @"Descend", APPROX_TIME : sliceNumber,  TEMPO: @"mediumFast"},
+    @{DESC: @"Back to Bottom", APPROX_TIME : sliceNumber,  TEMPO: @"medium"},
+    @{DESC: @"Cool down", APPROX_TIME:warmDownNumber, TEMPO: @"slow"}
+
+    ];
+    
+    return [self processIntervals:intervals]; 
+
+}
+
+-(NSArray *) createFastToSlow:(NSInteger)approxTime {
+
+    NSNumber *warmupSeconds = [NSNumber numberWithInt:300];
+    NSNumber *intervalSeconds = [NSNumber numberWithInt:approxTime/4];
+    
+    NSArray * intervals = @[
+    @{DESC:@"Warmup", APPROX_TIME: warmupSeconds, TEMPO:MEDIUM},
+    @{DESC:@"Fast", APPROX_TIME:intervalSeconds, TEMPO:FAST},
+    @{DESC:@"Medium Fast", APPROX_TIME:intervalSeconds, TEMPO:MEDIUMFAST},
+    @{DESC:@"Medium", APPROX_TIME:intervalSeconds, TEMPO:MEDIUM},
+    @{DESC:@"Slow",   APPROX_TIME:intervalSeconds, TEMPO:SLOW}
+    ];
+    
+    return [self processIntervals:intervals]; 
+
+}
+
+-(NSArray *) createSlowToFast:(NSInteger)approxTime {
+    NSNumber *intervalSeconds = [NSNumber numberWithInt:approxTime/4];
+    NSNumber *warmDownSeconds = [NSNumber numberWithInt:300];
+    
+    NSArray * intervals = @[
+    
+    @{DESC:@"Slow", APPROX_TIME:intervalSeconds, TEMPO:SLOW},
+    @{DESC:@"Medium", APPROX_TIME:intervalSeconds, TEMPO:MEDIUM},
+    @{DESC:@"Faster", APPROX_TIME:intervalSeconds, TEMPO:MEDIUMFAST},
+    @{DESC:@"Fast",   APPROX_TIME:intervalSeconds, TEMPO:FAST},
+    @{DESC:@"Cool down", APPROX_TIME: warmDownSeconds, TEMPO:SLOW}
+    ];
+    return [self processIntervals:intervals];
+}
+
+-(NSArray *) songsForInterval:(NSDictionary *)interval
+{
+    NSMutableArray * retList = [[NSMutableArray alloc] initWithCapacity:3];
+    SEL theSelector = [self filterSelectorForName:[interval objectForKey:TEMPO]];
+    [self performSelector:theSelector withObject:nil];
+    NSNumber * intervalSecondsN = [interval objectForKey:APPROX_TIME];
+    
+    NSInteger intervalSeconds = intervalSecondsN.intValue;
+    NSInteger remainingSeconds = intervalSeconds;
+    NSArray * shuffledItems = [self.libraryItems shuffle];
+    for (MusicLibraryItem * item  in shuffledItems) {
+        NSNumber * songSecondsN = [item.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
+        NSInteger songSeconds = songSecondsN.intValue;
+       
+        if (songSeconds <= intervalSeconds+SLOPSECONDS) {
+            [retList addObject:item];
+            remainingSeconds -= songSeconds;
+        }
+        if (remainingSeconds <= 0) {
+            break;
+        }
+        
+    }
+    [self unfilter];
+    /*[retList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MusicLibraryItem *item = (MusicLibraryItem *) obj;
+        NSString * title = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
+        NSLog(@"music library item:%@", title);
+    }];*/
+    return retList; 
+}
 @end
 
 @implementation MusicLibraryItem
-@synthesize mediaItem;
-@synthesize bpm;
 -(id) initWithMediaItem:(MPMediaItem *)theMediaItem
 {
     self.mediaItem = theMediaItem;

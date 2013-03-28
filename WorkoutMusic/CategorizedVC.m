@@ -40,7 +40,7 @@
         [self.musicLibraryTableVC.library unfilter];
     }
     else if (self.categoryControl.selectedSegmentIndex == 1) {
-        [self.musicLibraryTableVC.library filterWithMin:4 andMax:95];
+        [self.musicLibraryTableVC.library filterWithMin:60 andMax:95];
     } else if (self.categoryControl.selectedSegmentIndex == 2) {
         [self.musicLibraryTableVC.library filterWithMin:96 andMax:125];
     } else if (self.categoryControl.selectedSegmentIndex == 3) {

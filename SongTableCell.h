@@ -11,9 +11,11 @@
 @interface SongTableCell : UITableViewCell {
     UILabel *title;
     UILabel *bpm;
+    UILabel *time;
 
 }
-@property (nonatomic, retain) IBOutlet UILabel * title;
-@property (nonatomic, retain) IBOutlet UILabel * bpm;
+@property (nonatomic, strong) IBOutlet UILabel * title;
+@property (nonatomic, strong) IBOutlet UILabel * bpm;
+@property (nonatomic, strong) IBOutlet UILabel * time;
 
 @end
