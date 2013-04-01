@@ -48,7 +48,11 @@
 {
     NSManagedObjectContext * moc = [(WOMusicAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     self.library = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:moc];
-    [self.library processItunesLibrary:^(void) { [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; }];
+    [self.library processItunesLibrary:^(MusicLibraryItem *item) {
+        NSLog(@"processing item: %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+    } afterUpdatingItem:^(MusicLibraryItem *item) {
+        NSLog(@"processing item:%@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+    }];
     [self.library addObserver:self forKeyPath:@"libraryItems" options:0 context:nil];
 }
 
@@ -118,7 +122,7 @@
     }
    
     cell.title.text = titleText;
-    cell.bpm.text = [NSString stringWithFormat:@"%d", (int) mlItem.bpm];
+  //  cell.bpm.text = [NSString stringWithFormat:@"%d", (int) mlItem.bpm];
     // Configure the cell...
     
     return cell;

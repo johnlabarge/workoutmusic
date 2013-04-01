@@ -7,9 +7,10 @@
 //
 
 #import "Splash.h"
+#import "MusicLibraryBPMs.h"
 
 @interface Splash ()
-
+@property (nonatomic, assign) BOOL wasLoaded; 
 @end
 
 @implementation Splash
@@ -27,10 +28,34 @@
 - (void)viewDidLoad
 {
     
+    self.wasLoaded = YES;
         [super viewDidLoad];
+    [self.musicBPMLibrary addObserver:self forKeyPath:@"totalNumberOfItems" options:NSKeyValueObservingOptionNew context:nil];
+    [self.musicBPMLibrary addObserver:self forKeyPath:@"currentIndexBeingProcessed" options:NSKeyValueObservingOptionNew context:nil];
+    [self.musicBPMLibrary addObserver:self forKeyPath:@"itemBeingProcessed" options:NSKeyValueObservingOptionNew context:nil];
 	
        
   
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"observing!!!!!");
+    if (object == self.musicBPMLibrary) {
+        if ([keyPath isEqualToString:@"totalNumberOfItems"]) {
+            self.currentlyProcessing.text = [NSString stringWithFormat:@"%d total items", self.musicBPMLibrary.totalNumberOfItems];
+        } else if ([keyPath isEqualToString:@"currentIndexBeingProcessed"]) {
+             NSLog(@" current index being processed = %d", self.musicBPMLibrary.currentIndexBeingProcessed);
+             NSUInteger total = self.musicBPMLibrary.totalNumberOfItems;
+             [self.progressView setProgress:(self.musicBPMLibrary.currentIndexBeingProcessed+0.0)/(total>0?total:1) animated:YES];
+            
+        } else if ([keyPath isEqualToString:@"itemBeingProcessed"]) {
+            MusicLibraryItem * item = self.musicBPMLibrary.itemBeingProcessed;
+            NSString *artist = [item.mediaItem valueForProperty:MPMediaItemPropertyArtist];
+            NSString *title = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
+            self.currentlyProcessing.text = [NSString stringWithFormat:@"Processing : %@ - %@", artist,title]; 
+        }
+    }
 }
 - (void)viewDidUnload
 {
@@ -48,7 +73,14 @@
     [appDelegate.transitionController performSelectorOnMainThread:@selector(transitionToViewController:) withObject:vc waitUntilDone:NO];*/
 }
 
-
+-(void)dealloc
+{
+    if (self.wasLoaded) { 
+    [self.musicBPMLibrary removeObserver:self forKeyPath:@"totalNumberOfItems"];
+    [self.musicBPMLibrary removeObserver:self forKeyPath:@"currentIndexBeingProcessed"];
+    [self.musicBPMLibrary removeObserver:self forKeyPath:@"itemBeingProcessed"];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

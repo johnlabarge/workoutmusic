@@ -39,19 +39,8 @@
 		527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150A21655D15200111078 /* MusicLibraryBPMs.m */; };
 		52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970716691B14003E39B6 /* libz.dylib */; };
 		52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */; };
-		52D2BBEF166A9E8600EBCAB8 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */; };
-		52D2BBF0166A9E8600EBCAB8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */; };
-		52D2BBF1166A9E8600EBCAB8 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */; };
-		52D2BBF2166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */; };
-		52D2BBF3166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */; };
-		52D2BBF4166A9E8600EBCAB8 /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */; };
-		52D2BBF5166A9E8600EBCAB8 /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */; };
-		52D2BBF6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */; };
-		52D2BBF7166A9E8600EBCAB8 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */; };
-		52D2BBF8166A9E8600EBCAB8 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */; };
-		52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */; };
-		52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */; };
 		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
+		E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E509411C1709DD25000AC071 /* NSObject+SBJson.m */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
 		E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C234017008E8E00BEA02C /* WorkoutTimeSetSegue.m */; };
@@ -141,32 +130,9 @@
 		527150A11655D15200111078 /* MusicLibraryBPMs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLibraryBPMs.h; sourceTree = "<group>"; };
 		527150A21655D15200111078 /* MusicLibraryBPMs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryBPMs.m; sourceTree = "<group>"; };
 		52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		52D2BBD6166A9E8600EBCAB8 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
-		52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
-		52D2BBD8166A9E8600EBCAB8 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
-		52D2BBD9166A9E8600EBCAB8 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		52D2BBDB166A9E8600EBCAB8 /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
-		52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
-		52D2BBDD166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
-		52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAccumulator.m; sourceTree = "<group>"; };
-		52D2BBDF166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
-		52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
-		52D2BBE1166A9E8600EBCAB8 /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
-		52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
-		52D2BBE3166A9E8600EBCAB8 /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
-		52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
-		52D2BBE5166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterAccumulator.h; sourceTree = "<group>"; };
-		52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterAccumulator.m; sourceTree = "<group>"; };
-		52D2BBE7166A9E8600EBCAB8 /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
-		52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
-		52D2BBE9166A9E8600EBCAB8 /* SBJsonTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonTokeniser.h; sourceTree = "<group>"; };
-		52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonTokeniser.m; sourceTree = "<group>"; };
-		52D2BBEB166A9E8600EBCAB8 /* SBJsonUTF8Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonUTF8Stream.h; sourceTree = "<group>"; };
-		52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
-		52D2BBED166A9E8600EBCAB8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
+		E509411B1709DD25000AC071 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
+		E509411C1709DD25000AC071 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
 		E50C233416FE6BE500BEA02C /* SuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperViewController.m; sourceTree = "<group>"; };
 		E50C233716FE702D00BEA02C /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
@@ -283,7 +249,6 @@
 				E5DDAC8C16F664F40042D146 /* WorkoutList.m */,
 				E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */,
 				526425771672B360000D6C01 /* interface */,
-				52D2BBD5166A9E8600EBCAB8 /* JSON */,
 				52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */,
 				524B970716691B14003E39B6 /* libz.dylib */,
 				524B970516691AEF003E39B6 /* SystemConfiguration.framework */,
@@ -348,6 +313,7 @@
 		527150621651DF0200111078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E509411A1709DD25000AC071 /* JSON */,
 				E5F8221B1698812600669093 /* libechonest.a */,
 				527150631651DF0200111078 /* WorkoutMusic-Info.plist */,
 				527150641651DF0200111078 /* InfoPlist.strings */,
@@ -382,34 +348,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		52D2BBD5166A9E8600EBCAB8 /* JSON */ = {
+		E509411A1709DD25000AC071 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				52D2BBD6166A9E8600EBCAB8 /* NSObject+SBJson.h */,
-				52D2BBD7166A9E8600EBCAB8 /* NSObject+SBJson.m */,
-				52D2BBD8166A9E8600EBCAB8 /* SBJson.h */,
-				52D2BBD9166A9E8600EBCAB8 /* SBJsonParser.h */,
-				52D2BBDA166A9E8600EBCAB8 /* SBJsonParser.m */,
-				52D2BBDB166A9E8600EBCAB8 /* SBJsonStreamParser.h */,
-				52D2BBDC166A9E8600EBCAB8 /* SBJsonStreamParser.m */,
-				52D2BBDD166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.h */,
-				52D2BBDE166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m */,
-				52D2BBDF166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.h */,
-				52D2BBE0166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m */,
-				52D2BBE1166A9E8600EBCAB8 /* SBJsonStreamParserState.h */,
-				52D2BBE2166A9E8600EBCAB8 /* SBJsonStreamParserState.m */,
-				52D2BBE3166A9E8600EBCAB8 /* SBJsonStreamWriter.h */,
-				52D2BBE4166A9E8600EBCAB8 /* SBJsonStreamWriter.m */,
-				52D2BBE5166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.h */,
-				52D2BBE6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m */,
-				52D2BBE7166A9E8600EBCAB8 /* SBJsonStreamWriterState.h */,
-				52D2BBE8166A9E8600EBCAB8 /* SBJsonStreamWriterState.m */,
-				52D2BBE9166A9E8600EBCAB8 /* SBJsonTokeniser.h */,
-				52D2BBEA166A9E8600EBCAB8 /* SBJsonTokeniser.m */,
-				52D2BBEB166A9E8600EBCAB8 /* SBJsonUTF8Stream.h */,
-				52D2BBEC166A9E8600EBCAB8 /* SBJsonUTF8Stream.m */,
-				52D2BBED166A9E8600EBCAB8 /* SBJsonWriter.h */,
-				52D2BBEE166A9E8600EBCAB8 /* SBJsonWriter.m */,
+				E509411B1709DD25000AC071 /* NSObject+SBJson.h */,
+				E509411C1709DD25000AC071 /* NSObject+SBJson.m */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -583,18 +526,6 @@
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
 				52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */,
 				522E6F5F1667EFAF0036C5DA /* SongTableCell.m in Sources */,
-				52D2BBEF166A9E8600EBCAB8 /* NSObject+SBJson.m in Sources */,
-				52D2BBF0166A9E8600EBCAB8 /* SBJsonParser.m in Sources */,
-				52D2BBF1166A9E8600EBCAB8 /* SBJsonStreamParser.m in Sources */,
-				52D2BBF2166A9E8600EBCAB8 /* SBJsonStreamParserAccumulator.m in Sources */,
-				52D2BBF3166A9E8600EBCAB8 /* SBJsonStreamParserAdapter.m in Sources */,
-				52D2BBF4166A9E8600EBCAB8 /* SBJsonStreamParserState.m in Sources */,
-				52D2BBF5166A9E8600EBCAB8 /* SBJsonStreamWriter.m in Sources */,
-				52D2BBF6166A9E8600EBCAB8 /* SBJsonStreamWriterAccumulator.m in Sources */,
-				52D2BBF7166A9E8600EBCAB8 /* SBJsonStreamWriterState.m in Sources */,
-				52D2BBF8166A9E8600EBCAB8 /* SBJsonTokeniser.m in Sources */,
-				52D2BBF9166A9E8600EBCAB8 /* SBJsonUTF8Stream.m in Sources */,
-				52D2BBFA166A9E8600EBCAB8 /* SBJsonWriter.m in Sources */,
 				E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */,
 				E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */,
 				E580F67116C7F37900E8AD5A /* Splash.m in Sources */,
@@ -610,6 +541,7 @@
 				E50C234C1700CB6B00BEA02C /* WorkoutsPickerViewDataSource.m in Sources */,
 				E50C235117012A2300BEA02C /* WorkoutTypePickerViewController.m in Sources */,
 				E51FD8721704AAA300C52B75 /* TimeUtils.m in Sources */,
+				E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +594,7 @@
 		527150991651DF0300111078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_GROUP = admin;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -695,6 +628,7 @@
 		5271509A1651DF0300111078 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_GROUP = admin;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

@@ -17,9 +17,12 @@
 @property (nonatomic, strong) IBOutlet UIButton * pauseButton;
 @property (nonatomic, strong) IBOutlet UIButton * previousButton;
 @property (nonatomic, strong) IBOutlet UIButton * nextButton;
+@property (nonatomic, strong) IBOutlet UILabel * intervalLabel;
+
 @property (nonatomic, strong) NSNumber * remainingPlaybacktime; 
 @property (nonatomic, strong) MPMusicPlayerController *musicPlayerController;
 @property (nonatomic, strong) NSArray * playQueueArray; 
-@property (nonatomic, strong) NSTimer * workoutTimer; 
+@property (nonatomic, strong) NSTimer * workoutTimer;
+@property (nonatomic, assign) NSInteger currentSongIndex;
 
 @end

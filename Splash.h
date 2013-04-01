@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WOMusicAppDelegate.h"
+#import "SuperViewController.h"
 
-@interface Splash : UIViewController
+@interface Splash : SuperViewController
 @property  (nonatomic, strong) IBOutlet UIImageView * image;
+@property (nonatomic, strong) IBOutlet  UILabel * currentlyProcessing;
+@property (nonatomic, strong) IBOutlet  UIProgressView *progressView; 
 -(void) afterSplash;
 @end

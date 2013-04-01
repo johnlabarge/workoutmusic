@@ -28,12 +28,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.intervalLabel.text = @"";
     [self.workoutlist addObserver:self forKeyPath:@"workoutSongs" options:NSKeyValueObservingOptionNew context:nil];
      [self.workoutlist addObserver:self forKeyPath:@"actualWorkoutTime" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"remainingPlaybacktime" options:NSKeyValueObservingOptionNew context:nil];
     self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.workoutlist.actualWorkoutTime.intValue];
     
 	// Do any additional setup after loading the view.
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.musicPlayerController stop];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [self.musicPlayerController stop];
 }
 
 -(void) observeValueForKeyPath:(NSString *)path ofObject:(NSObject *)anObject change: (NSDictionary *) theChange context:(void *)ctx {
@@ -42,11 +52,9 @@
         [self.tableView reloadData];
     } else if([path isEqualToString:@"actualWorkoutTime"]) {
         self.remainingPlaybacktime = [NSNumber numberWithInt:self.workoutlist.actualWorkoutTime.intValue];
-        
         self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.remainingPlaybacktime.intValue];
         
     } else if ([path isEqualToString:@"remainingPlaybacktime"]) {
-        NSLog(@"remaining playback time....observed.....");
         self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.remainingPlaybacktime.intValue];
     }
     
@@ -93,13 +101,13 @@
     MPMediaItem * song = mlItem.mediaItem;
     
     NSString * titleText = [song valueForProperty:MPMediaItemPropertyTitle];
-    if (titleText.length > 30) {
-        titleText = [titleText substringToIndex:30];
+    if (titleText.length > 20) {
+        titleText = [titleText substringToIndex:20];
         titleText = [NSString stringWithFormat:@"%@...",titleText];
     }
     
     cell.title.text = titleText;
-    cell.bpm.text = [NSString stringWithFormat:@"%d", (int) mlItem.bpm];
+    cell.tempoClass.text = mlItem.tempoClassificaiton;
     cell.time.text =  [TimeUtils minutesColonSeconds:[[mlItem.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue]];
     
     // Configure the cell...
@@ -162,9 +170,14 @@
 -(void) playbackSongChanged:(NSNotification *) notification
 {
         NSLog(@"now playing item changed!!!");
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:[self indexForMediaItem: self.musicPlayerController.nowPlayingItem] inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
+    if (self.musicPlayerController.indexOfNowPlayingItem < self.playQueueArray.count && self.musicPlayerController.indexOfNowPlayingItem > 0) {
+ 
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.musicPlayerController.indexOfNowPlayingItem inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self recalculatePlaybackTime];
 
+
+    [self updateIntervalText];
+    }
 }
 -(void) playbackStateChanged:(NSNotification *)notification
 {
@@ -177,16 +190,23 @@
                                                      selector:@selector(onTimer)
                                                      userInfo:nil
                                                       repeats:YES];
+        [self updateIntervalText];
         
         
     } else {
         [self.workoutTimer invalidate];
+        self.intervalLabel.text = @"";
         
     }
         
         
 }
-
+-(void) updateIntervalText
+{
+    MusicLibraryItem * currentMLitem = (MusicLibraryItem *) [self.workoutlist.workoutSongs objectAtIndex:self.musicPlayerController.indexOfNowPlayingItem];
+                                                             ;
+    self.intervalLabel.text = [NSString stringWithFormat:@"Interval %d: %@",currentMLitem.intervalIndex+1, currentMLitem.intervalDescription];
+}
 -(void) recalculatePlaybackTime
 {
     
@@ -244,9 +264,7 @@
 
 -(void) onTimer
 {
-    NSLog(@"on timer....");
     [self recalculatePlaybackTime];
-    NSLog(@"remaining playback time = %d", self.remainingPlaybacktime.intValue);
 }
 
 -(IBAction)pauseMusic
@@ -264,25 +282,20 @@
     [self.workoutTimer invalidate];
     
     [self.musicPlayerController skipToNextItem];
-    [self recalculatePlaybackTime];
-    self.workoutTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                         target:self
-                                                       selector:@selector(onTimer)
-                                                       userInfo:nil
-                                                        repeats:YES];
-
+   
     NSLog(@" next item is : %@", [[self.musicPlayerController nowPlayingItem] valueForProperty:MPMediaItemPropertyTitle]);
 }
 
 -(NSUInteger) calculateSecondsUpToCurrent
 {
     NSUInteger currentItemIndex = self.musicPlayerController.indexOfNowPlayingItem;
+   
     __block NSUInteger totalSeconds = 0;
     [self.playQueueArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
         if (idx < currentItemIndex) {
-            MusicLibraryItem * item = (MusicLibraryItem *) obj;
-            totalSeconds += [[item.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue];
+            MPMediaItem *item = (MPMediaItem *) obj;
+            totalSeconds += [[item valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue];
         } else {
             *stop = YES;
         }
@@ -296,10 +309,10 @@
 
 -(void)dealloc
 {
-    [self.musicPlayerController stop];
+    
     [self.workoutlist removeObserver:self forKeyPath:@"workoutSongs"];
     [self.workoutlist removeObserver:self forKeyPath:@"actualWorkoutTime"];
-    
+    [self removeObserver:self forKeyPath:@"remainingPlaybacktime"];
 }
 
 @end

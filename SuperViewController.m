@@ -46,10 +46,13 @@
 
 -(WorkoutList *) workoutlist
 {
-    NSLog(@" getting apps workout list");
     return self.app.workout;
 }
 
+-(MusicLibraryBPMs *) musicBPMLibrary
+{
+    return self.app.musicBPMLibrary;
+}
 -(WOMusicAppDelegate *) app
 {
     return [UIApplication sharedApplication].delegate;

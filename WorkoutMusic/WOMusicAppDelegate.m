@@ -22,17 +22,25 @@
 {
     // Override point for customization after application launch.
     self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
-    [self splash];
+   
     __block WOMusicAppDelegate * me = self;
     dispatch_queue_t processqueue = dispatch_queue_create("music processor", NULL);
     dispatch_async(processqueue, ^{
-        [self.musicBPMLibrary processItunesLibrary:^{ NSLog(@"processed item");}];
+        [self.musicBPMLibrary processItunesLibrary:^(MusicLibraryItem *item) {
+            NSLog(@"%@ processing", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+
+        } afterUpdatingItem:^(MusicLibraryItem *item) {
+            NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+        }];
+         
+
         NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@" killing splash screen...");
             [me.splashScreen afterSplash]; 
         });
     });
+     [self splash];
     //dispatch_release(processqueue);
     self.workout = [[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary];
     

@@ -10,8 +10,6 @@
 
 @implementation SongTableCell
 
-@synthesize title;
-@synthesize bpm;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

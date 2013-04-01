@@ -8,14 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SongTableCell : UITableViewCell {
-    UILabel *title;
-    UILabel *bpm;
-    UILabel *time;
-
-}
+@interface SongTableCell : UITableViewCell 
 @property (nonatomic, strong) IBOutlet UILabel * title;
-@property (nonatomic, strong) IBOutlet UILabel * bpm;
+@property (nonatomic, strong) IBOutlet UILabel * tempoClass;
 @property (nonatomic, strong) IBOutlet UILabel * time;
 
 @end

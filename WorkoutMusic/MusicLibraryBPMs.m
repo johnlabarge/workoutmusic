@@ -15,7 +15,7 @@
 #define SLOPSECONDS 60
 
 @interface MusicLibraryBPMs()
--(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated:(void(^)(void))itemUpdated;
+-(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void (^)(MusicLibraryItem *) ) itemUpdated;
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
 -(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item;
 @property (nonatomic, strong) NSDictionary *  TempoSelectors;
@@ -43,6 +43,11 @@
     NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
     
     self.libraryItems = [[NSMutableArray alloc] initWithCapacity:mpItems.count];
+    __block MusicLibraryBPMs * me = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+        me.totalNumberOfItems = me.libraryItems.count;
+    });
     
     NSMutableArray * mutLibraryItems = (NSMutableArray *) self.libraryItems;
     for (MPMediaItem * item in mpItems)
@@ -62,19 +67,29 @@
 
 
 
--(void) processItunesLibrary:( void (^)(void) ) itemUpdated
+-(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem * item) ) itemUpdated
 {
     NSLog(@"processing itunes library....%d items",self.libraryItems.count);
+    __block MusicLibraryBPMs * me = self;
+    __block int count = 0;
     for (MusicLibraryItem * mi in self.libraryItems) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            me.currentIndexBeingProcessed = count;
+            me.itemBeingProcessed = mi;
+        });
+        beforeUpdatingItem(mi);
         if (mi.bpm == 0) {
             [self lookupBPMFor:mi whenUpdated:itemUpdated];
         }
+        count++;
     }
     self.processed = YES;
 }
 
 
--(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void ( ^ ) (void ) ) itemUpdated {
+-(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void (^)(MusicLibraryItem *) ) itemUpdated {
+    
     
     NSString * artist = [item.mediaItem valueForProperty:MPMediaItemPropertyArtist];
     NSString * title  = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
@@ -82,7 +97,8 @@
     MusicBPMEntry * entry =  [self findBPMEntryInCacheFor:artist andTitle:title];
     if (entry != nil) {
         item.bpm = [entry.bpm doubleValue];
-        itemUpdated();
+        item.tempoClassificaiton  = [self tempoClassificationForItem:item];
+        itemUpdated(item);
     } else {
     
         [self lookupBPMFromEchonest:item whenUpdated:itemUpdated artist:artist song:title];
@@ -166,7 +182,7 @@
    
     return entry;
 }
--(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:( void(^) (void) )itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
+-(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:( void(^) (MusicLibraryItem *) )itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
 
     ENAPIRequest *request = [ENAPIRequest requestWithEndpoint:@"song/search"];
     
@@ -178,7 +194,7 @@
     
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:[itemUpdated copy] forKey:@"itemUpdated"];
-    void (^itemUpdated2)(void) = [info objectForKey:@"itemUpdated"];
+    void (^itemUpdated2)(MusicLibraryItem *) = [info objectForKey:@"itemUpdated"];
     
     [info setObject:item forKey:@"libraryItem"];
     
@@ -197,10 +213,16 @@
     
     if (200 == request.responseStatusCode)
     {
-        MusicLibraryItem * musicLibraryItem = [request.userInfo objectForKey:@"libraryItem"];
+    
+        __block ENAPIRequest *req;
+        __block MusicLibraryBPMs * me = self;
+        dispatch_async( dispatch_queue_create("item saver", NULL), ^{
+            
+        
+        MusicLibraryItem * musicLibraryItem = [req.userInfo objectForKey:@"libraryItem"];
         //TODO: fish out the tempo from the data returned
          //   NSLog(@"%@",[request.requestURL absoluteString]);
-        NSArray * songs = [request.response valueForKeyPath:@"response.songs"];
+        NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
         if (songs.count > 0) {
             
         
@@ -216,22 +238,23 @@
             musicLibraryItem.bpm = tempo;
             NSLog(@"double vluae of tempo = %f",musicLibraryItem.bpm);
             
-            NSLog(@"int value of tempo = %d",[[request.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
+            NSLog(@"int value of tempo = %d",[[req.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
             
             
             
-            [self saveMusicBPMEntryInCache:musicLibraryItem];
+            [me saveMusicBPMEntryInCache:musicLibraryItem];
             
             
-            void (^itemUpdated)(void)  = (void(^)(void))[request.userInfo objectForKey:@"itemUpdated"];
+            void (^itemUpdated)(MusicLibraryItem *)  = (void(^)(MusicLibraryItem *))[req.userInfo objectForKey:@"itemUpdated"];
             
-            itemUpdated();
+            itemUpdated(musicLibraryItem);
     
         }
+                 });
     } else {
         NSLog(@"%d", request.responseStatusCode);
     }
-    
+                  
 }
 - (void)requestFailed:(ENAPIRequest *)request
 {
@@ -260,6 +283,7 @@
             NSLog (@"%@", songTitle);
         }
     }
+ 
     
     NSLog(@"found %d workoutItems",workoutItems.count);
     return workoutItems;
@@ -273,6 +297,18 @@
     self.libraryItems = [self doFilter:self.unfilteredItems withMin:min andMax:max];
 }
 
+-(NSString *) tempoClassificationForItem:(MusicLibraryItem *)item {
+    
+    if (item.bpm >=60 && item.bpm <=95) {
+        return @"Slow";
+    } else if (item.bpm >=96 && item.bpm <=125) {
+        return @"Medium";
+    } else if (item.bpm >= 125 && item.bpm <=159) {
+        return @"Medium Fast";
+    } else if (item.bpm >= 160 && item.bpm <= 400) {
+        return @"Fast";
+    }
+}
 -(void) slowFilter
 {
     [self filterWithMin:60 andMax:95];
@@ -298,8 +334,10 @@
 {
     NSMutableArray * theFilteredItems = [[NSMutableArray alloc] initWithCapacity:[list count]];
     if (!self.processed) {
-        [self processItunesLibrary:^{
-            NSLog(@"item updated..");
+        [self processItunesLibrary:^(MusicLibraryItem *item) {
+            NSLog(@"processing : %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+        } afterUpdatingItem:^(MusicLibraryItem *item) {
+            NSLog(@"processing : %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         }];
     }
     for (id theObj in list) {
@@ -315,6 +353,8 @@
     self.libraryItems = self.unfilteredItems;
 }
 
+
+
 #pragma mark create workout lists
 
 #define APPROX_TIME @"approxTime"
@@ -325,8 +365,10 @@
 {
     NSMutableArray *retList = [[NSMutableArray alloc] init];
     NSLog(@"processing %d intervals", retList.count);
+    NSInteger intervalNumber = 0;
     for (NSDictionary * interval in intervals) {
-        [retList addObjectsFromArray:[self songsForInterval:interval]];
+        [retList addObjectsFromArray:[self songsForInterval:interval number:intervalNumber]];
+        intervalNumber++;
     }
     NSLog(@"######WORKOUT LIST:######\n");
     [retList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -391,7 +433,7 @@
     return [self processIntervals:intervals];
 }
 
--(NSArray *) songsForInterval:(NSDictionary *)interval
+-(NSArray *) songsForInterval:(NSDictionary *)interval number:(NSInteger)intervalNumber
 {
     NSMutableArray * retList = [[NSMutableArray alloc] initWithCapacity:3];
     SEL theSelector = [self filterSelectorForName:[interval objectForKey:TEMPO]];
@@ -406,7 +448,11 @@
         NSInteger songSeconds = songSecondsN.intValue;
        
         if (songSeconds <= intervalSeconds+SLOPSECONDS) {
-            [retList addObject:item];
+            MusicLibraryItem * itemToAdd = [item copy];
+            itemToAdd.intervalDescription  = [interval objectForKey:DESC];
+            itemToAdd.intervalIndex = intervalNumber;
+            
+            [retList addObject:itemToAdd];
             remainingSeconds -= songSeconds;
         }
         if (remainingSeconds <= 0) {
@@ -429,6 +475,15 @@
 {
     self.mediaItem = theMediaItem;
     return self;
+}
+
+-(id) copyWithZone:(NSZone *)zone
+{
+    MusicLibraryItem *another = [[MusicLibraryItem alloc] initWithMediaItem:[self.mediaItem copy]];
+    another.tempoClassificaiton = [self.tempoClassificaiton copyWithZone:zone];
+    another.intervalDescription = [self.intervalDescription copyWithZone:zone];
+    another.intervalIndex = self.intervalIndex;
+    return another;
 }
 
 @end

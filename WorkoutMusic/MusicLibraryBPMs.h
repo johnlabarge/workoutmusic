@@ -11,6 +11,8 @@
 #import "MusicBPMEntry.h"
 #import "NSArray+Shuffle.h"
 #import "ENAPI.h"
+
+@class MusicLibraryItem;
 /*
  * Your API Key: 4N3RGRQDQPUETU3BV
  
@@ -34,8 +36,12 @@
 @property (nonatomic, retain) NSArray * unfilteredItems;
 @property (nonatomic, retain) NSManagedObjectContext * managedObjectContext;
 
+@property (nonatomic, strong) MusicLibraryItem *itemBeingProcessed;
+@property (nonatomic, assign) NSUInteger totalNumberOfItems;
+@property (nonatomic, assign) NSUInteger currentIndexBeingProcessed;
+
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
--(void) processItunesLibrary:(void (^)(void)) itemUpdated;
+-(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;
 - (void)requestFinished:(ENAPIRequest *)request;
 - (void)requestFailed:(ENAPIRequest *)request;
 - (void)filterWithMin:(NSInteger)min andMax:(NSInteger)max;
@@ -50,13 +56,16 @@
 
 @end
 
-@interface MusicLibraryItem : NSObject {
+@interface MusicLibraryItem : NSObject <NSCopying> {
     
     MPMediaItem * mediaItem;
     double bpm;
 }
 -(id) initWithMediaItem:(MPMediaItem *)theMediaItem;
+-(id) copyWithZone:(NSZone *)zone;
 @property double bpm;
-@property (nonatomic, strong) MPMediaItem *mediaItem;
-@property (nonatomic, strong) NSString * intervalDescription;
+@property (nonatomic, strong) MPMediaItem *mediaItem;          /* Todo: a bit of a hack to hang*/
+@property (nonatomic, strong) NSString * intervalDescription;  /* these properties on the item object.*/
+@property (nonatomic, strong) NSString * tempoClassificaiton;
+@property (nonatomic, assign) NSInteger intervalIndex;
 @end;
