@@ -12,5 +12,7 @@
 @property (nonatomic, strong) IBOutlet UILabel * title;
 @property (nonatomic, strong) IBOutlet UILabel * tempoClass;
 @property (nonatomic, strong) IBOutlet UILabel * time;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) UIImage * artworkImage;
 
 @end

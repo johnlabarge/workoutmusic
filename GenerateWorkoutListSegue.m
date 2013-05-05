@@ -28,19 +28,20 @@
         
         NSLog(@"\n\n after generated!!");
         
+        [UIView transitionWithView:src.view duration:0.8
+         
+                           options:UIViewAnimationOptionTransitionFlipFromLeft
+                        animations:^{
+                            
+                            UINavigationController * navController = (UINavigationController *) app.window.rootViewController;
+                            [navController pushViewController:player animated:YES];
+                        }
+         
+                        completion:NULL];
+        
     }];
     
 
-    [UIView transitionWithView:src.view duration:0.8
-     
-                       options:UIViewAnimationOptionTransitionFlipFromLeft
-                    animations:^{
-        
-                        UINavigationController * navController = (UINavigationController *) app.window.rootViewController;
-                        [navController pushViewController:player animated:YES];
-                    }
-     
-                    completion:NULL];
     
     
 }

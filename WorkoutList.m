@@ -32,9 +32,11 @@
                 NSLog(@"creating pyramid");
                 NSArray * workoutSongs = [self.bpmLibrary createPyramid:self.workoutTime.intValue];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                     me.intervals = self.bpmLibrary.pyramidIntervals;
                     [me calculateActualTime:workoutSongs];
                     me.workoutSongs = workoutSongs;
                     afterGenerated();
+               
                 });
             });
             generated  = YES;
@@ -44,8 +46,10 @@
                 NSArray * workoutSongs = [self.bpmLibrary createFastToSlow:self.workoutTime.intValue];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [me calculateActualTime:workoutSongs];
+                    me.intervals = self.bpmLibrary.fastToSlowIntervals;
                     me.workoutSongs = workoutSongs;
                     afterGenerated();
+               
                 });
             });
             generated = YES;
@@ -55,8 +59,10 @@
             NSArray * workoutSongs = [self.bpmLibrary createSlowToFast:self.workoutTime.intValue];
             dispatch_async(dispatch_get_main_queue(), ^{
                     [me calculateActualTime:workoutSongs];
-                    me.workoutSongs = workoutSongs;
-                    afterGenerated();
+                     me.intervals = self.bpmLibrary.slowToFastIntervals;
+                     me.workoutSongs = workoutSongs;
+                     afterGenerated();
+               
                 });
             });
             generated = YES;

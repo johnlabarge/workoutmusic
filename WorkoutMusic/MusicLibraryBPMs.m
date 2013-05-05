@@ -1,18 +1,13 @@
 //
 //  MusicLibraryBPMs.m
-//  WorkoutMusic
-//
+//  WorkoutMusicSlow//
 //  Created by John La Barge on 11/15/12.
 //  Copyright (c) 2012 John La Barge. All rights reserved.
 //
 
 #import "MusicLibraryBPMs.h"
+#import "WorkoutMusicSettings.h"
 
-#define SLOW @"slow"
-#define MEDIUM @"medium"
-#define MEDIUMFAST @"mediumFast"
-#define FAST @"fast"
-#define SLOPSECONDS 60
 
 @interface MusicLibraryBPMs()
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void (^)(MusicLibraryItem *) ) itemUpdated;
@@ -38,6 +33,10 @@
     
     
     
+       
+ 
+
+ 
     
     [ENAPI initWithApiKey:@"4N3RGRQDQPUETU3BV"];
     NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
@@ -58,8 +57,12 @@
     self.unfilteredItems = libraryItems;
     self.managedObjectContext = moc;
     self.processed = NO;
+    
+
     return self;
 }
+
+
 
 -(SEL) filterSelectorForName:(NSString *)name {
     return NSSelectorFromString([self.TempoSelectors objectForKey:name]);
@@ -210,47 +213,48 @@
     NSLog(@"%@",request.responseString);
 
   
-    
+   
     if (200 == request.responseStatusCode)
     {
     
-        __block ENAPIRequest *req;
+        __block ENAPIRequest *req = request;
         __block MusicLibraryBPMs * me = self;
         dispatch_async( dispatch_queue_create("item saver", NULL), ^{
+            MusicLibraryItem * musicLibraryItem = [req.userInfo objectForKey:@"libraryItem"];
             
-        
-        MusicLibraryItem * musicLibraryItem = [req.userInfo objectForKey:@"libraryItem"];
-        //TODO: fish out the tempo from the data returned
-         //   NSLog(@"%@",[request.requestURL absoluteString]);
-        NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
-        if (songs.count > 0) {
             
-        
-            NSDictionary * song = [songs objectAtIndex:0];
-            
-            NSDictionary * audio_summary = [song objectForKey:@"audio_summary"];
-            NSArray * allKeys = [audio_summary allKeys];
-            for (NSString * key in allKeys) {
-                NSLog(@"Key: %@",key);
+            //TODO: fish out the tempo from the data returned
+            //   NSLog(@"%@",[request.requestURL absoluteString]);
+            NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
+            if (songs.count > 0) {
+                
+                
+                NSDictionary * song = [songs objectAtIndex:0];
+                
+                NSDictionary * audio_summary = [song objectForKey:@"audio_summary"];
+                NSArray * allKeys = [audio_summary allKeys];
+                for (NSString * key in allKeys) {
+                    NSLog(@"Key: %@",key);
+                }
+                NSNumber *theTempo = [audio_summary objectForKey:@"tempo"];
+                double tempo = [[song valueForKeyPath:@"audio_summary.tempo"] doubleValue];
+                musicLibraryItem.bpm = tempo;
+                musicLibraryItem.tempoClassificaiton  = [self tempoClassificationForItem:musicLibraryItem];
+                NSLog(@"double vluae of tempo = %f",musicLibraryItem.bpm);
+                
+                NSLog(@"int value of tempo = %d",[[req.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
+                
+                
+                
+                [me saveMusicBPMEntryInCache:musicLibraryItem];
+                
+                
+                void (^itemUpdated)(MusicLibraryItem *)  = (void(^)(MusicLibraryItem *))[req.userInfo objectForKey:@"itemUpdated"];
+                
+                itemUpdated(musicLibraryItem);
+                
             }
-            NSNumber *theTempo = [audio_summary objectForKey:@"tempo"];
-            double tempo = [[song valueForKeyPath:@"audio_summary.tempo"] doubleValue];
-            musicLibraryItem.bpm = tempo;
-            NSLog(@"double vluae of tempo = %f",musicLibraryItem.bpm);
-            
-            NSLog(@"int value of tempo = %d",[[req.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
-            
-            
-            
-            [me saveMusicBPMEntryInCache:musicLibraryItem];
-            
-            
-            void (^itemUpdated)(MusicLibraryItem *)  = (void(^)(MusicLibraryItem *))[req.userInfo objectForKey:@"itemUpdated"];
-            
-            itemUpdated(musicLibraryItem);
-    
-        }
-                 });
+        });
     } else {
         NSLog(@"%d", request.responseStatusCode);
     }
@@ -270,7 +274,7 @@
     MPMediaItemCollection *workOutPlaylist;
     for (MPMediaItemCollection * playlist in playlists) {
         NSLog(@"found play list: %@",[playlist valueForProperty:MPMediaPlaylistPropertyName]);
-        if ([[playlist valueForProperty:MPMediaPlaylistPropertyName] isEqualToString:@"workoutsongs"]) {
+        if ([[playlist valueForProperty:MPMediaPlaylistPropertyName] isEqualToString:[WorkoutMusicSettings workoutSongsPlaylist]]) {
              workOutPlaylist = playlist;
              break;
         }
@@ -342,6 +346,7 @@
     }
     for (id theObj in list) {
         MusicLibraryItem * theItem = (MusicLibraryItem *) theObj;
+        NSLog(@"/** filtering items : \n\n %@ - %d", [theItem.mediaItem valueForProperty:MPMediaItemPropertyTitle], (int) theItem.bpm );
         if (theItem.bpm >= min && theItem.bpm <= max ) {
             [theFilteredItems addObject:theItem];
         }
@@ -357,9 +362,7 @@
 
 #pragma mark create workout lists
 
-#define APPROX_TIME @"approxTime"
-#define TEMPO @"tempo"
-#define DESC @"description"
+
 
 -(NSArray *) processIntervals:(NSArray *)intervals
 {
@@ -374,55 +377,67 @@
     [retList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MusicLibraryItem * item = (MusicLibraryItem *) obj;
         NSString * title = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
-        NSLog(@"%@", title);
+        NSString * tempo = [NSString stringWithFormat:@"%d", (int) item.bpm];
+        NSLog(@"%@ - %@", title, tempo);
         
     }];
     return retList;
 }
-
-- (NSArray *) createPyramid:(NSInteger)approxTime {
-    
+-(void) updatePyramidIntervalsForTime:(NSInteger) approxTime
+{
     NSNumber  * sliceNumber = [NSNumber numberWithInt:approxTime/6];
     NSNumber  * peakNumber  = [NSNumber numberWithInt:approxTime/3];
     NSNumber  * warmDownNumber = [NSNumber numberWithInt:5];
-   
     
-    NSArray * intervals = @[
+    self.pyramidIntervals =
+    @[
     @{DESC: @"Start Ascending", APPROX_TIME : sliceNumber,  TEMPO:@"medium"},
     @{DESC: @"Ascecnd", APPROX_TIME : sliceNumber,  TEMPO:@"mediumFast"},
     @{DESC: @"Peak", APPROX_TIME : peakNumber,   TEMPO:@"fast"},
     @{DESC: @"Descend", APPROX_TIME : sliceNumber,  TEMPO: @"mediumFast"},
     @{DESC: @"Back to Bottom", APPROX_TIME : sliceNumber,  TEMPO: @"medium"},
     @{DESC: @"Cool down", APPROX_TIME:warmDownNumber, TEMPO: @"slow"}
-
+    
     ];
+
+}
+
+- (NSArray *) createPyramid:(NSInteger)approxTime {
+    
+  
+   
+    [self updatePyramidIntervalsForTime:approxTime]; 
+    
+    NSArray * intervals = self.pyramidIntervals; 
     
     return [self processIntervals:intervals]; 
 
 }
 
--(NSArray *) createFastToSlow:(NSInteger)approxTime {
-
+-(void) updateFastToSlowIntervalsForTime:(NSInteger)time
+{
     NSNumber *warmupSeconds = [NSNumber numberWithInt:300];
-    NSNumber *intervalSeconds = [NSNumber numberWithInt:approxTime/4];
-    
-    NSArray * intervals = @[
+    NSNumber *intervalSeconds = [NSNumber numberWithInt:time/4];
+    self.fastToSlowIntervals =
+    @[
     @{DESC:@"Warmup", APPROX_TIME: warmupSeconds, TEMPO:MEDIUM},
     @{DESC:@"Fast", APPROX_TIME:intervalSeconds, TEMPO:FAST},
     @{DESC:@"Medium Fast", APPROX_TIME:intervalSeconds, TEMPO:MEDIUMFAST},
     @{DESC:@"Medium", APPROX_TIME:intervalSeconds, TEMPO:MEDIUM},
     @{DESC:@"Slow",   APPROX_TIME:intervalSeconds, TEMPO:SLOW}
     ];
-    
-    return [self processIntervals:intervals]; 
-
 }
 
--(NSArray *) createSlowToFast:(NSInteger)approxTime {
+-(NSArray *) createFastToSlow:(NSInteger)approxTime {
+    [self updateFastToSlowIntervalsForTime:approxTime]; 
+    NSArray * intervals = self.fastToSlowIntervals;
+    return [self processIntervals:intervals]; 
+}
+
+-(void) updateSlowToFastIntervals:(NSInteger)approxTime {
     NSNumber *intervalSeconds = [NSNumber numberWithInt:approxTime/4];
     NSNumber *warmDownSeconds = [NSNumber numberWithInt:300];
-    
-    NSArray * intervals = @[
+    self.fastToSlowIntervals = @[
     
     @{DESC:@"Slow", APPROX_TIME:intervalSeconds, TEMPO:SLOW},
     @{DESC:@"Medium", APPROX_TIME:intervalSeconds, TEMPO:MEDIUM},
@@ -430,6 +445,12 @@
     @{DESC:@"Fast",   APPROX_TIME:intervalSeconds, TEMPO:FAST},
     @{DESC:@"Cool down", APPROX_TIME: warmDownSeconds, TEMPO:SLOW}
     ];
+    
+}
+-(NSArray *) createSlowToFast:(NSInteger)approxTime {
+    
+    [self updateSlowToFastIntervals:approxTime];
+    NSArray * intervals = self.slowToFastIntervals; 
     return [self processIntervals:intervals];
 }
 
@@ -483,6 +504,7 @@
     another.tempoClassificaiton = [self.tempoClassificaiton copyWithZone:zone];
     another.intervalDescription = [self.intervalDescription copyWithZone:zone];
     another.intervalIndex = self.intervalIndex;
+    another.bpm = self.bpm;
     return another;
 }
 

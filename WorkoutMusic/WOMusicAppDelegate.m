@@ -10,6 +10,7 @@
 #import "MusicLibraryBPMs.h"
 #import "WorkoutList.h"
 #import "Splash.h"
+#import "WorkoutMusicSettings.h"
 
 @interface WOMusicAppDelegate ()
 @property (nonatomic, strong) WorkoutList * workout;
@@ -21,8 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    WorkoutMusicSettings * settings = [WorkoutMusicSettings sharedInstance];
     self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
-   
+
     __block WOMusicAppDelegate * me = self;
     dispatch_queue_t processqueue = dispatch_queue_create("music processor", NULL);
     dispatch_async(processqueue, ^{
@@ -33,7 +35,7 @@
             NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         }];
          
-
+       
         NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@" killing splash screen...");

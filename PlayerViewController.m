@@ -11,7 +11,7 @@
 #import "TimeUtils.h"
 
 @interface PlayerViewController()
-
+@property (nonatomic, assign) CGRect retractedSongsFrame;
 @end
 
 @implementation PlayerViewController
@@ -28,14 +28,129 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.retractSongsImage    =  [UIImage imageNamed:@"retractSongs.png"];
+    self.expandSongsImage = [UIImage imageNamed:@"expandSongs.png"];
+    self.retractedSongsFrame = self.songsView.frame;
+
+    [self setupAppMusicPlayer];
     self.intervalLabel.text = @"";
     [self.workoutlist addObserver:self forKeyPath:@"workoutSongs" options:NSKeyValueObservingOptionNew context:nil];
      [self.workoutlist addObserver:self forKeyPath:@"actualWorkoutTime" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"remainingPlaybacktime" options:NSKeyValueObservingOptionNew context:nil];
     self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.workoutlist.actualWorkoutTime.intValue];
     
+    self.workoutGraph.currentInterval = 0;
+    self.workoutGraph.intervals = self.workoutlist.intervals;
+    [self.view addSubview:self.tableView];
+    /*[self showSongsExpanded];
+    [self showSongsRetracted]; */
+   // self.buttonBar.frame = CGRectMake(self.buttonBar.frame.origin.x, self.buttonBar.frame.origin.y, self.buttonBar.frame.size.width, 80);
+
+    
+    self.songsExpanded = NO;
+    
+   
 	// Do any additional setup after loading the view.
 }
+
+-(void) layoutTableView
+{
+    self.tableView = [[UITableView alloc] init];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    //[self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    CGRect tableFrame = self.songsTableContainer.frame;
+    tableFrame.origin.x =0;
+    tableFrame.origin.y=0;
+    self.tableView.frame = tableFrame;
+    
+    [self.songsTableContainer addSubview:self.tableView];
+    [self.songsTableContainer bringSubviewToFront:self.tableView];
+    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.scrollEnabled = YES;
+    [self.tableView reloadData];
+    
+    NSLog(@"TABLE VIEW FRAME: %.2f %.2f %.2f %.2f", tableFrame.origin.x, tableFrame.origin.y, tableFrame.size.width, tableFrame.size.height);
+
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+     [self updateWorkoutView];
+}
+#define EXPAND 188
+-(void) showSongsExpanded
+{
+    NSLog(@"show songs");
+     // [self.view bringSubviewToFront:self.songsView];
+    [UIView animateWithDuration:0.25f  animations: ^{
+      
+        
+       // self.songsTableContainer.frame= CGRectMake(0, 110+self.showSongsButton.frame.size.height, 320, 330-self.showSongsButton.frame.size.height);
+      
+    
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.25f animations:^{
+            CGRect songsViewFrame = self.songsView.frame;
+            songsViewFrame.size.height +=EXPAND;
+            songsViewFrame.origin.y -=EXPAND;
+
+            
+            
+            self.songsView.frame = songsViewFrame;
+            
+            
+        } completion:^(BOOL finished) {
+            
+            [UIView animateWithDuration:0.0f animations:^{
+                CGRect tableFrame = self.songsTableContainer.frame;
+                tableFrame.size.height += self.retractedSongsFrame.size.height+EXPAND;
+                tableFrame.origin.y=self.buttonBar.frame.origin.y + 80;
+                self.songsTableContainer.frame = tableFrame;
+                self.tableView.frame = CGRectMake(0, 0, self.songsTableContainer.frame.size.width, self.songsTableContainer.frame.size.height);
+        
+            } completion:^(BOOL finished) {
+                if (finished)
+                    [self.showSongsButton setImage:self.retractSongsImage forState:UIControlStateNormal];
+  
+            }];
+            if (finished) {
+              [self.showSongsButton setImage:self.retractSongsImage forState:UIControlStateNormal];
+                NSLog(@" frame: %.2f %.2f %.2f %.2f", self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
+            [self.tableView reloadData];
+            }
+        }];
+        
+        self.songsExpanded = YES;
+     }];
+     [self.songsView.superview bringSubviewToFront:self.songsView];
+}
+-(void) showSongsRetracted
+{
+    // [self.musicControlBar.superview bringSubviewToFront:self.musicControlBar];
+     NSLog(@" frame: %.2f %.2f %.2f %.2f", self.songsView.frame.origin.x, self.songsView.frame.origin.y, self.songsView.frame.size.width, self.songsView.frame.size.height);
+    [UIView animateWithDuration:0.1 animations:^{
+       
+ 
+    
+    } completion:^(BOOL finished) {
+
+            [UIView animateWithDuration:0.25 animations:^{
+                       self.songsView.frame = self.retractedSongsFrame;
+               
+
+            }completion:^(BOOL finished) {
+                if (finished) {
+                [self.workoutGraph.superview bringSubviewToFront:self.workoutGraph];
+                     [self.showSongsButton setImage:self.expandSongsImage forState:UIControlStateNormal];
+                self.songsExpanded = NO;
+                }
+            }];
+            
+    }];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.musicPlayerController stop];
@@ -46,10 +161,20 @@
     [self.musicPlayerController stop];
 }
 
+-(void) updateWorkoutView {
+    
+    [self layoutTableView];
+    self.workoutGraph.intervals = self.workoutlist.intervals;
+    self.remainingPlaybacktime = [NSNumber numberWithInt:self.workoutlist.actualWorkoutTime.intValue];
+    self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.remainingPlaybacktime.intValue];
+
+}
+
 -(void) observeValueForKeyPath:(NSString *)path ofObject:(NSObject *)anObject change: (NSDictionary *) theChange context:(void *)ctx {
 
     if ([path isEqualToString:@"workoutSongs"]) {
-        [self.tableView reloadData];
+        
+        [self updateWorkoutView];
     } else if([path isEqualToString:@"actualWorkoutTime"]) {
         self.remainingPlaybacktime = [NSNumber numberWithInt:self.workoutlist.actualWorkoutTime.intValue];
         self.workoutTimeRemaining.text = [TimeUtils minutesColonSeconds:self.remainingPlaybacktime.intValue];
@@ -60,7 +185,24 @@
     
     
 }
-
+-(IBAction) showSongs:(id)sender
+{
+    NSLog(@"show songs....");
+    
+    if (self.songsExpanded) {
+        
+        NSLog(@"retract songs");
+        [self showSongsRetracted];
+    } else {
+        [self showSongsExpanded];
+    }
+ 
+       
+    
+   // CGRect newTableViewBounds =
+    
+   // self.tableView.bounds = [self.view.bounds];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -73,8 +215,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
@@ -84,11 +224,14 @@
         NSArray * items = self.workoutlist.workoutSongs;
         return [items count];
     }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    
+    NSLog(@"\n\n####### cellForRow: %d\n#######",[indexPath indexAtPosition:1]);
     SongTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil) {
@@ -109,67 +252,22 @@
     cell.title.text = titleText;
     cell.tempoClass.text = mlItem.tempoClassificaiton;
     cell.time.text =  [TimeUtils minutesColonSeconds:[[mlItem.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue]];
-    
+     MPMediaItemArtwork * artwork = [song valueForProperty:MPMediaItemPropertyArtwork];
+     UIImage *albumArtworkImage = [artwork imageWithSize:CGSizeMake(100.0, 100.0)];
+    cell.artworkImage = albumArtworkImage;
+    cell.backgroundColor = [UIColor blackColor];
     // Configure the cell...
     
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
-
 -(void) playbackSongChanged:(NSNotification *) notification
 {
-        NSLog(@"now playing item changed!!!");
+        
     if (self.musicPlayerController.indexOfNowPlayingItem < self.playQueueArray.count && self.musicPlayerController.indexOfNowPlayingItem > 0) {
  
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.musicPlayerController.indexOfNowPlayingItem inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
@@ -191,11 +289,13 @@
                                                      userInfo:nil
                                                       repeats:YES];
         [self updateIntervalText];
+        [self.workoutGraph startAnimate];
         
         
     } else {
         [self.workoutTimer invalidate];
         self.intervalLabel.text = @"";
+        [self.workoutGraph stopAnimate];
         
     }
         
@@ -205,7 +305,8 @@
 {
     MusicLibraryItem * currentMLitem = (MusicLibraryItem *) [self.workoutlist.workoutSongs objectAtIndex:self.musicPlayerController.indexOfNowPlayingItem];
                                                              ;
-    self.intervalLabel.text = [NSString stringWithFormat:@"Interval %d: %@",currentMLitem.intervalIndex+1, currentMLitem.intervalDescription];
+   /* self.intervalLabel.text = [NSString stringWithFormat:@"Interval %d: %@",currentMLitem.intervalIndex+1, currentMLitem.intervalDescription];*/
+    self.workoutGraph.currentInterval = currentMLitem.intervalIndex;
 }
 -(void) recalculatePlaybackTime
 {
@@ -219,7 +320,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80.0;
 }
--(IBAction)playMusic
+
+-(void) setupAppMusicPlayer
 {
     self.musicPlayerController = [MPMusicPlayerController applicationMusicPlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -229,10 +331,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackStateChanged:)
                                                  name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                object:nil];
-     
+                                               object:nil];
     [self.musicPlayerController setShuffleMode:MPMusicShuffleModeOff];
     [self.musicPlayerController beginGeneratingPlaybackNotifications];
+ 
+}
+-(IBAction)playMusic
+{
+         
+  
    // [self.musicPlayerController addObserver:self forKeyPath:@"nowPlayingItem" options:NSKeyValueObservingOptionNew context:nil];
     
     NSMutableArray * playQueueArray = [[NSMutableArray alloc] initWithCapacity:self.workoutlist.workoutSongs.count ];

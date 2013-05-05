@@ -13,6 +13,7 @@
     dispatch_queue_t listmakerqueue;
 }
 
+@property (nonatomic, strong) NSArray * intervals; 
 @property (nonatomic, strong) MusicLibraryBPMs * bpmLibrary;
 @property (nonatomic, strong) NSNumber * workoutTime;
 @property (nonatomic, strong) NSArray  * workoutSongs;

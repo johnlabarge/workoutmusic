@@ -12,6 +12,15 @@
 #import "NSArray+Shuffle.h"
 #import "ENAPI.h"
 
+#define SLOW @"slow"
+#define MEDIUM @"medium"
+#define MEDIUMFAST @"mediumFast"
+#define FAST @"fast"
+#define APPROX_TIME @"approxTime"
+#define TEMPO @"tempo"
+#define DESC @"description"
+#define SLOPSECONDS 60
+
 @class MusicLibraryItem;
 /*
  * Your API Key: 4N3RGRQDQPUETU3BV
@@ -29,8 +38,15 @@
     NSArray * libraryItems;
     NSArray * unfilteredItems; 
 }
-
+/*
+ * class methods ....
+ */
 +(NSArray *) getMusicItems;
++(NSString *) workoutSongsPlaylist;
+
+/*
+ *   instance properties
+ */
 @property (nonatomic, assign) BOOL loaded; 
 @property (nonatomic, retain) NSArray * libraryItems;
 @property (nonatomic, retain) NSArray * unfilteredItems;
@@ -39,6 +55,9 @@
 @property (nonatomic, strong) MusicLibraryItem *itemBeingProcessed;
 @property (nonatomic, assign) NSUInteger totalNumberOfItems;
 @property (nonatomic, assign) NSUInteger currentIndexBeingProcessed;
+@property (nonatomic, strong) NSArray * pyramidIntervals;
+@property (nonatomic, strong) NSArray * fastToSlowIntervals;
+@property (nonatomic, strong) NSArray * slowToFastIntervals; 
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;

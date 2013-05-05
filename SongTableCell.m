@@ -27,4 +27,10 @@
     // Configure the view for the selected state
 }
 
+-(void) setArtworkImage:(UIImage *)inImage
+{
+    _artworkImage = inImage;
+    self.imageView.image = _artworkImage;
+}
+
 @end
