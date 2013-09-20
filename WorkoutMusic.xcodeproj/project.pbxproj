@@ -37,9 +37,15 @@
 		527150951651DF0300111078 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527150931651DF0300111078 /* InfoPlist.strings */; };
 		527150981651DF0300111078 /* WorkoutMusicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150971651DF0300111078 /* WorkoutMusicTests.m */; };
 		527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150A21655D15200111078 /* MusicLibraryBPMs.m */; };
+		529FDDDE17E539F60016B575 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDDC17E539F60016B575 /* next.png */; };
+		529FDDDF17E539F60016B575 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDDD17E539F60016B575 /* back.png */; };
+		529FDDE117E53CDB0016B575 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDE017E53CDB0016B575 /* pause.png */; };
+		529FDDE317E540270016B575 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDE217E540270016B575 /* play.png */; };
 		52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970716691B14003E39B6 /* libz.dylib */; };
 		52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */; };
 		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
+		52DB39A417E229E400800260 /* retract.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DB39A217E229E400800260 /* retract.png */; };
+		52DB39A517E229E400800260 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DB39A317E229E400800260 /* expand.png */; };
 		E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E509411C1709DD25000AC071 /* NSObject+SBJson.m */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
@@ -142,8 +148,14 @@
 		527150971651DF0300111078 /* WorkoutMusicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkoutMusicTests.m; sourceTree = "<group>"; };
 		527150A11655D15200111078 /* MusicLibraryBPMs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicLibraryBPMs.h; sourceTree = "<group>"; };
 		527150A21655D15200111078 /* MusicLibraryBPMs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryBPMs.m; sourceTree = "<group>"; };
+		529FDDDC17E539F60016B575 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/next.png; sourceTree = "<group>"; };
+		529FDDDD17E539F60016B575 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = images/back.png; sourceTree = "<group>"; };
+		529FDDE017E53CDB0016B575 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = images/pause.png; sourceTree = "<group>"; };
+		529FDDE217E540270016B575 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
+		52DB39A217E229E400800260 /* retract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retract.png; path = images/retract.png; sourceTree = "<group>"; };
+		52DB39A317E229E400800260 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = expand.png; path = images/expand.png; sourceTree = "<group>"; };
 		E509411B1709DD25000AC071 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		E509411C1709DD25000AC071 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
@@ -253,6 +265,12 @@
 		526425771672B360000D6C01 /* interface */ = {
 			isa = PBXGroup;
 			children = (
+				529FDDE217E540270016B575 /* play.png */,
+				529FDDE017E53CDB0016B575 /* pause.png */,
+				529FDDDC17E539F60016B575 /* next.png */,
+				529FDDDD17E539F60016B575 /* back.png */,
+				52DB39A217E229E400800260 /* retract.png */,
+				52DB39A317E229E400800260 /* expand.png */,
 				E5205DB516C7F40500EDD1DA /* workoutmusic.storyboard */,
 				E59DF697172D81A0001B7048 /* orange_fast_foward.png */,
 				E59DF698172D81A0001B7048 /* orange_pause.png */,
@@ -500,6 +518,11 @@
 				CLASSPREFIX = workoutmusic;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "John La Barge";
+				TargetAttributes = {
+					527150561651DF0200111078 = {
+						DevelopmentTeam = 9TBWV2GQV3;
+					};
+				};
 			};
 			buildConfigurationList = 527150511651DF0200111078 /* Build configuration list for PBXProject "WorkoutMusic" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -535,21 +558,27 @@
 				52449ED81667DA94000A146F /* MusicLibraryTableVC.xib in Resources */,
 				522E6F611667EFCB0036C5DA /* SongTableCell.xib in Resources */,
 				52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */,
+				52DB39A517E229E400800260 /* expand.png in Resources */,
 				523F8F731671827000251C91 /* FilterView.xib in Resources */,
 				E580F66716C7F24A00E8AD5A /* runner.png in Resources */,
+				529FDDE117E53CDB0016B575 /* pause.png in Resources */,
 				E5205DB716C7F40500EDD1DA /* workoutmusic.storyboard in Resources */,
 				E553399316EA115F00255C67 /* FastThenSlow.png in Resources */,
 				E553399416EA115F00255C67 /* Pyramid.png in Resources */,
 				E553399516EA115F00255C67 /* SlowToFast.png in Resources */,
+				52DB39A417E229E400800260 /* retract.png in Resources */,
 				E5CD0D2B16EBC80B00332141 /* note.jpeg in Resources */,
+				529FDDE317E540270016B575 /* play.png in Resources */,
 				E5CD0D2E16EBC86900332141 /* musicSettings.png in Resources */,
 				E50C234E17011DDF00BEA02C /* set.png in Resources */,
 				E5113E7B1724175900A52F5A /* background.png in Resources */,
 				E5113E7C1724175900A52F5A /* background@2x.png in Resources */,
 				E59DF692172D6F3F001B7048 /* expandSongs.png in Resources */,
 				E59DF694172D718C001B7048 /* retractSongs.png in Resources */,
+				529FDDDE17E539F60016B575 /* next.png in Resources */,
 				E59DF696172D818F001B7048 /* orange_play.png in Resources */,
 				E59DF69A172D81A0001B7048 /* orange_fast_foward.png in Resources */,
+				529FDDDF17E539F60016B575 /* back.png in Resources */,
 				E59DF69B172D81A0001B7048 /* orange_pause.png in Resources */,
 				E59DF69C172D81A0001B7048 /* orange_rewind.png in Resources */,
 				E5BB4C451731F384001CC2F5 /* Settings.bundle in Resources */,
@@ -728,6 +757,8 @@
 		5271509C1651DF0300111078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
 				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
@@ -736,6 +767,7 @@
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -743,6 +775,8 @@
 		5271509D1651DF0300111078 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
 				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
@@ -751,6 +785,7 @@
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
