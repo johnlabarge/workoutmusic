@@ -10,11 +10,15 @@
 #import "WorkoutInterval.h"
 #import "Workouts.h"
 
+@interface Workout()
+@property NSMutableArray * changeActions;
+@end
 @implementation Workout
+
+
 +(NSString *) pathToWorkout:(NSString *)workoutName
 
 {
-    
     
     return [[Workouts path] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.json",workoutName]];
 
@@ -23,7 +27,6 @@
 {
     self = [super init];
     
-    _name = @"untitled";
     _intervals = [[NSMutableArray alloc] initWithCapacity:20];
     WorkoutInterval * firstInterval = [[WorkoutInterval alloc] initForWorkout:self];
     firstInterval.speed = SLOW;
@@ -31,7 +34,7 @@
     
     [self.intervals addObject:firstInterval];
     [self recalculate];
-    
+    self.changeActions = [[NSMutableArray alloc] initWithCapacity:2];
     
     return self;
 }
@@ -48,6 +51,7 @@
         NSDictionary * intervalDict =  (NSDictionary *) obj;
         [self.intervals addObject:[[WorkoutInterval alloc] initFromDict:intervalDict forWorkout:self]];
     }];
+    self.changeActions = [[NSMutableArray alloc] initWithCapacity:2];
     return self;
 }
 
@@ -90,7 +94,9 @@
 
 -(void) save
 {
-    [self saveAs:self.name];
+    if (self.name) {
+        [self saveAs:self.name];
+    }
 }
 -(void) saveAs:(NSString *)workoutName
 {
@@ -124,6 +130,7 @@
     
     
     [self recalculate];
+    
     [self save];
     return interval;
     
@@ -166,5 +173,15 @@
 {
     [self recalculate];
     [self save];
+    __weak typeof(self) weakSelf = self;
+    [self.changeActions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        void (^action)(Workout *) =  (void (^)(Workout *)) obj;
+        action(weakSelf);
+    }];
+}
+
+-(void) addChangeAction:(void (^)(Workout *))changeAction
+{
+    [self.changeActions addObject:[changeAction copy]];
 }
 @end

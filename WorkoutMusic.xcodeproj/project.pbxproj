@@ -46,6 +46,11 @@
 		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
 		52DB39A417E229E400800260 /* retract.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DB39A217E229E400800260 /* retract.png */; };
 		52DB39A517E229E400800260 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DB39A317E229E400800260 /* expand.png */; };
+		6307EE12183164130034D0CB /* TimePickerVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE10183164130034D0CB /* TimePickerVCViewController.m */; };
+		6307EE13183164130034D0CB /* TimePickerVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6307EE11183164130034D0CB /* TimePickerVCViewController.xib */; };
+		6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE15183184BF0034D0CB /* TimeLabel.m */; };
+		6307EE19183190870034D0CB /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE18183190870034D0CB /* FXBlurView.m */; };
+		6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6307EE1A183193290034D0CB /* Accelerate.framework */; };
 		E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E509411C1709DD25000AC071 /* NSObject+SBJson.m */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
@@ -168,6 +173,14 @@
 		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
 		52DB39A217E229E400800260 /* retract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retract.png; path = images/retract.png; sourceTree = "<group>"; };
 		52DB39A317E229E400800260 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = expand.png; path = images/expand.png; sourceTree = "<group>"; };
+		6307EE0F183164130034D0CB /* TimePickerVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerVCViewController.h; sourceTree = "<group>"; };
+		6307EE10183164130034D0CB /* TimePickerVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerVCViewController.m; sourceTree = "<group>"; };
+		6307EE11183164130034D0CB /* TimePickerVCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerVCViewController.xib; sourceTree = "<group>"; };
+		6307EE14183184BF0034D0CB /* TimeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeLabel.h; sourceTree = "<group>"; };
+		6307EE15183184BF0034D0CB /* TimeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeLabel.m; sourceTree = "<group>"; };
+		6307EE17183190870034D0CB /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		6307EE18183190870034D0CB /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		6307EE1A183193290034D0CB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		E509411B1709DD25000AC071 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		E509411C1709DD25000AC071 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
@@ -254,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */,
 				E50E97ED171D5F2800BA1A6E /* libechonest.a in Frameworks */,
 				E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */,
 				52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */,
@@ -328,6 +342,8 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
+				6307EE17183190870034D0CB /* FXBlurView.h */,
+				6307EE18183190870034D0CB /* FXBlurView.m */,
 				E5D77C2F182C09E2000BBFE4 /* Solution.h */,
 				E5D77C30182C09E2000BBFE4 /* Solution.m */,
 				E5D77C2C182BEC28000BBFE4 /* WorkoutIntervalPicker.h */,
@@ -343,6 +359,9 @@
 				E5113E761724175800A52F5A /* background@2x.png */,
 				E50E97EC171D5F2800BA1A6E /* libechonest.a */,
 				E5754ABB170A1E9300998E1D /* ListPickerViewController.h */,
+				6307EE0F183164130034D0CB /* TimePickerVCViewController.h */,
+				6307EE10183164130034D0CB /* TimePickerVCViewController.m */,
+				6307EE11183164130034D0CB /* TimePickerVCViewController.xib */,
 				E5754ABC170A1E9400998E1D /* ListPickerViewController.m */,
 				E50C233F17008E8E00BEA02C /* WorkoutTimeSetSegue.h */,
 				E50C234017008E8E00BEA02C /* WorkoutTimeSetSegue.m */,
@@ -378,6 +397,7 @@
 		5271505A1651DF0200111078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6307EE1A183193290034D0CB /* Accelerate.framework */,
 				52449EDE1667E523000A146F /* MediaPlayer.framework */,
 				5271505B1651DF0200111078 /* UIKit.framework */,
 				5271505D1651DF0200111078 /* Foundation.framework */,
@@ -521,6 +541,8 @@
 				E5D77C26182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib */,
 				E5C452A8182991210073A8B3 /* WorkoutDesignerVC.h */,
 				E5C452AA182991210073A8B3 /* WorkoutDesignerVC.m */,
+				6307EE14183184BF0034D0CB /* TimeLabel.h */,
+				6307EE15183184BF0034D0CB /* TimeLabel.m */,
 				E5C452A6182991210073A8B3 /* IntervalCell.h */,
 				E5C452A7182991210073A8B3 /* IntervalCell.m */,
 			);
@@ -650,6 +672,7 @@
 				E5205DB716C7F40500EDD1DA /* workoutmusic.storyboard in Resources */,
 				E553399316EA115F00255C67 /* FastThenSlow.png in Resources */,
 				E553399416EA115F00255C67 /* Pyramid.png in Resources */,
+				6307EE13183164130034D0CB /* TimePickerVCViewController.xib in Resources */,
 				E553399516EA115F00255C67 /* SlowToFast.png in Resources */,
 				52DB39A417E229E400800260 /* retract.png in Resources */,
 				E5CD0D2B16EBC80B00332141 /* note.jpeg in Resources */,
@@ -706,6 +729,7 @@
 				527150781651DF0300111078 /* workoutmusicFirstViewController.m in Sources */,
 				5271507F1651DF0300111078 /* CategorizedVC.m in Sources */,
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
+				6307EE12183164130034D0CB /* TimePickerVCViewController.m in Sources */,
 				E5C452A3182990E60073A8B3 /* WorkoutGraph.m in Sources */,
 				52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */,
 				E5D77C27182AEC0E000BBFE4 /* SecondsPickerVCViewController.m in Sources */,
@@ -729,6 +753,8 @@
 				E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */,
 				E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */,
 				E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */,
+				6307EE19183190870034D0CB /* FXBlurView.m in Sources */,
+				6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */,
 				E5C452AF182991210073A8B3 /* WorkoutDesignerVC.m in Sources */,
 				E50C234C1700CB6B00BEA02C /* WorkoutsPickerViewDataSource.m in Sources */,
 				E50C235117012A2300BEA02C /* WorkoutTypePickerViewController.m in Sources */,

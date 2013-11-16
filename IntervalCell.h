@@ -10,19 +10,24 @@
 #import "Workout.h"
 #import "WorkoutInterval.h"
 #import "WorkoutIntervalPicker.h"
-@interface IntervalCell : UITableViewCell <UITextFieldDelegate, UIPickerViewDataSource>
-@property (weak, nonatomic) IBOutlet UITextField *timeField;
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+#import "WorkoutDesignerVC.h"
+#import "TimeLabel.h"
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *speedControl;
+@interface IntervalCell : UITableViewCell <UITextFieldDelegate, UIPickerViewDataSource>
+
+@property (strong, nonatomic) IBOutlet TimeLabel *timeLabel;
+
+
 @property (readwrite, assign) BOOL isSelected;
 
 @property (weak, nonatomic) WorkoutInterval * workoutInterval;
 @property (strong, nonatomic) IBOutlet UIView *timeView;
 
-@property (strong, nonatomic) IBOutlet WorkoutIntervalPicker *timePicker;
+
 @property (nonatomic, assign) NSInteger seconds; 
 @property (strong, nonatomic) IBOutlet UISlider *tempoSlider;
+@property (nonatomic, strong) WorkoutDesignerVC * parent;
+
 -(void) selectCell;
 -(void) deselectCell; 
 @end

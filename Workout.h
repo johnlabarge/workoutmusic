@@ -20,5 +20,6 @@
 -(void) recalculate;
 -(void) save;
 -(void) renameFile:(NSString *)newName;
--(void) intervalChanged:(WorkoutInterval *)sender; 
+-(void) intervalChanged:(WorkoutInterval *)sender;
+-(void) addChangeAction:(void(^)(Workout * changedWorkout))changeAction;
 @end

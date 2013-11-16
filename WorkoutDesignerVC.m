@@ -11,6 +11,7 @@
 #import "WorkoutInterval.h"
 #import "IntervalCell.h"
 #import "WorkoutIntervalPicker.h"
+#import "TimePickerVCViewController.h"
 
 @interface WorkoutDesignerVC ()
 @property WorkoutInterval * selectedInterval;
@@ -18,6 +19,7 @@
 @property NSIndexPath * selectedIndexPath;
 @property IntervalCell * selectedCell;
 @property UITextField * editingField;
+@property TimePickerVCViewController * presentedTimePicker;
 @end
 
 @implementation WorkoutDesignerVC
@@ -52,7 +54,10 @@
     
     [self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
     [self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
-    
+    __weak typeof(self) weakSelf = self;
+    [self.model addChangeAction:^(Workout *changedWorkout) {
+        [weakSelf.intervalsTable reloadData];
+    }];
     self.workoutGraph.workout = self.model;
     
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -101,12 +106,8 @@
    WorkoutInterval * interval = (WorkoutInterval *)[self.model.intervals objectAtIndex:[indexPath indexAtPosition:1]];
     
     cell.workoutInterval = interval;
-
-    cell.timePicker.dataSource = self;
-    cell.timePicker.delegate = self;
-    [cell.timePicker reloadAllComponents];
-    cell.seconds = interval.intervalSeconds;
-    
+    cell.timeLabel.seconds = interval.intervalSeconds;
+    cell.parent = self; 
     //cell.timePicker.hidden = YES;
     
     return cell;
@@ -146,8 +147,10 @@
 {
     IntervalCell * cell = (IntervalCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     self.selectedInterval = cell.workoutInterval;
+    
     self.selectedIndexPath = indexPath;
     self.selectedCell = cell;
+    
     
 }
 - (IBAction)deleteInterval:(id)sender {
@@ -171,37 +174,20 @@
     //[self.intervalsTable setContentOffset:CGPointMake(0,0.0)];
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+-(void) presentTimePickerForInterval:(WorkoutInterval *)interval
 {
-    NSLog(@"number of ComponentsInPickerView");
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    NSLog(@"numberOfRowsInComponent");
-    return 60;
+    TimePickerVCViewController * timePicker = [[TimePickerVCViewController alloc] initWithNibName:@"TimePickerVCViewController" bundle:nil];
+    timePicker.interval = interval;
+    timePicker.selectedSeconds  = interval.intervalSeconds;
+    self.presentedTimePicker = timePicker;
+    self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);
+    self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
+    timePicker.blurView.blurRadius = 15.0; 
+    [self.view addSubview:timePicker.blurView];
+    
+    [self.view addSubview:self.presentedTimePicker.view];
 }
 
-
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
-    NSLog(@"titleForRow");
-    
-    NSInteger seconds = (row+1)*10;
-    NSInteger minutes = seconds/60;
-    NSInteger leftOverSeconds = seconds-(minutes*60);
-    
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:15.0];
-    label.text  = [NSString stringWithFormat:@"%d min %ds", minutes, leftOverSeconds];
-    label.textAlignment = NSTextAlignmentCenter;
-    return label;
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    WorkoutIntervalPicker * wop = (WorkoutIntervalPicker *)pickerView;
-    wop.interval.intervalSeconds = [wop selectedRowInComponent:0];
-}
+ 
 
 @end
