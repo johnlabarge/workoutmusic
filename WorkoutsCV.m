@@ -9,6 +9,7 @@
 #import "WorkoutsCV.h"
 #import "WorkoutsCVC.h"
 #import "Workouts.h"
+#import "IndividualWorkout.h"
 
 @interface WorkoutsCV ()
 
@@ -90,6 +91,9 @@
     Workout * workout = [self workoutForIndexPath: indexPath];
     NSLog(@"workout %@ selected.", workout.name);*/
     self.selectedWorkout = [self workoutForIndexPath:indexPath];
+    //WorkoutsCVC * cell = [(WorkoutsCVC *) collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"individualWorkout" sender:self];
     [self.collectionView reloadData];
     //[[Model sharedInstance] placeOrder:drink];
 }
@@ -106,5 +110,13 @@
 - (UIEdgeInsets)collectionView:
 (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(50, 20, 50, 20);
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"individualWorkout"]) {
+        IndividualWorkout * iworkoutVC = (IndividualWorkout *) segue.destinationViewController;
+        iworkoutVC.workout = self.selectedWorkout;
+    }
 }
 @end

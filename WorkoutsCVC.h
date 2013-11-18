@@ -15,5 +15,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 -(void) highlight;
--(void) unhlighlight; 
+-(void) unhighlight;
 @end

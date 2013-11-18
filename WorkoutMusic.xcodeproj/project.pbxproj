@@ -51,6 +51,8 @@
 		6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE15183184BF0034D0CB /* TimeLabel.m */; };
 		6307EE19183190870034D0CB /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE18183190870034D0CB /* FXBlurView.m */; };
 		6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6307EE1A183193290034D0CB /* Accelerate.framework */; };
+		6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE1D183828BE0034D0CB /* IndividualWorkout.m */; };
+		6307EE21183839D60034D0CB /* EditWorkoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE20183839D60034D0CB /* EditWorkoutSegue.m */; };
 		E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E509411C1709DD25000AC071 /* NSObject+SBJson.m */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
@@ -181,6 +183,10 @@
 		6307EE17183190870034D0CB /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		6307EE18183190870034D0CB /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		6307EE1A183193290034D0CB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		6307EE1C183828BE0034D0CB /* IndividualWorkout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualWorkout.h; sourceTree = "<group>"; };
+		6307EE1D183828BE0034D0CB /* IndividualWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualWorkout.m; sourceTree = "<group>"; };
+		6307EE1F183839D60034D0CB /* EditWorkoutSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditWorkoutSegue.h; sourceTree = "<group>"; };
+		6307EE20183839D60034D0CB /* EditWorkoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditWorkoutSegue.m; sourceTree = "<group>"; };
 		E509411B1709DD25000AC071 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		E509411C1709DD25000AC071 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
@@ -545,6 +551,8 @@
 				6307EE15183184BF0034D0CB /* TimeLabel.m */,
 				E5C452A6182991210073A8B3 /* IntervalCell.h */,
 				E5C452A7182991210073A8B3 /* IntervalCell.m */,
+				6307EE1F183839D60034D0CB /* EditWorkoutSegue.h */,
+				6307EE20183839D60034D0CB /* EditWorkoutSegue.m */,
 			);
 			name = WorkoutDesigner;
 			sourceTree = "<group>";
@@ -568,6 +576,8 @@
 				E5C45294182990E60073A8B3 /* WorkoutCVC.xib */,
 				E5C45295182990E60073A8B3 /* WorkoutsCV.h */,
 				E5C45296182990E60073A8B3 /* WorkoutsCV.m */,
+				6307EE1C183828BE0034D0CB /* IndividualWorkout.h */,
+				6307EE1D183828BE0034D0CB /* IndividualWorkout.m */,
 				E5C45297182990E60073A8B3 /* WorkoutsCVC.h */,
 				E5C45298182990E60073A8B3 /* WorkoutsCVC.m */,
 			);
@@ -742,6 +752,7 @@
 				E5C452AD182991210073A8B3 /* IntervalCell.m in Sources */,
 				E580F67216C7F37900E8AD5A /* TransitionController.m in Sources */,
 				E5CD0D3116EBCBF000332141 /* TransitionSegue.m in Sources */,
+				6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */,
 				E5DDAC8216F4F3470042D146 /* NSArray+Shuffle.m in Sources */,
 				E5D77C31182C09E2000BBFE4 /* Solution.m in Sources */,
 				E5C452B0182991210073A8B3 /* WorkoutInterval.m in Sources */,
@@ -754,6 +765,7 @@
 				E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */,
 				E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */,
 				6307EE19183190870034D0CB /* FXBlurView.m in Sources */,
+				6307EE21183839D60034D0CB /* EditWorkoutSegue.m in Sources */,
 				6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */,
 				E5C452AF182991210073A8B3 /* WorkoutDesignerVC.m in Sources */,
 				E50C234C1700CB6B00BEA02C /* WorkoutsPickerViewDataSource.m in Sources */,

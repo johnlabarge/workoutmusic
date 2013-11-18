@@ -60,17 +60,17 @@
 {
     NSLog(@"changing name from %@ to %@", _name, name);
     if (![name isEqualToString:_name]) {
+        _name = name;
         NSError * error;
         NSFileManager *fileMgr = [NSFileManager defaultManager];
         if ([fileMgr fileExistsAtPath:[Workout pathToWorkout:_name]]) {
             NSLog(@"Saving with name: %@",_name); 
             [[NSFileManager defaultManager] removeItemAtPath:[Workout pathToWorkout:self.name] error:&error];
-            _name = name;
             if (error) {
                 NSLog(@" couldn't remove old file..");
             }
-            [self save];
         }
+        [self save];
     }
    
 }
@@ -95,6 +95,7 @@
 -(void) save
 {
     if (self.name) {
+        
         [self saveAs:self.name];
     }
 }

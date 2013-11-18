@@ -47,7 +47,9 @@
     /*
       TODO handle editing an existing 
      */
-    self.model  = [[Workout alloc] init];
+    if (self.model == nil) {
+        self.model  = [[Workout alloc] init];
+    }
     self.nameField.text = self.model.name;
     [[self.model.intervals objectAtIndex:0] addObserver:self forKeyPath:@"speed"  options:NSKeyValueObservingOptionNew context:NULL];
     
