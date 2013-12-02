@@ -11,11 +11,9 @@
 #import "MusicBPMEntry.h"
 #import "NSArray+Shuffle.h"
 #import "ENAPI.h"
+#import "Tempo.h"
 
-#define SLOW @"slow"
-#define MEDIUM @"medium"
-#define MEDIUMFAST @"mediumFast"
-#define FAST @"fast"
+
 #define APPROX_TIME @"approxTime"
 #define TEMPO @"tempo"
 #define DESC @"description"
@@ -64,22 +62,17 @@
 - (void)requestFinished:(ENAPIRequest *)request;
 - (void)requestFailed:(ENAPIRequest *)request;
 - (void)filterWithMin:(NSInteger)min andMax:(NSInteger)max;
-- (void) slowFilter;
-- (void) mediumFilter;
-- (void) medFastFilter; 
-- (void) fastFilter; 
 - (void)unfilter;
-- (NSArray *) createPyramid:(NSInteger)approxTime;
-- (NSArray *) createSlowToFast:(NSInteger) approxTime;
-- (NSArray *) createFastToSlow:(NSInteger) approxTime;
+
+/**
+ * random MusicLibraryItems
+ */
+
+-(NSArray *) randomItemsForTempo:(NSInteger)tempo andDuration:(NSInteger)seconds;
 
 @end
 
-@interface MusicLibraryItem : NSObject <NSCopying> {
-    
-    MPMediaItem * mediaItem;
-    double bpm;
-}
+@interface MusicLibraryItem : NSObject <NSCopying>
 -(id) initWithMediaItem:(MPMediaItem *)theMediaItem;
 -(id) copyWithZone:(NSZone *)zone;
 @property double bpm;
@@ -87,4 +80,5 @@
 @property (nonatomic, strong) NSString * intervalDescription;  /* these properties on the item object.*/
 @property (nonatomic, strong) NSString * tempoClassificaiton;
 @property (nonatomic, assign) NSInteger intervalIndex;
+@property (readonly) NSInteger durationInSeconds; 
 @end;

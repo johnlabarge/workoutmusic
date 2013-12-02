@@ -52,7 +52,14 @@
 		6307EE19183190870034D0CB /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE18183190870034D0CB /* FXBlurView.m */; };
 		6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6307EE1A183193290034D0CB /* Accelerate.framework */; };
 		6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE1D183828BE0034D0CB /* IndividualWorkout.m */; };
-		6307EE21183839D60034D0CB /* EditWorkoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE20183839D60034D0CB /* EditWorkoutSegue.m */; };
+		6307EE21183839D60034D0CB /* DismissAndPushSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE20183839D60034D0CB /* DismissAndPushSegue.m */; };
+		631606F0183E4E79008C64E5 /* WorkoutListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 631606EF183E4E79008C64E5 /* WorkoutListItem.m */; };
+		63197C411848C8710004F7E0 /* SongInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C401848C8710004F7E0 /* SongInstruction.m */; };
+		63197C44184A5BDA0004F7E0 /* StartWorkoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C43184A5BDA0004F7E0 /* StartWorkoutSegue.m */; };
+		63197C47184A5CA10004F7E0 /* WorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C46184A5CA10004F7E0 /* WorkoutViewController.m */; };
+		63197C49184BB5A50004F7E0 /* Tempo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C48184BB5A50004F7E0 /* Tempo.m */; };
+		63197C4B184BB6620004F7E0 /* WorkoutListItemCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */; };
+		63197C51184BBA080004F7E0 /* WorkoutListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */; };
 		E50941341709DD25000AC071 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E509411C1709DD25000AC071 /* NSObject+SBJson.m */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
@@ -96,7 +103,6 @@
 		E5D77C27182AEC0E000BBFE4 /* SecondsPickerVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D77C25182AEC0E000BBFE4 /* SecondsPickerVCViewController.m */; };
 		E5D77C28182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5D77C26182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib */; };
 		E5D77C2E182BEC28000BBFE4 /* WorkoutIntervalPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D77C2D182BEC28000BBFE4 /* WorkoutIntervalPicker.m */; };
-		E5D77C31182C09E2000BBFE4 /* Solution.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D77C30182C09E2000BBFE4 /* Solution.m */; };
 		E5DDAC8216F4F3470042D146 /* NSArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDAC8116F4F3470042D146 /* NSArray+Shuffle.m */; };
 		E5DDAC8616F6490A0042D146 /* WorkoutTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDAC8516F6490A0042D146 /* WorkoutTimeViewController.m */; };
 		E5DDAC8D16F664F50042D146 /* WorkoutList.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDAC8C16F664F40042D146 /* WorkoutList.m */; };
@@ -185,8 +191,21 @@
 		6307EE1A183193290034D0CB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		6307EE1C183828BE0034D0CB /* IndividualWorkout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualWorkout.h; sourceTree = "<group>"; };
 		6307EE1D183828BE0034D0CB /* IndividualWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualWorkout.m; sourceTree = "<group>"; };
-		6307EE1F183839D60034D0CB /* EditWorkoutSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditWorkoutSegue.h; sourceTree = "<group>"; };
-		6307EE20183839D60034D0CB /* EditWorkoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditWorkoutSegue.m; sourceTree = "<group>"; };
+		6307EE1F183839D60034D0CB /* DismissAndPushSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissAndPushSegue.h; sourceTree = "<group>"; };
+		6307EE20183839D60034D0CB /* DismissAndPushSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissAndPushSegue.m; sourceTree = "<group>"; };
+		631606EE183E4E79008C64E5 /* WorkoutListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutListItem.h; sourceTree = "<group>"; };
+		631606EF183E4E79008C64E5 /* WorkoutListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutListItem.m; sourceTree = "<group>"; };
+		631606F1183E7106008C64E5 /* Tempo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tempo.h; sourceTree = "<group>"; };
+		63197C3F1848C8710004F7E0 /* SongInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongInstruction.h; sourceTree = "<group>"; };
+		63197C401848C8710004F7E0 /* SongInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongInstruction.m; sourceTree = "<group>"; };
+		63197C42184A5BDA0004F7E0 /* StartWorkoutSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartWorkoutSegue.h; sourceTree = "<group>"; };
+		63197C43184A5BDA0004F7E0 /* StartWorkoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartWorkoutSegue.m; sourceTree = "<group>"; };
+		63197C45184A5CA10004F7E0 /* WorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutViewController.h; sourceTree = "<group>"; };
+		63197C46184A5CA10004F7E0 /* WorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutViewController.m; sourceTree = "<group>"; };
+		63197C48184BB5A50004F7E0 /* Tempo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tempo.m; sourceTree = "<group>"; };
+		63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkoutListItemCells.xib; sourceTree = "<group>"; };
+		63197C4F184BBA080004F7E0 /* WorkoutListItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutListItemCell.h; sourceTree = "<group>"; };
+		63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutListItemCell.m; sourceTree = "<group>"; };
 		E509411B1709DD25000AC071 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		E509411C1709DD25000AC071 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
@@ -252,8 +271,6 @@
 		E5D77C26182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondsPickerVCViewController.xib; sourceTree = "<group>"; };
 		E5D77C2C182BEC28000BBFE4 /* WorkoutIntervalPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutIntervalPicker.h; sourceTree = "<group>"; };
 		E5D77C2D182BEC28000BBFE4 /* WorkoutIntervalPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutIntervalPicker.m; sourceTree = "<group>"; };
-		E5D77C2F182C09E2000BBFE4 /* Solution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Solution.h; sourceTree = "<group>"; };
-		E5D77C30182C09E2000BBFE4 /* Solution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Solution.m; sourceTree = "<group>"; };
 		E5DDAC8016F4F3470042D146 /* NSArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Shuffle.h"; sourceTree = "<group>"; };
 		E5DDAC8116F4F3470042D146 /* NSArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Shuffle.m"; sourceTree = "<group>"; };
 		E5DDAC8416F6490A0042D146 /* WorkoutTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutTimeViewController.h; sourceTree = "<group>"; };
@@ -340,7 +357,6 @@
 				E553399216EA115F00255C67 /* SlowToFast.png */,
 				E580F66616C7F24A00E8AD5A /* runner.png */,
 				52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */,
-				522E6F601667EFCB0036C5DA /* SongTableCell.xib */,
 			);
 			name = interface;
 			sourceTree = "<group>";
@@ -348,10 +364,10 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
+				63197C52184BBBC70004F7E0 /* WorkoutVC */,
+				631606F1183E7106008C64E5 /* Tempo.h */,
 				6307EE17183190870034D0CB /* FXBlurView.h */,
 				6307EE18183190870034D0CB /* FXBlurView.m */,
-				E5D77C2F182C09E2000BBFE4 /* Solution.h */,
-				E5D77C30182C09E2000BBFE4 /* Solution.m */,
 				E5D77C2C182BEC28000BBFE4 /* WorkoutIntervalPicker.h */,
 				E5D77C2D182BEC28000BBFE4 /* WorkoutIntervalPicker.m */,
 				E5C452B1182991270073A8B3 /* Model */,
@@ -372,8 +388,6 @@
 				E50C233F17008E8E00BEA02C /* WorkoutTimeSetSegue.h */,
 				E50C234017008E8E00BEA02C /* WorkoutTimeSetSegue.m */,
 				E50C233A16FE791400BEA02C /* ViewControllers */,
-				E5DDAC8B16F664F40042D146 /* WorkoutList.h */,
-				E5DDAC8C16F664F40042D146 /* WorkoutList.m */,
 				E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */,
 				526425771672B360000D6C01 /* interface */,
 				52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */,
@@ -382,8 +396,6 @@
 				524B970316691AD4003E39B6 /* AVFoundation.framework */,
 				524B970116691ABC003E39B6 /* CFNetwork.framework */,
 				522E6F76166919C90036C5DA /* ENAPI */,
-				522E6F5D1667EFAF0036C5DA /* SongTableCell.h */,
-				522E6F5E1667EFAF0036C5DA /* SongTableCell.m */,
 				527150611651DF0200111078 /* WorkoutMusic */,
 				527150901651DF0300111078 /* WorkoutMusicTests */,
 				5271505A1651DF0200111078 /* Frameworks */,
@@ -435,6 +447,8 @@
 				523F8F721671827000251C91 /* FilterView.xib */,
 				E5DDAC8016F4F3470042D146 /* NSArray+Shuffle.h */,
 				E5DDAC8116F4F3470042D146 /* NSArray+Shuffle.m */,
+				631606EE183E4E79008C64E5 /* WorkoutListItem.h */,
+				631606EF183E4E79008C64E5 /* WorkoutListItem.m */,
 			);
 			path = WorkoutMusic;
 			sourceTree = "<group>";
@@ -474,6 +488,21 @@
 				527150931651DF0300111078 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		63197C52184BBBC70004F7E0 /* WorkoutVC */ = {
+			isa = PBXGroup;
+			children = (
+				522E6F5D1667EFAF0036C5DA /* SongTableCell.h */,
+				522E6F5E1667EFAF0036C5DA /* SongTableCell.m */,
+				522E6F601667EFCB0036C5DA /* SongTableCell.xib */,
+				63197C45184A5CA10004F7E0 /* WorkoutViewController.h */,
+				63197C46184A5CA10004F7E0 /* WorkoutViewController.m */,
+				63197C4F184BBA080004F7E0 /* WorkoutListItemCell.h */,
+				63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */,
+				63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */,
+			);
+			name = WorkoutVC;
 			sourceTree = "<group>";
 		};
 		E509411A1709DD25000AC071 /* JSON */ = {
@@ -551,8 +580,11 @@
 				6307EE15183184BF0034D0CB /* TimeLabel.m */,
 				E5C452A6182991210073A8B3 /* IntervalCell.h */,
 				E5C452A7182991210073A8B3 /* IntervalCell.m */,
-				6307EE1F183839D60034D0CB /* EditWorkoutSegue.h */,
-				6307EE20183839D60034D0CB /* EditWorkoutSegue.m */,
+				6307EE1F183839D60034D0CB /* DismissAndPushSegue.h */,
+				63197C42184A5BDA0004F7E0 /* StartWorkoutSegue.h */,
+				63197C43184A5BDA0004F7E0 /* StartWorkoutSegue.m */,
+				63197C48184BB5A50004F7E0 /* Tempo.m */,
+				6307EE20183839D60034D0CB /* DismissAndPushSegue.m */,
 			);
 			name = WorkoutDesigner;
 			sourceTree = "<group>";
@@ -560,6 +592,10 @@
 		E5C452B1182991270073A8B3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E5DDAC8B16F664F40042D146 /* WorkoutList.h */,
+				E5DDAC8C16F664F40042D146 /* WorkoutList.m */,
+				63197C3F1848C8710004F7E0 /* SongInstruction.h */,
+				63197C401848C8710004F7E0 /* SongInstruction.m */,
 				E5C45299182990E60073A8B3 /* Workouts.h */,
 				E5C4529A182990E60073A8B3 /* Workouts.m */,
 				E5C4529C182990E60073A8B3 /* Workout.m */,
@@ -663,6 +699,7 @@
 			files = (
 				E5C452AE182991210073A8B3 /* intervalcell.xib in Resources */,
 				527150661651DF0200111078 /* InfoPlist.strings in Resources */,
+				63197C4B184BB6620004F7E0 /* WorkoutListItemCells.xib in Resources */,
 				5271506E1651DF0200111078 /* Default.png in Resources */,
 				527150701651DF0200111078 /* Default@2x.png in Resources */,
 				527150721651DF0300111078 /* Default-568h@2x.png in Resources */,
@@ -734,28 +771,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63197C51184BBA080004F7E0 /* WorkoutListItemCell.m in Sources */,
 				527150681651DF0200111078 /* main.m in Sources */,
 				5271506C1651DF0200111078 /* WOMusicAppDelegate.m in Sources */,
 				527150781651DF0300111078 /* workoutmusicFirstViewController.m in Sources */,
 				5271507F1651DF0300111078 /* CategorizedVC.m in Sources */,
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
 				6307EE12183164130034D0CB /* TimePickerVCViewController.m in Sources */,
+				631606F0183E4E79008C64E5 /* WorkoutListItem.m in Sources */,
 				E5C452A3182990E60073A8B3 /* WorkoutGraph.m in Sources */,
 				52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */,
 				E5D77C27182AEC0E000BBFE4 /* SecondsPickerVCViewController.m in Sources */,
 				522E6F5F1667EFAF0036C5DA /* SongTableCell.m in Sources */,
 				E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */,
+				63197C49184BB5A50004F7E0 /* Tempo.m in Sources */,
 				E5C452A0182990E60073A8B3 /* WorkoutsCV.m in Sources */,
+				63197C44184A5BDA0004F7E0 /* StartWorkoutSegue.m in Sources */,
 				E5C452A1182990E60073A8B3 /* WorkoutsCVC.m in Sources */,
 				E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */,
 				E580F67116C7F37900E8AD5A /* Splash.m in Sources */,
 				E5C452AD182991210073A8B3 /* IntervalCell.m in Sources */,
 				E580F67216C7F37900E8AD5A /* TransitionController.m in Sources */,
 				E5CD0D3116EBCBF000332141 /* TransitionSegue.m in Sources */,
+				63197C411848C8710004F7E0 /* SongInstruction.m in Sources */,
 				6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */,
 				E5DDAC8216F4F3470042D146 /* NSArray+Shuffle.m in Sources */,
-				E5D77C31182C09E2000BBFE4 /* Solution.m in Sources */,
 				E5C452B0182991210073A8B3 /* WorkoutInterval.m in Sources */,
+				63197C47184A5CA10004F7E0 /* WorkoutViewController.m in Sources */,
 				E5C452A4182990E60073A8B3 /* Workout.m in Sources */,
 				E5DDAC8616F6490A0042D146 /* WorkoutTimeViewController.m in Sources */,
 				E5DDAC8D16F664F50042D146 /* WorkoutList.m in Sources */,
@@ -765,7 +807,7 @@
 				E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */,
 				E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */,
 				6307EE19183190870034D0CB /* FXBlurView.m in Sources */,
-				6307EE21183839D60034D0CB /* EditWorkoutSegue.m in Sources */,
+				6307EE21183839D60034D0CB /* DismissAndPushSegue.m in Sources */,
 				6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */,
 				E5C452AF182991210073A8B3 /* WorkoutDesignerVC.m in Sources */,
 				E50C234C1700CB6B00BEA02C /* WorkoutsPickerViewDataSource.m in Sources */,

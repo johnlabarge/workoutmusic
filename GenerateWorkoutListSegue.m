@@ -23,7 +23,7 @@
     WOMusicAppDelegate * app = [[UIApplication sharedApplication] delegate];
     SuperViewController * svc = (SuperViewController *) src;
     svc.workoutlist.workoutType = self.identifier;
-    
+    /*
     BOOL listGenerated = [svc.workoutlist generateList:^{
         
         NSLog(@"\n\n after generated!!");
@@ -40,7 +40,7 @@
                         completion:NULL];
         
     }];
-    
+    */
 
     
     

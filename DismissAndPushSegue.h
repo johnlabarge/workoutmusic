@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditWorkoutSegue : UIStoryboardSegue
+@interface DismissAndPushSegue : UIStoryboardSegue
 
 @end

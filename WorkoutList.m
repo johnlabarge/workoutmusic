@@ -8,80 +8,81 @@
 
 #import "WorkoutList.h"
 #import "MusicLibraryBPMs.h"
-
+#import "Workout.h"
+#import "WorkoutListItem.h"
 @implementation WorkoutList
+
+
++(id) setInstance:(id)instance
+{
+    static id myInstance;
+    if (instance != nil) {
+        myInstance = instance;
+    }
+    return myInstance;
+}
+
++(id) sharedInstance
+{
+    return [self setInstance:nil];
+}
+
++(id) instantiateForLibrary:(MusicLibraryBPMs *)library {
+    static dispatch_once_t once;
+    static id sharedInstnace;
+    dispatch_once(&once, ^{
+        sharedInstnace = [[self alloc] initWithLibrary:library];
+    });
+    return sharedInstnace;
+}
+
 
 -(id) initWithLibrary:(MusicLibraryBPMs *) library {
     self.bpmLibrary = library;
     listmakerqueue = dispatch_queue_create("listmaker",NULL);
     return self;
 }
--(BOOL) generateList:(void(^)(void))afterGenerated {
-    
-    BOOL generated = NO;
-    NSLog(@"\n\n\n\n generate list");
-    __block WorkoutList * me = self;
-    if (self.workoutTime.intValue >= 300) {
-       
-        /*
-         * TODO: clean this up, should be able to have a workout type spec storage.
-         */
-        if ([self.workoutType isEqualToString:@"pyramid"]) {
-           
-            dispatch_async(listmakerqueue, ^{
-                NSLog(@"creating pyramid");
-                NSArray * workoutSongs = [self.bpmLibrary createPyramid:self.workoutTime.intValue];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                     me.intervals = self.bpmLibrary.pyramidIntervals;
-                    [me calculateActualTime:workoutSongs];
-                    me.workoutSongs = workoutSongs;
-                    afterGenerated();
-               
-                });
-            });
-            generated  = YES;
-        } else if ([self.workoutType isEqualToString:@"fastToSlow"]) {
-            dispatch_async(listmakerqueue, ^{
-                NSLog(@"creating fasttoslow");
-                NSArray * workoutSongs = [self.bpmLibrary createFastToSlow:self.workoutTime.intValue];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [me calculateActualTime:workoutSongs];
-                    me.intervals = self.bpmLibrary.fastToSlowIntervals;
-                    me.workoutSongs = workoutSongs;
-                    afterGenerated();
-               
-                });
-            });
-            generated = YES;
-        } else if ([self.workoutType isEqualToString:@"slowToFast"]) {
-            dispatch_async(listmakerqueue, ^{
-            NSLog(@"creating slowToFast");
-            NSArray * workoutSongs = [self.bpmLibrary createSlowToFast:self.workoutTime.intValue];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                    [me calculateActualTime:workoutSongs];
-                     me.intervals = self.bpmLibrary.slowToFastIntervals;
-                     me.workoutSongs = workoutSongs;
-                     afterGenerated();
-               
-                });
-            });
-            generated = YES;
-        }
-    }
-    return generated;
 
+-(BOOL) generateListForWorkout:(Workout *) workout afterGenerated:(void(^)(void))after
+{
+    __weak typeof(self) me = self;
+    dispatch_async(listmakerqueue, ^{
+        NSMutableArray  * listItems = [[NSMutableArray alloc] initWithCapacity:self.workout.intervals.count];
+        [self.workout.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            WorkoutInterval * interval = (WorkoutInterval *) obj;
+            WorkoutListItem * listItem = [[WorkoutListItem alloc] initWithInterval:interval];
+            
+            NSArray * musicItems = [self.bpmLibrary randomItemsForTempo:interval.speed andDuration:interval.intervalSeconds];
+            if (musicItems.count > 0) {
+                NSInteger secondsPerSong = interval.intervalSeconds/musicItems.count;
+               [musicItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    [listItem addSongInstruction:[self songInstructionForSeconds:secondsPerSong ofMusicItem:(MusicLibraryItem *)obj]];
+                }];
+                [listItems addObject:listItem];
+            }
+            
+            
+        }];
+        self.workoutListItems = listItems;
+        
+        after();
+        
+    });
+    return YES;
 }
 
--(void) calculateActualTime:(NSArray *)songs
+-(SongInstruction *) songInstructionForSeconds:(NSInteger)seconds ofMusicItem:(MusicLibraryItem *)item
 {
-    __block NSInteger totalTime = 0;
-    [songs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MusicLibraryItem * item = (MusicLibraryItem *) obj;
-        totalTime += [[item.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue];
-        NSLog(@"total time: %d", totalTime);
-    }];
-    self.actualWorkoutTime = [NSNumber numberWithInt:totalTime];
-    NSLog(@"actualWorkoutTime:%d", self.actualWorkoutTime.intValue);
+    NSInteger middle =item.durationInSeconds/2;
+    NSInteger halfTime = seconds/2;
+    NSInteger theStart = middle-halfTime;
+    NSInteger theEnd = middle+halfTime;
+    return [[SongInstruction alloc] initWithMusicItem:item start:theStart andEnd:theEnd];
+}
 
+-(NSArray *) songInstructionsForInterval:(NSInteger)interval
+{
+    WorkoutListItem * item = (WorkoutListItem *) [self.workoutListItems objectAtIndex:interval];
+    return item.songInstructions;
 }
 @end

@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Workout.h"
+#import "Tempo.h"
 
-#define SLOW 0
-#define MEDIUM 1
-#define FAST 2
-#define VERYFAST 3
+
 
 #define SLOWINTERVAL @"0"
 #define MEDIUMINTERVAL @"1"

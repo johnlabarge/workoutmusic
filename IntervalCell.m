@@ -77,7 +77,9 @@
 }
 - (IBAction)sliderChanged:(id)sender {
     NSLog(@"slider value=%.2f",self.tempoSlider.value);
+    
     NSInteger intVal = round(self.tempoSlider.value);
+    
     [self.tempoSlider setValue:intVal animated:NO];
     NSLog(@"slider int value=%d", intVal);
     self.workoutInterval.speed = intVal;

@@ -13,7 +13,7 @@
 #import "WorkoutDesignerVC.h"
 #import "TimeLabel.h"
 
-@interface IntervalCell : UITableViewCell <UITextFieldDelegate, UIPickerViewDataSource>
+@interface IntervalCell : UITableViewCell <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet TimeLabel *timeLabel;
 

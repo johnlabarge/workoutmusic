@@ -34,6 +34,7 @@
         } afterUpdatingItem:^(MusicLibraryItem *item) {
             NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         }];
+        [WorkoutList instantiateForLibrary:self.musicBPMLibrary];
          
        
         NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
@@ -44,7 +45,7 @@
     });
      [self splash];
     //dispatch_release(processqueue);
-    self.workout = [[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary];
+    self.workout = [WorkoutList sharedInstance];
     
     return YES;
    

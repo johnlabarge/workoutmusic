@@ -221,7 +221,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        NSArray * items = self.workoutlist.workoutSongs;
+        NSArray * items = self.workoutlist.workoutListItems;
         return [items count];
     }
     return 0;
@@ -240,7 +240,7 @@
 
     }
     
-    MusicLibraryItem * mlItem = [self.workoutlist.workoutSongs objectAtIndex:[indexPath indexAtPosition:1]];
+    MusicLibraryItem * mlItem = [self.workoutlist.workoutListItems objectAtIndex:[indexPath indexAtPosition:1]];
     MPMediaItem * song = mlItem.mediaItem;
     
     NSString * titleText = [song valueForProperty:MPMediaItemPropertyTitle];
@@ -303,7 +303,7 @@
 }
 -(void) updateIntervalText
 {
-    MusicLibraryItem * currentMLitem = (MusicLibraryItem *) [self.workoutlist.workoutSongs objectAtIndex:self.musicPlayerController.indexOfNowPlayingItem];
+    MusicLibraryItem * currentMLitem = (MusicLibraryItem *) [self.workoutlist.workoutListItems objectAtIndex:self.musicPlayerController.indexOfNowPlayingItem];
                                                              ;
    /* self.intervalLabel.text = [NSString stringWithFormat:@"Interval %d: %@",currentMLitem.intervalIndex+1, currentMLitem.intervalDescription];*/
     self.workoutGraph.currentInterval = currentMLitem.intervalIndex;
@@ -342,9 +342,9 @@
   
    // [self.musicPlayerController addObserver:self forKeyPath:@"nowPlayingItem" options:NSKeyValueObservingOptionNew context:nil];
     
-    NSMutableArray * playQueueArray = [[NSMutableArray alloc] initWithCapacity:self.workoutlist.workoutSongs.count ];
+    NSMutableArray * playQueueArray = [[NSMutableArray alloc] initWithCapacity:self.workoutlist.workoutListItems.count ];
     self.playQueueArray = playQueueArray; 
-    for (MusicLibraryItem * item in self.workoutlist.workoutSongs) {
+    for (MusicLibraryItem * item in self.workoutlist.workoutListItems) {
         NSLog(@"queuing songs....\n\n");
         NSLog(@"%@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         [playQueueArray addObject:item.mediaItem];

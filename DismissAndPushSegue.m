@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 John La Barge. All rights reserved.
 //
 
-#import "EditWorkoutSegue.h"
+#import "DismissAndPushSegue.h"
 #import "Workout.h"
 #import "IndividualWorkout.h"
 #import "WorkoutDesignerVC.h"
 
-@implementation EditWorkoutSegue
+@implementation DismissAndPushSegue
 -(void) perform
 {
     IndividualWorkout * iw = (IndividualWorkout *) self.sourceViewController;
