@@ -63,7 +63,7 @@
    }
 -(void) afterSplash
 {
-    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"workoutmusic" bundle:nil];
+  
     [self performSegueWithIdentifier:@"splashOut" sender:self];
 
     /*UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"workoutmusic" bundle:nil];

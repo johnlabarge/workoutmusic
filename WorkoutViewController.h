@@ -17,4 +17,5 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) IBOutlet WorkoutGraph *graph;
 @property (strong, nonatomic) IBOutlet UITableView *songTable;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end

@@ -250,7 +250,7 @@
     }
     
     cell.title.text = titleText;
-    cell.tempoClass.text = mlItem.tempoClassificaiton;
+    cell.tempoClass.text = mlItem.tempoClassification;
     cell.time.text =  [TimeUtils minutesColonSeconds:[[mlItem.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue]];
      MPMediaItemArtwork * artwork = [song valueForProperty:MPMediaItemPropertyArtwork];
      UIImage *albumArtworkImage = [artwork imageWithSize:CGSizeMake(100.0, 100.0)];

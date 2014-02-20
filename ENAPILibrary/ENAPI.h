@@ -1,8 +1,8 @@
 //
-//  ENSigner.h
+//  ENAPI.h
 //  libechonest
 //
-//  Copyright (c) 2011, tapsquare, llc. (http://www.tapsquare.com, art@tapsquare.com)
+//  Copyright (c) 2013, Echo Nest Corporation
 //  All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -28,13 +28,40 @@
 //  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import <Foundation/Foundation.h>
+#include "ENAPIRequest.h"
 
-@interface ENSigner : NSObject
+// License string constants
+extern NSString * const ENLicenseEchoSource;
+extern NSString * const ENLicenseAllRightsReserved;
+extern NSString * const ENLicenseCreativeCommonsBy_SA;
+extern NSString * const ENLicenseCreativeCommonsBy_NC;
+extern NSString * const ENLicenseCreativeCommonsBy_NC_ND;
+extern NSString * const ENLicenseCreativeCommonsBy_NC_SA;
+extern NSString * const ENLicenseCreativeCommonsBy_ND;
+extern NSString * const ENLicenseCreativeCommonsBy;
+extern NSString * const ENLicensePublicDomain;
+extern NSString * const ENLicenseUnknown;
 
-/**
- * Signs the text with HMAC-SHA1 algorithm and base64 encodes resulting string. 
- */
-+ (NSString *)signText:(NSString *)text WithKeyAndEncode:(NSString *)secret;
+// Sort string constants
+extern NSString * const ENSortFamiliarityAscending;
+extern NSString * const ENSortFamiliarityDescending;
+extern NSString * const ENSortHotttnesssAscending;
+extern NSString * const ENSortHotttnesssDescending;
+extern NSString * const ENSortWeight;
+extern NSString * const ENSortFrequency;
+
+NSString *ENGetStringRepresentationForObject(NSObject *obj);
+NSString *ENEscapeStringForURL (NSString *str);
+
+@interface ENAPI : NSObject
+
++ (NSString *)encodeObjectAsJSON:(NSObject *)object;
++ (NSString *)encodeDataAsJSON:(NSData *)data;
++ (NSString *)encodeArrayAsJSON:(NSArray *)array;
++ (NSDictionary *)parseJSONDataToDictionary:(NSData *)data;
++ (NSString *)encodeDictionaryAsQueryString:(NSDictionary *)dictionary;
++ (NSString *)calculateMD5DigestFromData:(NSData *)data;
++ (NSString *)signString:(NSString *)string andEncodeWithSecret:(NSString *)secret;
 
 @end
+

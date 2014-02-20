@@ -32,6 +32,7 @@
         [secondsArray addObject:[NSString stringWithFormat:@"%d", (i+1)*10]];
     }
     self.secondsArray = secondsArray;
+    return self;
 }
 - (void)viewDidLoad
 {

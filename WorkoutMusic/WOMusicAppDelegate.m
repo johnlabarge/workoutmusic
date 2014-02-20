@@ -22,7 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    WorkoutMusicSettings * settings = [WorkoutMusicSettings sharedInstance];
+   
     self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
 
     __block WOMusicAppDelegate * me = self;

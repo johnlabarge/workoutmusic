@@ -15,12 +15,10 @@
     
     
     UIViewController *src = (UIViewController *) self.sourceViewController;
-    PlayerViewController  * player = (PlayerViewController *) self.destinationViewController;
    // UIViewController *dst = (UIViewController *) self.destinationViewController;
     
     
     
-    WOMusicAppDelegate * app = [[UIApplication sharedApplication] delegate];
     SuperViewController * svc = (SuperViewController *) src;
     svc.workoutlist.workoutType = self.identifier;
     /*

@@ -31,7 +31,7 @@
  *
  */
 
-@interface MusicLibraryBPMs : NSObject <ENAPIRequestDelegate> {
+@interface MusicLibraryBPMs : NSObject {
     NSString * apiKey;
     NSArray * libraryItems;
     NSArray * unfilteredItems; 
@@ -40,7 +40,6 @@
  * class methods ....
  */
 +(NSArray *) getMusicItems;
-+(NSString *) workoutSongsPlaylist;
 
 /*
  *   instance properties
@@ -53,14 +52,9 @@
 @property (nonatomic, strong) MusicLibraryItem *itemBeingProcessed;
 @property (nonatomic, assign) NSUInteger totalNumberOfItems;
 @property (nonatomic, assign) NSUInteger currentIndexBeingProcessed;
-@property (nonatomic, strong) NSArray * pyramidIntervals;
-@property (nonatomic, strong) NSArray * fastToSlowIntervals;
-@property (nonatomic, strong) NSArray * slowToFastIntervals; 
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;
-- (void)requestFinished:(ENAPIRequest *)request;
-- (void)requestFailed:(ENAPIRequest *)request;
 - (void)filterWithMin:(NSInteger)min andMax:(NSInteger)max;
 - (void)unfilter;
 
@@ -78,7 +72,9 @@
 @property double bpm;
 @property (nonatomic, strong) MPMediaItem *mediaItem;          /* Todo: a bit of a hack to hang*/
 @property (nonatomic, strong) NSString * intervalDescription;  /* these properties on the item object.*/
-@property (nonatomic, strong) NSString * tempoClassificaiton;
+@property (readonly) NSString * tempoClassification;
 @property (nonatomic, assign) NSInteger intervalIndex;
-@property (readonly) NSInteger durationInSeconds; 
+@property (readonly) NSInteger durationInSeconds;
+@property (readonly) NSString * title;
+@property (readonly) NSString * artist;
 @end;

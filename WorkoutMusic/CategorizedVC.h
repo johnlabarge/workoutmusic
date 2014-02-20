@@ -9,12 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MusicLibraryTableVC.h"
 
-@interface  CategorizedVC : UIViewController {
-    MusicLibraryTableVC * musicLibraryTableVC;
-    UISegmentedControl * categoryControl;
-    UITableView * tableView; 
-    MPMusicPlayerController *musicPlayerController;
-}
+@interface  CategorizedVC : UIViewController
 -(IBAction) categoryChanged;
 -(IBAction) playMusic;
 -(IBAction) pauseMusic;

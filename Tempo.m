@@ -7,20 +7,96 @@
 //
 
 #import "Tempo.h"
+#import "NSArray+Range.h"
 
 @implementation Tempo
+
 +(NSString *) speedDescription:(NSInteger)speed
 {
-    switch (speed) {
-        case SLOW:
-            return @"Slow";
-        case MEDIUM:
-            return @"Medium";
-        case FAST:
-            return @"Fast";
-        case VERYFAST:
-            return @"Very Fast";
+    static NSArray *speedDescriptions;
+    if (!speedDescriptions) {
+            speedDescriptions = @[@"Slow", @"Medium", @"Fast", @"Very Fast"];
     }
-    return nil;
+    if (speed >= 0 && speed < speedDescriptions.count) {
+        return speedDescriptions[speed];
+    } else {
+        return @"Unknown";
+    }
+}
+
++(NSString *) tempoClassificationForBPM:(double)bpm
+{
+    return [self speedDescription:[self classifySpeed:bpm]];
+}
++(NSArray *) ranges {
+    static NSArray * ranges;
+    if (!ranges) {
+        ranges = @[
+                   [self slowRange],
+                   [self mediumRange],
+                   [self fastRange],
+                   [self veryFastRange],
+                   ];
+    }
+    return  ranges;
+}
++(NSArray *) slowRange {
+    static NSArray * slowRange;
+    if (!slowRange) {
+        slowRange = @[@60, @95];
+    }
+    return slowRange;
+}
+
++(NSArray *) mediumRange {
+    static NSArray * mediumRange;
+    if (!mediumRange) {
+        mediumRange = @[@96, @125];
+    }
+    return mediumRange;
+}
+
++(NSArray *) fastRange {
+    static NSArray * fastRange;
+    if (!fastRange) {
+        fastRange = @[@126, @159];
+    }
+    return fastRange;
+}
+
++(NSArray *) veryFastRange {
+    static NSArray * veryFastRange;
+    if (!veryFastRange) {
+        veryFastRange = @[@160, @400];
+    }
+    return veryFastRange;
+}
+
++(NSInteger) classifySpeed:(double)bpm
+{
+    if ([self isSlow:bpm]) {
+        return SLOW;
+    } else if ([self isMedium:bpm]) {
+        return MEDIUM;
+    } else if ([self isFast:bpm]) {
+        return FAST;
+    } else if ([self isVeryFast:bpm]) {
+        return VERYFAST;
+    } else {
+        return -1;
+    }
+}
+
++(BOOL) isSlow:(double)bpm {
+    return [[self slowRange] fallsWithin:bpm];
+}
++(BOOL) isMedium:(double)bpm {
+    return [[self mediumRange] fallsWithin:bpm];
+}
++(BOOL) isFast:(double)bpm {
+   return [[self fastRange] fallsWithin:bpm];
+}
++(BOOL) isVeryFast:(double)bpm {
+   return [[self veryFastRange] fallsWithin:bpm];
 }
 @end

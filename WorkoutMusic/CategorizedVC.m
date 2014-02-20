@@ -13,9 +13,7 @@
 
 @implementation CategorizedVC
 
-@synthesize categoryControl;
-@synthesize musicLibraryTableVC;
-@synthesize musicTableView;
+
 
 - (void)viewDidLoad
 {

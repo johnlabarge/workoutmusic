@@ -52,7 +52,7 @@
     self.workoutTimes = times;
     self.workoutTimeDescs = timeDescs;
     [self.workoutTimeDescs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(obj);
+        NSLog(@"%@",obj);
     }];
     WOMusicAppDelegate * delegate = [UIApplication sharedApplication].delegate;
     self.theWorkout = delegate.workout;
@@ -85,7 +85,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     NSString * title = [self.workoutTimeDescs objectAtIndex:row];
-    NSLog(title);
+    NSLog(@"%@",title);
     return title;
     
 }

@@ -35,11 +35,14 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o1z-9a-Gzj">
-                                <rect key="frame" x="144" y="463" width="33" height="30"/>
+                                <rect key="frame" x="144" y="458" width="33" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Q57-p6-E0x" kind="custom" customClass="StartWorkoutSegue" id="9T9-iq-psd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4L-z0-6x2">
                                 <rect key="frame" x="138" y="501" width="48" height="30"/>
@@ -87,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="npe-nD-GbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="687" y="478"/>
+            <point key="canvasLocation" x="525" y="252"/>
         </scene>
         <!--Workout View Controller-->
         <scene sceneID="3sE-bh-Jp0">
@@ -133,61 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ox7-Pg-txj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1115" y="1006"/>
-        </scene>
-        <!--Music Library TableVC - First-->
-        <scene sceneID="a5Y-iv-gFM">
-            <objects>
-                <tableViewController id="e28-ld-gvB" customClass="MusicLibraryTableVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8b6-W8-MD7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uMw-Ni-n4Y">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uMw-Ni-n4Y" id="reQ-Hc-ezC">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="e28-ld-gvB" id="Tzn-sv-0Fy"/>
-                            <outlet property="delegate" destination="e28-ld-gvB" id="8AR-cH-aMa"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="7"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Df-OL-ZGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1433" y="267"/>
-        </scene>
-        <!--CategorizedVC - Second-->
-        <scene sceneID="13">
-            <objects>
-                <viewController title="Second" id="3" customClass="CategorizedVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oQw-tb-kcY"/>
-                        <viewControllerLayoutGuide type="bottom" id="msF-kb-Jms"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pfH-ae-n6v">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                        <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="lyx-wa-bfi"/>
-                    <connections>
-                        <outlet property="view" destination="pfH-ae-n6v" id="h2y-4F-Uai"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="12" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="503" y="-490"/>
+            <point key="canvasLocation" x="1375" y="198"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="mMM-tE-5Wk">
@@ -318,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1LD-VX-Ge9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1135" y="31"/>
+            <point key="canvasLocation" x="1398" y="-615"/>
         </scene>
         <!--Splash-->
         <scene sceneID="YcD-39-PTk">
@@ -374,7 +323,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gBx-Xg-AiF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-607" y="-482"/>
+            <point key="canvasLocation" x="-1021" y="-600"/>
         </scene>
         <!--WorkoutNavigation-->
         <scene sceneID="0bK-zY-SPK">
@@ -393,173 +342,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MqB-tq-MXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="-490"/>
-        </scene>
-        <!--WorkoutTime-->
-        <scene sceneID="aJu-aG-SBT">
-            <objects>
-                <viewController storyboardIdentifier="WorkoutTime" id="6Ql-Mv-HYH" userLabel="WorkoutTime" customClass="WorkoutTimeViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="XdF-wT-VAl"/>
-                        <viewControllerLayoutGuide type="bottom" id="uxp-mf-fF5"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6z9-wq-FAd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Workout Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEV-wc-L5z">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" red="1" green="0.64735782129999997" blue="0.091354669890000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <pickerView contentMode="top" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Mo-hm-EW5">
-                                <rect key="frame" x="-12" y="116" width="332" height="216"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="01Z-ri-hUX"/>
-                                    <constraint firstAttribute="width" constant="327" id="dVf-8y-7gZ"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="dataSource" destination="6Ql-Mv-HYH" id="7lG-7E-L7l"/>
-                                    <outlet property="delegate" destination="6Ql-Mv-HYH" id="5K1-b7-63C"/>
-                                </connections>
-                            </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJi-v4-NHk">
-                                <rect key="frame" x="46" y="329" width="229" height="56"/>
-                                <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="105" id="aqE-xK-TaI"/>
-                                    <constraint firstAttribute="width" constant="208" id="qxS-2S-MRg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Set">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGu-E3-eRG">
-                                <rect key="frame" x="0.0" y="62" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="PCB-xc-dmQ"/>
-                                    <constraint firstAttribute="width" constant="30" id="iUK-YA-Wv2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                <state key="normal" image="musicSettings.png" backgroundImage="musicSettings.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="T3U-6o-gp1" kind="push" id="R4y-QE-eHc"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="kEV-wc-L5z" firstAttribute="centerX" secondItem="8Mo-hm-EW5" secondAttribute="centerX" id="759-PO-B0Y"/>
-                            <constraint firstItem="8Mo-hm-EW5" firstAttribute="top" secondItem="6z9-wq-FAd" secondAttribute="top" constant="30" id="KjZ-ZM-eyg"/>
-                            <constraint firstItem="kEV-wc-L5z" firstAttribute="trailing" secondItem="6z9-wq-FAd" secondAttribute="trailing" id="Mr7-qu-zTY"/>
-                            <constraint firstItem="dJi-v4-NHk" firstAttribute="centerX" secondItem="8Mo-hm-EW5" secondAttribute="centerX" id="aDh-6m-XTj"/>
-                            <constraint firstAttribute="trailing" secondItem="cGu-E3-eRG" secondAttribute="trailing" constant="5" id="dgd-wk-bmA"/>
-                            <constraint firstItem="kEV-wc-L5z" firstAttribute="leading" secondItem="6z9-wq-FAd" secondAttribute="leading" id="mX7-Jw-v2M"/>
-                            <constraint firstItem="kEV-wc-L5z" firstAttribute="top" secondItem="6z9-wq-FAd" secondAttribute="top" id="saz-fE-lMY"/>
-                            <constraint firstAttribute="bottom" secondItem="dJi-v4-NHk" secondAttribute="bottom" constant="61" id="vnG-4N-QH5"/>
-                            <constraint firstAttribute="bottom" secondItem="cGu-E3-eRG" secondAttribute="bottom" constant="11" id="vxm-6n-gOf"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="pcZ-py-9ja"/>
-                    <connections>
-                        <outlet property="workoutTimePicker" destination="8Mo-hm-EW5" id="FfT-Qn-ewH"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ku-W8-LHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="122" y="290"/>
-        </scene>
-        <!--List Picker View Controller-->
-        <scene sceneID="eAa-hW-ZQ0">
-            <objects>
-                <viewController id="T3U-6o-gp1" customClass="ListPickerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fmn-gS-zIU"/>
-                        <viewControllerLayoutGuide type="bottom" id="VqI-u8-8yD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="aDd-Sh-bVM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="YZR-mO-4Sn">
-                                <rect key="frame" x="0.0" y="275" width="320" height="293"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="293" id="OlN-Ad-Tfb"/>
-                                </constraints>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="K5r-c6-9Gy">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="212"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <progressView opaque="NO" contentMode="scaleToFill" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XKp-Zj-OTG">
-                                            <rect key="frame" x="10" y="136" width="300" height="2"/>
-                                        </progressView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8I-qi-2S8">
-                                            <rect key="frame" x="10" y="95" width="300" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="ieP-UW-FIv"/>
-                                                <constraint firstAttribute="width" constant="300" id="sFi-Er-TFI"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="X8I-qi-2S8" firstAttribute="centerX" secondItem="K5r-c6-9Gy" secondAttribute="centerX" id="8Sa-GU-jNE"/>
-                                        <constraint firstItem="X8I-qi-2S8" firstAttribute="trailing" secondItem="XKp-Zj-OTG" secondAttribute="trailing" id="H4T-8W-aLx"/>
-                                        <constraint firstItem="X8I-qi-2S8" firstAttribute="top" secondItem="K5r-c6-9Gy" secondAttribute="top" constant="95" id="HTN-tT-OFy"/>
-                                        <constraint firstAttribute="bottom" secondItem="XKp-Zj-OTG" secondAttribute="bottom" constant="74" id="Ke8-85-gGQ"/>
-                                        <constraint firstItem="X8I-qi-2S8" firstAttribute="leading" secondItem="XKp-Zj-OTG" secondAttribute="leading" id="Wm7-5b-HHI"/>
-                                    </constraints>
-                                </view>
-                            </tableView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfU-mv-e6n">
-                                <rect key="frame" x="0.0" y="-6" width="320" height="216"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="tRZ-Pj-ag0"/>
-                                </constraints>
-                            </pickerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="YZR-mO-4Sn" firstAttribute="leading" secondItem="aDd-Sh-bVM" secondAttribute="leading" id="6Om-Qo-CUu"/>
-                            <constraint firstItem="KfU-mv-e6n" firstAttribute="leading" secondItem="aDd-Sh-bVM" secondAttribute="leading" id="8WA-Vs-stM"/>
-                            <constraint firstItem="KfU-mv-e6n" firstAttribute="trailing" secondItem="aDd-Sh-bVM" secondAttribute="trailing" id="JH7-gG-1wD"/>
-                            <constraint firstItem="KfU-mv-e6n" firstAttribute="top" secondItem="aDd-Sh-bVM" secondAttribute="top" constant="-6" id="Sbr-Ep-2kc"/>
-                            <constraint firstItem="YZR-mO-4Sn" firstAttribute="trailing" secondItem="aDd-Sh-bVM" secondAttribute="trailing" id="ZvH-ch-msC"/>
-                            <constraint firstItem="YZR-mO-4Sn" firstAttribute="bottom" secondItem="aDd-Sh-bVM" secondAttribute="bottom" id="kFm-EC-mk7"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="WzP-fZ-NnI"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2KM-I0-7Ck" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-683" y="187"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="s4r-sN-Jb2">
-            <objects>
-                <viewController id="8rC-wP-8FD" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="wlj-Ub-MJB"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fpv-1G-yrg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jmx-YS-bQw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D0M-VY-WOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-315" y="620"/>
+            <point key="canvasLocation" x="-477" y="-610"/>
         </scene>
         <!--WorkoutsCV - Workouts-->
         <scene sceneID="KqW-uT-RxJ">
@@ -604,7 +387,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E2p-rk-aKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="210" y="148"/>
+            <point key="canvasLocation" x="90" y="-610"/>
         </scene>
         <!--Workout DesignerVC - Workout Designer-->
         <scene sceneID="3KM-U6-bfX">
@@ -697,13 +480,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rM5-4o-enq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="635" y="-201"/>
+            <point key="canvasLocation" x="907" y="-610"/>
         </scene>
     </scenes>
     <resources>
         <image name="back.png" width="179" height="333"/>
-        <image name="first" width="16" height="16"/>
-        <image name="musicSettings.png" width="169" height="193"/>
         <image name="next.png" width="179" height="333"/>
         <image name="pause.png" width="79" height="314"/>
         <image name="play.png" width="89" height="133"/>

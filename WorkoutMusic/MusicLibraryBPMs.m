@@ -7,66 +7,103 @@
 
 #import "MusicLibraryBPMs.h"
 #import "WorkoutMusicSettings.h"
+#import "Tempo.h"
+
 
 
 @interface MusicLibraryBPMs()
--(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void (^)(MusicLibraryItem *) ) itemUpdated;
+typedef void(^ItemUpdatedCallback)(MusicLibraryItem *);
+typedef void(^ItemUpdater)(ENAPIRequest *);
+typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
+
+
+-(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: (ItemUpdatedCallback) itemUpdated;
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
 -(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item;
+
+@property (nonatomic, strong) dispatch_queue_t itemSaverQueue;
 @property (nonatomic, assign) BOOL processed;
 @property (nonatomic, strong) NSArray * filters;
+@property (nonatomic, strong) Updater updater;
 @end
 @implementation MusicLibraryBPMs
 @synthesize libraryItems;
 @synthesize unfilteredItems;
 @synthesize managedObjectContext;
 
+
+
 -(id) initWithManagedObjectContext:(NSManagedObjectContext *)moc
 {
+    self.filters = [Tempo ranges];
     
-
     
-    
-    self.filters = @[ @[@60, @95],  //SLOW
-                      @[@96, @125], //MEDIUM
-                      @[@126,@159], //FAST
-                      @[@160, @500] ]; //VERYFAST
-       
  
     
-    [ENAPI initWithApiKey:@"4N3RGRQDQPUETU3BV"];
+    [ENAPIRequest setApiKey:@"4N3RGRQDQPUETU3BV" andConsumerKey:@"433d5d6e8f39a40ea0fed4bff7556acd" andSharedSecret:@"jTppHq3qQCaeF3+kUgbmTQ"];
     NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
     
     self.libraryItems = [[NSMutableArray alloc] initWithCapacity:mpItems.count];
     __block MusicLibraryBPMs * me = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-    
         me.totalNumberOfItems = me.libraryItems.count;
     });
     
     NSMutableArray * mutLibraryItems = (NSMutableArray *) self.libraryItems;
     for (MPMediaItem * item in mpItems)
     {
-        
         [mutLibraryItems addObject:[[MusicLibraryItem alloc] initWithMediaItem:item]];
     }
     self.unfilteredItems = libraryItems;
     self.managedObjectContext = moc;
     self.processed = NO;
-    
-
+    [self createUpdater];                                                         
     return self;
 }
 
 
+-(void) createUpdater {
+     self.itemSaverQueue = dispatch_queue_create("item saver", NULL);
+    __weak typeof(self)weakSelf = self;
+    self.updater = ^(MusicLibraryItem *item, ItemUpdatedCallback callback) {
+        
+        __weak MusicLibraryItem * weakItem;
+        __weak ItemUpdatedCallback weakCallback = callback;
+        
+        
+        return ^(ENAPIRequest * request) {
+            if (200 == request.httpResponseCode) {
+                __weak ENAPIRequest *req = request;
+                
+                dispatch_async( dispatch_queue_create("item saver", NULL), ^{
+                    
+                    NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
+                    if (songs.count > 0) {
+                        NSDictionary * song = [songs objectAtIndex:0];
+                        double tempo = [[song valueForKeyPath:@"audio_summary.tempo"] doubleValue];
+                        weakItem.bpm = tempo;
+                        [weakSelf saveMusicBPMEntryInCache:weakItem];
+                        weakCallback(weakItem);
+                        
+                    } else {
+                        NSLog(@"no song found at echonest for %@-%@", weakItem.artist, weakItem.title);
+                    }
+                    
+                });
+            } else {
+                NSLog(@"%d", request.httpResponseCode);
+            }
+
+        };
+    };
+}
 
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem * item) ) itemUpdated
 {
     NSLog(@"processing itunes library....%d items",self.libraryItems.count);
-    __block MusicLibraryBPMs * me = self;
-    __block int count = 0;
+    __weak MusicLibraryBPMs * me = self;
+    int count = 0;
     for (MusicLibraryItem * mi in self.libraryItems) {
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             me.currentIndexBeingProcessed = count;
             me.itemBeingProcessed = mi;
@@ -90,7 +127,6 @@
     MusicBPMEntry * entry =  [self findBPMEntryInCacheFor:artist andTitle:title];
     if (entry != nil) {
         item.bpm = [entry.bpm doubleValue];
-        item.tempoClassificaiton  = [self tempoClassificationForItem:item];
         itemUpdated(item);
     } else {
     
@@ -119,11 +155,11 @@
         NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
         if(detailedErrors != nil && [detailedErrors count] > 0) {
             for(NSError* detailedError in detailedErrors) {
-              NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+                NSLog(@"error : %@", detailedError.localizedDescription);
             }
         }
         else {
-          NSLog(@"  %@", [error userInfo]);
+          NSLog(@"  %@", error.localizedDescription);
         }
     }
 
@@ -162,103 +198,36 @@
     NSArray *array = [moc executeFetchRequest:request error:&error];
     NSLog(@"***** found %d entries matching %@ and %@", array.count, artist, title);
    
-    if (array == nil)
-    {
-        NSLog(@" nil array from coredata request, error:", error.localizedDescription);
+    if (array == nil) {
+        NSLog(@" nil array from coredata request, error: %@", error.localizedDescription);
     }
     
     if (array.count > 0) {
         NSLog(@"Found %d matching musicBPM entries",array.count);
-        return  entry = (MusicBPMEntry *) [array objectAtIndex:0]; 
+        return  entry = (MusicBPMEntry *) array[0];
     }
 
    
     return entry;
 }
--(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:( void(^) (MusicLibraryItem *) )itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
-
-    ENAPIRequest *request = [ENAPIRequest requestWithEndpoint:@"song/search"];
+-(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:(ItemUpdatedCallback)itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
     
-    request.delegate = self;                              // our class implements ENAPIRequestDelegate
-    [request setValue:theArtist forParameter:@"artist"];
-    [request setValue:theSong forParameter:@"title"];
-    [request setValue:@"audio_summary" forParameter:@"bucket"];
-    [request setIntegerValue:1 forParameter:@"results"];
-    
-    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-   [info setObject:[itemUpdated copy] forKey:@"itemUpdated"];
-    
-    [info setObject:item forKey:@"libraryItem"];
-    
-    
-    request.userInfo = info;
-    [NSThread sleepForTimeInterval:0.5];
-    [request startSynchronous];
+    [ENAPIRequest GETWithEndpoint:@"song/search"
+                                            andParameters:@{@"artist": theArtist,
+                                                            @"title" : theSong,
+                                                            @"bucket": @"audio_summary",
+                                                            @"results": @1}
+                                            andCompletionBlock:self.updater(item,itemUpdated)
+    ];
+ 
 }
 
-- (void)requestFinished:(ENAPIRequest *)request
-{
-    NSDictionary * userInfo = request.userInfo;
-    NSLog(@"%@",request.responseString);
-
-  
-   
-    if (200 == request.responseStatusCode)
-    {
-    
-        __block ENAPIRequest *req = request;
-        __block MusicLibraryBPMs * me = self;
-        dispatch_async( dispatch_queue_create("item saver", NULL), ^{
-            MusicLibraryItem * musicLibraryItem = [req.userInfo objectForKey:@"libraryItem"];
-            
-            
-            //TODO: fish out the tempo from the data returned
-            //   NSLog(@"%@",[request.requestURL absoluteString]);
-            NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
-            if (songs.count > 0) {
-                
-                
-                NSDictionary * song = [songs objectAtIndex:0];
-                
-                NSDictionary * audio_summary = [song objectForKey:@"audio_summary"];
-                NSArray * allKeys = [audio_summary allKeys];
-                for (NSString * key in allKeys) {
-                    NSLog(@"Key: %@",key);
-                }
-                double tempo = [[song valueForKeyPath:@"audio_summary.tempo"] doubleValue];
-                musicLibraryItem.bpm = tempo;
-                musicLibraryItem.tempoClassificaiton  = [self tempoClassificationForItem:musicLibraryItem];
-                NSLog(@"double vluae of tempo = %f",musicLibraryItem.bpm);
-                
-                NSLog(@"int value of tempo = %d",[[req.response valueForKeyPath:@"audio_summary.tempo"] intValue]);
-                
-                
-                
-                [me saveMusicBPMEntryInCache:musicLibraryItem];
-                
-                
-                void (^itemUpdated)(MusicLibraryItem *)  = (void(^)(MusicLibraryItem *))[req.userInfo objectForKey:@"itemUpdated"];
-                
-                itemUpdated(musicLibraryItem);
-                
-            }
-        });
-    } else {
-        NSLog(@"%d", request.responseStatusCode);
-    }
-                  
-}
-- (void)requestFailed:(ENAPIRequest *)request
-{
-    NSLog(@"Request to echonest api failed!");
-}
 
 +(NSArray *) getMusicItems
 {
-    NSLog(@"Getting music items now...");
     MPMediaQuery *playlistQuery = [MPMediaQuery playlistsQuery];
     NSArray * playlists = [playlistQuery collections];
-    NSLog(@"Playlist count:%d",playlists.count);
+  
     MPMediaItemCollection *workOutPlaylist;
     for (MPMediaItemCollection * playlist in playlists) {
         NSLog(@"found play list: %@",[playlist valueForProperty:MPMediaPlaylistPropertyName]);
@@ -281,6 +250,8 @@
     return workoutItems;
     
 }
+
+
 #pragma mark filtering
 -(void) filterWithMin:(NSInteger)min andMax:(NSInteger)max
 {
@@ -292,14 +263,15 @@
 -(NSString *) tempoClassificationForItem:(MusicLibraryItem *)item {
     
     if (item.bpm >=60 && item.bpm <=95) {
-        return @"Slow";
+        return [Tempo speedDescription:SLOW];
     } else if (item.bpm >=96 && item.bpm <=125) {
-        return @"Medium";
+        return [Tempo speedDescription:MEDIUM];
     } else if (item.bpm >= 125 && item.bpm <=159) {
-        return @"Medium Fast";
-    } else if (item.bpm >= 160 && item.bpm <= 400) {
-        return @"Fast";
+        return [Tempo speedDescription:FAST];
     }
+    
+    // else item.bpm >= 160 && item.bpm <= 400
+    return [Tempo speedDescription:VERYFAST];
 }
 
 -(NSArray *) doFilter:(NSArray *)list withMin:(NSInteger)min andMax:(NSInteger)max
@@ -309,7 +281,7 @@
         [self processItunesLibrary:^(MusicLibraryItem *item) {
             NSLog(@"processing : %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         } afterUpdatingItem:^(MusicLibraryItem *item) {
-            NSLog(@"processing : %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+            NSLog(@"processed: %@", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
         }];
     }
     for (id theObj in list) {
@@ -357,7 +329,6 @@
     return array;
 }
 
-#pragma mark create workout lists
 
 
 
@@ -374,16 +345,20 @@
 -(id) copyWithZone:(NSZone *)zone
 {
     MusicLibraryItem *another = [[MusicLibraryItem alloc] initWithMediaItem:[self.mediaItem copy]];
-    another.tempoClassificaiton = [self.tempoClassificaiton copyWithZone:zone];
     another.intervalDescription = [self.intervalDescription copyWithZone:zone];
     another.intervalIndex = self.intervalIndex;
     another.bpm = self.bpm;
     return another;
 }
--(NSInteger) durationInSeconds
-{
+-(NSInteger) durationInSeconds {
     NSNumber * songSecondsN = [self.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
-    return  songSecondsN.intValue;
+    return songSecondsN.integerValue;
+}
+
+
+-(NSString *)tempoClassification
+{
+    return [Tempo tempoClassificationForBPM:self.bpm];
 }
 @end
 

@@ -40,7 +40,7 @@
         NSString * filename = (NSString *) obj;
         NSString *fullPath = [dirPath stringByAppendingPathComponent:filename];
         BOOL isDir;
-        BOOL exists = [fileMgr fileExistsAtPath:fullPath isDirectory:&isDir];
+        [fileMgr fileExistsAtPath:fullPath isDirectory:&isDir];
         if (!isDir) {
             NSError *error;
             NSLog(@"loading workout at %@",fullPath);

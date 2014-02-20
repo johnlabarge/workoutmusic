@@ -20,6 +20,7 @@
         
     }];
     WorkoutViewController *workoutVC = (WorkoutViewController *) self.destinationViewController;
+    workoutVC.workout = iw.workout;
     [parentNav pushViewController:self.destinationViewController animated:YES];
     
 }

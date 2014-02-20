@@ -41,7 +41,6 @@
 {
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     NSInteger minutes = _seconds/60;
-    NSInteger remainingSeconds = _seconds - minutes*60;
     comps.minute = minutes;
     comps.second = seconds;
     NSCalendar *calendar = [NSCalendar currentCalendar];

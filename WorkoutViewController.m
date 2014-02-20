@@ -62,7 +62,7 @@
     return [self.workoutList songInstructionsForInterval:section].count;
 }
 
--(UITableViewCell *)talbeView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WorkoutListItem * item  = (WorkoutListItem *)[self.workoutList.workoutListItems objectAtIndex:indexPath.section];
     SongInstruction * instruction = (SongInstruction *) [ item.songInstructions objectAtIndex:indexPath.row];
@@ -77,6 +77,7 @@
     return cell;
 
 }
+
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {

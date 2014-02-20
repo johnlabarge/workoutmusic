@@ -45,7 +45,6 @@
 
 -(BOOL) generateListForWorkout:(Workout *) workout afterGenerated:(void(^)(void))after
 {
-    __weak typeof(self) me = self;
     dispatch_async(listmakerqueue, ^{
         NSMutableArray  * listItems = [[NSMutableArray alloc] initWithCapacity:self.workout.intervals.count];
         [self.workout.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
