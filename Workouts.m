@@ -43,7 +43,7 @@
         [fileMgr fileExistsAtPath:fullPath isDirectory:&isDir];
         if (!isDir) {
             NSError *error;
-            NSLog(@"loading workout at %@",fullPath);
+           // NSLog(@"loading workout at %@",fullPath);
             NSData * data = [NSData dataWithContentsOfFile:fullPath];
             NSDictionary * workoutDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers
                                                                              error:&error];

@@ -33,8 +33,6 @@
 
 @interface MusicLibraryBPMs : NSObject {
     NSString * apiKey;
-    NSArray * libraryItems;
-    NSArray * unfilteredItems; 
 }
 /*
  * class methods ....
@@ -44,20 +42,27 @@
 /*
  *   instance properties
  */
-@property (nonatomic, assign) BOOL loaded; 
-@property (nonatomic, retain) NSArray * libraryItems;
-@property (nonatomic, retain) NSArray * unfilteredItems;
+@property (nonatomic, assign) BOOL loaded;
+/* TODO don't expose mutable array.
+ */
+@property (nonatomic, strong) NSMutableArray *libraryItems;
+@property (nonatomic, strong) NSMutableArray * unfilteredItems;
+@property (nonatomic, strong) NSArray * sortedItems;
 @property (nonatomic, retain) NSManagedObjectContext * managedObjectContext;
 
 @property (nonatomic, strong) MusicLibraryItem *itemBeingProcessed;
 @property (nonatomic, assign) NSUInteger totalNumberOfItems;
 @property (nonatomic, assign) NSUInteger currentIndexBeingProcessed;
+@property (nonatomic, assign) BOOL shouldPruneICloudItems;
+@property (nonatomic, assign) BOOL didContainICloudItems; 
+@property (nonatomic, assign) BOOL override_notfound; 
++(instancetype) currentInstance:(id)instance;
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;
-- (void)filterWithMin:(NSInteger)min andMax:(NSInteger)max;
 - (void)unfilter;
-
+-(NSArray *) sortByClassification; 
+-(NSString *) classificationForMusicItem:(MusicLibraryItem *)item; 
 /**
  * random MusicLibraryItems
  */
@@ -67,6 +72,8 @@
 @end
 
 @interface MusicLibraryItem : NSObject <NSCopying>
+@property (nonatomic, assign) double energy;
+@property (nonatomic, assign) double danceability;
 -(id) initWithMediaItem:(MPMediaItem *)theMediaItem;
 -(id) copyWithZone:(NSZone *)zone;
 @property double bpm;
@@ -77,4 +84,13 @@
 @property (readonly) NSInteger durationInSeconds;
 @property (readonly) NSString * title;
 @property (readonly) NSString * artist;
+@property (readonly) MPMediaItemArtwork * artwork;
+@property (nonatomic, assign) BOOL overridden;
+@property (nonatomic, assign) BOOL notfound;
+
+
+
+
+-(BOOL) isICloudItem;
+
 @end;

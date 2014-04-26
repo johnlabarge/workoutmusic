@@ -17,7 +17,8 @@
 #define FASTINTERVAL @"2" 
 #define VERYFASTINTERVAL @"3" 
 @class Workout;
-@interface WorkoutInterval : NSObject
+@interface WorkoutInterval : NSObject <NSCopying>
+@property (nonatomic, assign) NSInteger position;
 @property (nonatomic, assign) NSInteger intervalSeconds;
 @property (nonatomic, assign) NSInteger speed;
 @property (nonatomic, strong) Workout * workout;

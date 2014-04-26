@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface WorkoutMusicSettings : NSObject
-
-+ (WorkoutMusicSettings *)sharedInstance;
-+ (NSString *) workoutSongsPlaylist;
+ 
++(WorkoutMusicSettings *)sharedInstance;
++(NSString *) workoutSongsPlaylist;
++(void) setWorkoutSongsPlaylist:(NSString *)playlist;
 
 @end

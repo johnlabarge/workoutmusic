@@ -16,6 +16,7 @@
 @property (nonatomic, assign) NSInteger activeinterval;
 @property (nonatomic, strong) NSArray * intervals;
 @property (nonatomic, assign) NSInteger currentInterval;
+@property (nonatomic, assign) BOOL active; 
 
 -(void) startAnimate;
 -(void) stopAnimate;

@@ -12,8 +12,11 @@
 
 @interface MusicBPMEntry : NSManagedObject
 
-@property (nonatomic, retain) NSString * artist;
-@property (nonatomic, retain) NSNumber * bpm;
-@property (nonatomic, retain) NSString * title;
+@property (nonatomic, strong) NSString * artist;
+@property (nonatomic, strong) NSNumber * bpm;
+@property (nonatomic, strong) NSNumber * energy;
+@property (nonatomic, strong) NSNumber * danceability;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, strong) NSNumber * notfound;
 
 @end

@@ -53,4 +53,12 @@
 {
     self.workout = nil;
 }
+-(id) copyWithZone:(NSZone *)zone
+{
+    WorkoutInterval *another = [[WorkoutInterval alloc] initForWorkout:self.workout];
+    another.speed = self.speed;
+    another.intervalSeconds = self.intervalSeconds;
+    return another;
+}
+
 @end

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *tableExpander;
 @property (weak, nonatomic) IBOutlet UILabel *workoutTimeLabel;
 @property (weak, nonatomic) IBOutlet WorkoutGraph *workoutGraph;
+@property (weak, nonatomic) IBOutlet UIButton *repeatButton;
 
 
 @property (strong, nonatomic) Workout * model;

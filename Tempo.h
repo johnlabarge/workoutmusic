@@ -12,8 +12,13 @@
 #define MEDIUM 1
 #define FAST 2
 #define VERYFAST 3
+#define UNKNOWN 4
 
-@interface Tempo : NSObject 
+@interface Tempo : NSObject
++(NSArray *) intensities;
++(NSUInteger) toIntensityNum:(NSString *)tempoClass;
++(NSArray *) classifications;
++(NSString *) tempoToIntensity:(NSString *) tempo;
 +(NSString *) speedDescription:(NSInteger)speed;
 +(NSString *) tempoClassificationForBPM:(double)bpm;
 +(NSInteger) classifySpeed:(double)bpm;

@@ -11,8 +11,6 @@
 
 @implementation MusicBPMEntry
 
-@dynamic artist;
-@dynamic bpm;
-@dynamic title;
+
 
 @end

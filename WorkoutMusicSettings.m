@@ -13,9 +13,9 @@
 // Get the shared instance and create it if necessary.
 static WorkoutMusicSettings * sharedInstance = nil;
 
-+ (WorkoutMusicSettings *)sharedInstance {
++(WorkoutMusicSettings *)sharedInstance {
     if (sharedInstance == nil) {
-        sharedInstance = [[self allocWithZone:NULL] init];
+        sharedInstance = [[self alloc] init];
     }
     
     return sharedInstance;
@@ -28,6 +28,7 @@ static WorkoutMusicSettings * sharedInstance = nil;
 }
 
 - (void)registerDefaultsFromSettingsBundle {
+
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
     if(!settingsBundle) {
         NSLog(@"Could not find Settings.bundle");
@@ -35,10 +36,12 @@ static WorkoutMusicSettings * sharedInstance = nil;
     }
     
     NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    
     NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
     NSMutableDictionary * defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     [preferences enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary * prefSpec = (NSDictionary *) obj;
+        NSLog(@"registering defaults: %@", [prefSpec objectForKey:@"Key"]);
         NSString *key = [prefSpec objectForKey:@"Key"];
         if (key) { 
             [defaultsToRegister setObject:[prefSpec objectForKey:@"DefaultValue"] forKey:key];
@@ -52,5 +55,10 @@ static WorkoutMusicSettings * sharedInstance = nil;
 +(NSString *) workoutSongsPlaylist
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"workoutsongsplaylist"];
+}
++(void) setWorkoutSongsPlaylist:(NSString *)name
+{
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"workoutsongsplaylist"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"workoutsongschanged" object:self userInfo:nil];
 }
 @end

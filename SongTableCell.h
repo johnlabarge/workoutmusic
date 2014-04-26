@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface SongTableCell : UITableViewCell 
-@property (nonatomic, strong) IBOutlet UILabel * title;
+
 @property (nonatomic, strong) IBOutlet UILabel * tempoClass;
 @property (nonatomic, strong) IBOutlet UILabel * time;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage * artworkImage;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (nonatomic, strong) NSString *description;
+@property (weak, nonatomic) IBOutlet UILabel *bpmLabel;
 
 @end

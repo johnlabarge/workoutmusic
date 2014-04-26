@@ -8,6 +8,7 @@
 
 #import "IndividualWorkout.h"
 #import "WorkoutDesignerVC.h"
+#import "WorkoutViewController.h"
 
 @interface IndividualWorkout ()
 
@@ -30,6 +31,7 @@
     self.nameLabel.text = self.workout.name;
     self.graphView.workout = self.workout;
     self.workoutTimeLabel.text = [self timeText];
+    NSLog(@"intervals = %d",self.workout.intervals.count);
 }
 	// Do any additional setup after loading the view.
 
@@ -62,8 +64,16 @@
 {
     if ([segue.identifier isEqualToString:@"editWorkout"]) {
         WorkoutDesignerVC * wdvc = (WorkoutDesignerVC *) segue.destinationViewController;
+        NSLog(@"workout intervals = %d",self.workout.intervals.count);
         wdvc.model = self.workout;
+    } else if ([segue.identifier isEqualToString:@"startWorkout"]) {
+        WorkoutViewController * wovc = (WorkoutViewController *) segue.destinationViewController;
+        wovc.workout = self.workout;
+        NSLog(@"workout intervals = %d",self.workout.intervals.count);
+
     }
 }
+
+
 
 @end

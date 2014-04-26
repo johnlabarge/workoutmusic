@@ -11,18 +11,47 @@
 
 @implementation Tempo
 
-+(NSString *) speedDescription:(NSInteger)speed
++(NSArray *) intensities
+{
+    static NSArray * intensities;
+    if (!intensities) {
+        intensities = @[@"Low", @"Medium", @"High", @"Very High", @"Unknown"];
+    }
+    return intensities;
+    
+}
++(NSUInteger) toIntensityNum:(NSString *)tempo{
+    return [[self classifications] indexOfObject:tempo];
+}
+
++(NSString *) tempoToIntensity:(NSString *) tempo {
+    NSUInteger index = [[self classifications] indexOfObject:tempo];
+    return [self intensities][index];
+}
+
+
++(NSArray *)classifications
 {
     static NSArray *speedDescriptions;
+
     if (!speedDescriptions) {
-            speedDescriptions = @[@"Slow", @"Medium", @"Fast", @"Very Fast"];
+        speedDescriptions = @[@"Slow", @"Medium", @"Fast", @"Very Fast", @"Unknown"];
+        
     }
+    return speedDescriptions;
+}
+
+
++(NSString *) speedDescription:(NSInteger)speed
+{
+    NSArray * speedDescriptions = [self classifications];
     if (speed >= 0 && speed < speedDescriptions.count) {
         return speedDescriptions[speed];
     } else {
         return @"Unknown";
     }
 }
+
 
 +(NSString *) tempoClassificationForBPM:(double)bpm
 {

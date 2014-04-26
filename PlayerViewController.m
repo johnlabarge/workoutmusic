@@ -249,7 +249,7 @@
         titleText = [NSString stringWithFormat:@"%@...",titleText];
     }
     
-    cell.title.text = titleText;
+    cell.descriptionLabel.text = titleText;
     cell.tempoClass.text = mlItem.tempoClassification;
     cell.time.text =  [TimeUtils minutesColonSeconds:[[mlItem.mediaItem valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue]];
      MPMediaItemArtwork * artwork = [song valueForProperty:MPMediaItemPropertyArtwork];

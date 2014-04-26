@@ -20,6 +20,7 @@
 @property IntervalCell * selectedCell;
 @property UITextField * editingField;
 @property TimePickerVCViewController * presentedTimePicker;
+@property (nonatomic, strong) NSMutableArray * selectedIndexes;
 @end
 
 @implementation WorkoutDesignerVC
@@ -38,6 +39,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.intervalsTable.allowsMultipleSelection = YES;
+    
+    self.selectedIndexes = [[NSMutableArray alloc] initWithCapacity:10];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
@@ -73,7 +77,6 @@
     [textField resignFirstResponder];
     
     if (self.editingField == self.nameField) {
-        NSLog(@"changing name....to %@",self.nameField.text);
         self.model.name = textField.text;
     }
     
@@ -109,7 +112,11 @@
     
     cell.workoutInterval = interval;
     cell.timeLabel.seconds = interval.intervalSeconds;
-    cell.parent = self; 
+    cell.parent = self;
+    
+
+    
+    
     //cell.timePicker.hidden = YES;
     
     return cell;
@@ -139,25 +146,110 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void) updateStateForSelection
 {
-    IntervalCell * cell = (IntervalCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-    self.selectedInterval = cell.workoutInterval;
+    self.selectedIndexes = [[self.intervalsTable indexPathsForSelectedRows] mutableCopy];
+    [self.selectedIndexes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSIndexPath * a = obj1;
+        NSIndexPath * b = obj2;
+        return [a compare:b];
+    }];
+     self.repeatButton.enabled = [self selectedIndexesAreConsecutive];
+    
+
+}
+-(BOOL) selectedIndexesAreConsecutive
+{
+    __weak NSIndexPath * previousIndexPath = nil;
+    __block BOOL answer = YES;
+    [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSIndexPath * nextIndexPath = obj;
+        if (previousIndexPath) {
+            if ((nextIndexPath.row - previousIndexPath.row) > 1)  {
+                answer = NO;
+                *stop = YES;
+            }
+        }
+        
+    }];
+    return answer; 
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedIndexes = [[self.intervalsTable indexPathsForSelectedRows] mutableCopy];
+     [self.selectedIndexes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSIndexPath * a = obj1;
+        NSIndexPath * b = obj2;
+        return [a compare:b];
+    }];
+
+   
+}
+- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+ 
+    [tableView reloadData];
+    return indexPath;
+}
 -(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IntervalCell * cell = (IntervalCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-    self.selectedInterval = cell.workoutInterval;
-    
-    self.selectedIndexPath = indexPath;
-    self.selectedCell = cell;
-    
+
+    [self updateStateForSelection];
     
 }
-- (IBAction)deleteInterval:(id)sender {
-    NSLog(@"deleting Interval.."); 
-    [self.model deleteInterval:self.selectedInterval];
+
+- (IBAction)deleteIntervals:(id)sender {
+    NSLog(@"deleting Intervals");
+    
+    [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSIndexPath * index = (NSIndexPath *)obj;
+        [self.model.intervals removeObjectAtIndex:index.row];
+    }];
+    [self.intervalsTable reloadData];
+    [self.workoutGraph reloadData];
+    
+
+}
+- (IBAction)repeatIntervals:(id)sender {
+    __block NSIndexPath * lastIntervalIndex;
+     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+         
+         NSIndexPath * indexPath = obj;
+         if (lastIntervalIndex && lastIntervalIndex.row  < indexPath.row) {
+             lastIntervalIndex = indexPath;
+         }
+    }];
+    
+    
+    NSArray * copiesOfSelectedIntervals = [self copiesOfSelectedIntervals];
+    /*
+      TODO encapsulate in model
+     */
+    
+    
+    if ([self selectedIndexesAreConsecutive]) {
+        [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSIndexPath * indexPath = obj;
+            [self.model.intervals insertObject:copiesOfSelectedIntervals[idx] atIndex:idx+indexPath.row];
+        }];
+    }
+ 
+    [self.model save];
+    [self.intervalsTable reloadData];
+    [self.workoutGraph reloadData];
+}
+
+-(NSArray *) copiesOfSelectedIntervals
+{
+    __weak NSMutableArray * intervals = self.model.intervals;
+    NSMutableArray * copies = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
+    __weak NSArray *sortedSelectedIndexes = self.selectedIndexes;
+     [sortedSelectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+         NSIndexPath * index = obj;
+         [copies addObject:[intervals[index.row] copy]];
+     }];
+     return copies;
 }
 -(void) keyboardDidShow:(NSNotification *)note;
 {

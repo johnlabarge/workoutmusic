@@ -15,7 +15,16 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        [self.contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionOld context:nil];
+
+    }
+    return self;
+}
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+       //[self.contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionOld context:nil];
     }
     return self;
 }
@@ -32,5 +41,19 @@
     _artworkImage = inImage;
     self.imageView.image = _artworkImage;
 }
-
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  //  NSLog(@"observed value for kp %@ changed: %@",keyPath,change);
+    if ( [keyPath isEqual:@"frame"] && object == self.contentView )
+    {
+        CGRect newFrame = self.contentView.frame;
+        CGRect oldFrame = [[change objectForKey:NSKeyValueChangeOldKey] CGRectValue];
+        //    NSLog(@"frame old: %@  new: %@",NSStringFromCGRect(oldFrame),NSStringFromCGRect(newFrame));
+        
+        if ( newFrame.origin.x != 0 ) self.contentView.frame = oldFrame;
+    }
+}
+-(void)dealloc{
+    // [self.contentView removeObserver:self forKeyPath:@"frame"];
+}
 @end

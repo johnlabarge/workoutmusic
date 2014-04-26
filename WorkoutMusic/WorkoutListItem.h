@@ -9,14 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "MusicLibraryBPMs.h"
 #import "WorkoutInterval.h"
-#import "SongInstruction.h"
+#import "SongJockeySong.h"
 
 @interface WorkoutListItem : NSObject
-@property (nonatomic, readonly) NSArray * songInstructions;
+@property (nonatomic, readonly) NSArray * songs;
 @property (nonatomic, strong) WorkoutInterval * workoutInterval;
 @property (readonly) NSString * speedDescription;
 
 -(instancetype) initWithInterval:(WorkoutInterval *)interval;
--(void) addSongInstruction:(SongInstruction *)instruction;
+
+-(void) addSongJockeySong:(SongJockeySong *)sjsong;
 
 @end

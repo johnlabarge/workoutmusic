@@ -29,33 +29,30 @@
 {
     
     self.wasLoaded = YES;
-        [super viewDidLoad];
-    [self.musicBPMLibrary addObserver:self forKeyPath:@"totalNumberOfItems" options:NSKeyValueObservingOptionNew context:nil];
-    [self.musicBPMLibrary addObserver:self forKeyPath:@"currentIndexBeingProcessed" options:NSKeyValueObservingOptionNew context:nil];
-    [self.musicBPMLibrary addObserver:self forKeyPath:@"itemBeingProcessed" options:NSKeyValueObservingOptionNew context:nil];
-	
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaProcessedNotificationHandler:) name:@"media_processed" object:nil];
        
   
 }
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+-(void) mediaProcessedNotificationHandler:(NSNotification *)note
 {
-    NSLog(@"observing!!!!!");
-    if (object == self.musicBPMLibrary) {
-        if ([keyPath isEqualToString:@"totalNumberOfItems"]) {
-            self.currentlyProcessing.text = [NSString stringWithFormat:@"%d total items", self.musicBPMLibrary.totalNumberOfItems];
-        } else if ([keyPath isEqualToString:@"currentIndexBeingProcessed"]) {
-             NSLog(@" current index being processed = %d", self.musicBPMLibrary.currentIndexBeingProcessed);
-             NSUInteger total = self.musicBPMLibrary.totalNumberOfItems;
-             [self.progressView setProgress:(self.musicBPMLibrary.currentIndexBeingProcessed+0.0)/(total>0?total:1) animated:YES];
-            
-        } else if ([keyPath isEqualToString:@"itemBeingProcessed"]) {
-            MusicLibraryItem * item = self.musicBPMLibrary.itemBeingProcessed;
-            NSString *artist = [item.mediaItem valueForProperty:MPMediaItemPropertyArtist];
-            NSString *title = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
-            self.currentlyProcessing.text = [NSString stringWithFormat:@"Processing : %@ - %@", artist,title]; 
+    NSUInteger total =  ((NSNumber *)note.userInfo[@"totalItems"]).integerValue;
+    NSUInteger currentIndex =  ((NSNumber *)note.userInfo[@"currentIndexBeingProcessed"]).integerValue;
+    double progress = (0.0+currentIndex)/total;
+    
+    NSLog(@"#####\n Processed : %lul out of Total items : %lul %.2f", (unsigned long)currentIndex, (unsigned long)total, progress);
+    MusicLibraryItem * mi = note.userInfo[@"itemBeingProcessed"];
+    __weak NSString * artist = (NSString *) mi.artist;
+    __weak NSString * title = (NSString *) mi.title;
+    __weak Splash * me = self;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (total > 0) {
+            [me.progressView setProgress:progress];
+        } else {
+            [me.progressView setProgress:1.0];
         }
-    }
+        me.currentlyProcessing.text = [NSString stringWithFormat:@"%@ - %@",artist,title];
+    });
 }
 - (void)viewDidUnload
 {
@@ -65,6 +62,7 @@
 {
   
     [self performSegueWithIdentifier:@"splashOut" sender:self];
+    
 
     /*UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"workoutmusic" bundle:nil];
     UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"MainViewController"];
@@ -76,9 +74,9 @@
 -(void)dealloc
 {
     if (self.wasLoaded) { 
-    [self.musicBPMLibrary removeObserver:self forKeyPath:@"totalNumberOfItems"];
+   /* [self.musicBPMLibrary removeObserver:self forKeyPath:@"totalNumberOfItems"];
     [self.musicBPMLibrary removeObserver:self forKeyPath:@"currentIndexBeingProcessed"];
-    [self.musicBPMLibrary removeObserver:self forKeyPath:@"itemBeingProcessed"];
+    [self.musicBPMLibrary removeObserver:self forKeyPath:@"itemBeingProcessed"];*/
     }
 }
 - (void)didReceiveMemoryWarning

@@ -11,7 +11,6 @@
 
 @interface SongInstruction : NSObject
 @property (nonatomic, strong) MusicLibraryItem * musicItem;
-@property (nonatomic, assign) NSInteger startSeconds;
-@property (nonatomic, assign) NSInteger endSeconds;
+@property (nonatomic, assign) NSInteger duration;
 -(instancetype)initWithMusicItem:(MusicLibraryItem *)item start:(NSInteger)start andEnd:(NSInteger)end; 
 @end

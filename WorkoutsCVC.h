@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet WorkoutGraph *graph;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+
 -(void) highlight;
 -(void) unhighlight;
 @end

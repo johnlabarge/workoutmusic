@@ -12,9 +12,12 @@
 #import "Splash.h"
 #import "WorkoutMusicSettings.h"
 
-@interface WOMusicAppDelegate ()
+@interface WOMusicAppDelegate () {
+    dispatch_queue_t _processqueue;
+}
 @property (nonatomic, strong) WorkoutList * workout;
 @property (nonatomic, strong) Splash *splashScreen;
+-(void) processMusicLibrary;
 @end
 
 @implementation WOMusicAppDelegate
@@ -22,36 +25,68 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [WorkoutMusicSettings sharedInstance]; 
+    
+    if (![WorkoutMusicSettings workoutSongsPlaylist] || [self cantFindWorkoutPlaylist]) {
+
+        [self informUserMissingPlaylist];
+    }
+    
+     _processqueue = dispatch_queue_create("music processor", NULL);
    
-    self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
-
-    __block WOMusicAppDelegate * me = self;
-    dispatch_queue_t processqueue = dispatch_queue_create("music processor", NULL);
-    dispatch_async(processqueue, ^{
-        [self.musicBPMLibrary processItunesLibrary:^(MusicLibraryItem *item) {
-            NSLog(@"%@ processing", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
-
-        } afterUpdatingItem:^(MusicLibraryItem *item) {
-            NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
-        }];
-        [WorkoutList instantiateForLibrary:self.musicBPMLibrary];
-         
-       
-        NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@" killing splash screen...");
-            [me.splashScreen afterSplash]; 
-        });
-    });
-     [self splash];
-    //dispatch_release(processqueue);
-    self.workout = [WorkoutList sharedInstance];
+ 
+    [self processMusicLibrary:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processMusicLibrary:) name:@"workoutsongschanged" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processedMusicLibrary:) name:@"workoutsongsprocessed" object:nil];
+    
     
     return YES;
    
 }
+-(void) processedMusicLibrary:(NSNotification *)note
+{
+    [self.splashScreen afterSplash];
+}
+-(BOOL) cantFindWorkoutPlaylist
+{
+    return NO;
+}
 
+-(void) informUserMissingPlaylist
+{
+    NSLog(@"should present message here.");
+}
+-(void) processMusicLibrary:(NSNotification *)note
+{
+    
+    __weak WOMusicAppDelegate * me = self;
+    self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    [MusicLibraryBPMs currentInstance:self.musicBPMLibrary];
+    self.musicBPMLibrary.shouldPruneICloudItems = YES;
 
+    dispatch_async(_processqueue, ^{
+        
+        [self.musicBPMLibrary processItunesLibrary:^(MusicLibraryItem *item) {
+            NSLog(@"%@ processing", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+            
+        } afterUpdatingItem:^(MusicLibraryItem *item) {
+            NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
+        }];
+        
+       
+       
+        
+        
+        NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
+       [WorkoutList setInstance:[[WorkoutList alloc] initWithLibrary:me.musicBPMLibrary]];
+       [[NSRunLoop currentRunLoop]run];
+    });
+    self.workout = [WorkoutList sharedInstance];
+    [self splash];
+
+}
 
 -(BOOL) splash
 {
@@ -101,7 +136,7 @@
     }
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [managedObjectContext setPersistentStoreCoordinator: coordinator];
     }
     
@@ -136,5 +171,12 @@
 
 - (NSString *)applicationDocumentsDirectory {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+-(UITabBarController *) tabs {
+    if ([self.window.rootViewController isKindOfClass:[UITabBarController class]]) {
+        return (UITabBarController *) self.window.rootViewController;
+    }
+    return nil;
+         
 }
 @end

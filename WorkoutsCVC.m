@@ -14,7 +14,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        CGFloat borderWidth = 3.0f;
+        UIView *bgView = [[UIView alloc] initWithFrame:frame];
+        bgView.layer.borderColor = [UIColor redColor].CGColor;
+        bgView.layer.borderWidth = borderWidth;
+        self.selectedBackgroundView = bgView;
+    }
+    return self;
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        CGFloat borderWidth = 3.0f;
+        UIView *bgView = [[UIView alloc] initWithFrame:self.frame];
+        bgView.layer.borderColor = [UIColor redColor].CGColor;
+        bgView.layer.borderWidth = borderWidth;
+        self.selectedBackgroundView = bgView;
     }
     return self;
 }
@@ -28,6 +44,7 @@
     self.nameLabel.text = _workout.name;
     self.graph.backgroundColor = [UIColor blackColor]; 
 }
+
 
 -(void) highlight
 {

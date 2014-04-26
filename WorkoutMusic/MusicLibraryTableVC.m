@@ -122,7 +122,7 @@
         titleText = [NSString stringWithFormat:@"%@...",titleText];
     }
    
-    cell.title.text = titleText;
+    cell.descriptionLabel.text = titleText;
   //  cell.bpm.text = [NSString stringWithFormat:@"%d", (int) mlItem.bpm];
     // Configure the cell...
     

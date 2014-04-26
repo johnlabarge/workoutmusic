@@ -29,7 +29,9 @@
                         WOMusicAppDelegate * app = [[UIApplication sharedApplication] delegate];
                         app.window.rootViewController = dst;
                     
+                        
                     }
+     
     
                     completion:NULL];
 

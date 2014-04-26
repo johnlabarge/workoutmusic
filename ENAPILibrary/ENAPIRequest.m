@@ -174,7 +174,8 @@ static NSMutableArray *EN_SECURED_ENDPOINTS = nil;
     
     [request setTimeoutInterval:requestTimeoutInterval];
     
-    self.connection =[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    self.connection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     if (self.connection == nil) {
         self.error = [NSError errorWithDomain:@"domain?" code:-1 userInfo:nil];

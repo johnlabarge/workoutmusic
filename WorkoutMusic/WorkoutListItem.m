@@ -10,6 +10,7 @@
 
 @interface WorkoutListItem()
 @property (nonatomic, strong) NSMutableArray * instructions;
+@property (nonatomic, strong) NSMutableArray * sjsongs;
 @end
 @implementation WorkoutListItem
 
@@ -20,12 +21,12 @@
     return self;
 }
 
--(void) addSongInstruction:(SongInstruction *)instruction
+-(void) addSongJockeySong:(SongJockeySong *)sjsong
 {
-    if (!self.instructions) {
-        self.instructions = [[NSMutableArray alloc] initWithCapacity:2];
+    if (!self.songs) {
+        self.sjsongs = [[NSMutableArray alloc] initWithCapacity:2];
     }
-    [self.instructions addObject:instruction];
+    [self.sjsongs addObject:sjsong];
 }
 
 -(NSArray *) songInstructions
@@ -36,6 +37,11 @@
 -(NSString *)speedDescription
 {
     return [Tempo speedDescription:self.workoutInterval.speed];
+}
+
+-(NSArray *) songs
+{
+    return self.sjsongs;
 }
 
 @end

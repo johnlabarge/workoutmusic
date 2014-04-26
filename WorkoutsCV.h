@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Workout.h"
+#import "ActionDelegate.h"
 
-@interface WorkoutsCV : UICollectionViewController
+@interface WorkoutsCV : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, ActionDelegate, UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) NSArray * workouts;
 @property (strong, nonatomic) Workout * selectedWorkout;
+@property (weak, nonatomic) IBOutlet UICollectionView * collectionView;
 @end

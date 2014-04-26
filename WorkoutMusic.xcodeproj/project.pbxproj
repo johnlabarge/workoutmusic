@@ -27,7 +27,6 @@
 		527150721651DF0300111078 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150711651DF0300111078 /* Default-568h@2x.png */; };
 		5271507A1651DF0300111078 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150791651DF0300111078 /* first.png */; };
 		5271507C1651DF0300111078 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5271507B1651DF0300111078 /* first@2x.png */; };
-		5271507F1651DF0300111078 /* CategorizedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271507E1651DF0300111078 /* CategorizedVC.m */; };
 		527150811651DF0300111078 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150801651DF0300111078 /* second.png */; };
 		527150831651DF0300111078 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527150821651DF0300111078 /* second@2x.png */; };
 		5271508B1651DF0300111078 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5271508A1651DF0300111078 /* SenTestingKit.framework */; };
@@ -38,8 +37,6 @@
 		527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */ = {isa = PBXBuildFile; fileRef = 527150A21655D15200111078 /* MusicLibraryBPMs.m */; };
 		529FDDDE17E539F60016B575 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDDC17E539F60016B575 /* next.png */; };
 		529FDDDF17E539F60016B575 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDDD17E539F60016B575 /* back.png */; };
-		529FDDE117E53CDB0016B575 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDE017E53CDB0016B575 /* pause.png */; };
-		529FDDE317E540270016B575 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FDDE217E540270016B575 /* play.png */; };
 		52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B970716691B14003E39B6 /* libz.dylib */; };
 		52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */; };
 		52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */; };
@@ -52,6 +49,9 @@
 		6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6307EE1A183193290034D0CB /* Accelerate.framework */; };
 		6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE1D183828BE0034D0CB /* IndividualWorkout.m */; };
 		6307EE21183839D60034D0CB /* DismissAndPushSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307EE20183839D60034D0CB /* DismissAndPushSegue.m */; };
+		63114E3018BA734100A43892 /* backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 63114E2E18BA734100A43892 /* backward.png */; };
+		63114E3118BA734100A43892 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 63114E2F18BA734100A43892 /* pause.png */; };
+		63114E3418BA83D100A43892 /* WorkoutsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 63114E3318BA83D100A43892 /* WorkoutsVC.m */; };
 		631606F0183E4E79008C64E5 /* WorkoutListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 631606EF183E4E79008C64E5 /* WorkoutListItem.m */; };
 		63197C411848C8710004F7E0 /* SongInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C401848C8710004F7E0 /* SongInstruction.m */; };
 		63197C44184A5BDA0004F7E0 /* StartWorkoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C43184A5BDA0004F7E0 /* StartWorkoutSegue.m */; };
@@ -59,10 +59,41 @@
 		63197C49184BB5A50004F7E0 /* Tempo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C48184BB5A50004F7E0 /* Tempo.m */; };
 		63197C4B184BB6620004F7E0 /* WorkoutListItemCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */; };
 		63197C51184BBA080004F7E0 /* WorkoutListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */; };
+		631FA7BD189D4D6F00C04AFC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FA7BC189D4D6F00C04AFC /* CoreMedia.framework */; };
+		631FA7BF189D697300C04AFC /* WorkoutsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631FA7BE189D697300C04AFC /* WorkoutsHeader.xib */; };
+		631FA7C1189D6A8300C04AFC /* playlisticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FA7C0189D6A8300C04AFC /* playlisticon.png */; };
+		631FA7C4189D6C8600C04AFC /* PlayListButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FA7C3189D6C8600C04AFC /* PlayListButton.m */; };
+		631FA7C6189D711600C04AFC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FA7C5189D711600C04AFC /* QuartzCore.framework */; };
+		631FA7C9189D744500C04AFC /* WorkoutsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FA7C8189D744500C04AFC /* WorkoutsHeader.m */; };
+		632C061518BA593A000EBFBE /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 632C061418BA593A000EBFBE /* play.png */; };
+		632C061718BA5D82000EBFBE /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 632C061618BA5D82000EBFBE /* forward.png */; };
+		6335410118DD05680007F093 /* PlaylistChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6335410018DD05680007F093 /* PlaylistChooserViewController.m */; };
+		6335410418EB8D470007F093 /* MusicItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6335410318EB8D470007F093 /* MusicItemCell.xib */; };
+		6335410718EB90DE0007F093 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6335410618EB90DE0007F093 /* MusicViewController.m */; };
+		6335410A18EB92290007F093 /* MusicItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6335410918EB92290007F093 /* MusicItemCell.m */; };
 		634640C818B6A4E1003D7197 /* NSArray+Range.m in Sources */ = {isa = PBXBuildFile; fileRef = 634640C718B6A4E1003D7197 /* NSArray+Range.m */; };
-		63C0B92818B65FF90027278E /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 63C0B92018B65FF90027278E /* Base64Transcoder.c */; };
-		63C0B92918B65FF90027278E /* ENAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C0B92318B65FF90027278E /* ENAPI.m */; };
-		63C0B92A18B65FF90027278E /* ENAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C0B92618B65FF90027278E /* ENAPIRequest.m */; };
+		63594A4018F9E2530058D9EB /* music.png in Resources */ = {isa = PBXBuildFile; fileRef = 63594A3F18F9E2520058D9EB /* music.png */; };
+		63594A4218FA1DC40058D9EB /* New@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63594A4118FA1DC40058D9EB /* New@2x.png */; };
+		63594A4418FAF2E10058D9EB /* runningImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 63594A4318FAF2E10058D9EB /* runningImage.png */; };
+		63594A4618FC151A0058D9EB /* Shuffle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63594A4518FC151A0058D9EB /* Shuffle@2x.png */; };
+		635E4D5718A26DD90086F2A8 /* newWorkoutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635E4D5618A26DD90086F2A8 /* newWorkoutCell.xib */; };
+		635E4D5A18A26E660086F2A8 /* NewWorkoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 635E4D5918A26E660086F2A8 /* NewWorkoutCell.m */; };
+		6362ABBE18D7512900EE904C /* WorkoutsCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362ABBD18D7512900EE904C /* WorkoutsCollectionViewLayout.m */; };
+		6362ABC018D7798B00EE904C /* music_note.png in Resources */ = {isa = PBXBuildFile; fileRef = 6362ABBF18D7798B00EE904C /* music_note.png */; };
+		6370AD1E18B6C48D00C71512 /* ENAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 6370AD1B18B6C48D00C71512 /* ENAPI.m */; };
+		6370AD1F18B6C48D00C71512 /* ENAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6370AD1D18B6C48D00C71512 /* ENAPIRequest.m */; };
+		6370AD2818B6C6B100C71512 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 6370AD2418B6C6B100C71512 /* Base64Transcoder.c */; };
+		6396F6BF18CD47CA00A86088 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396F6BE18CD47CA00A86088 /* add.png */; };
+		6396F6C118CD54FB00A86088 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396F6C018CD54FB00A86088 /* edit.png */; };
+		6396F6C318CD578C00A86088 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396F6C218CD578C00A86088 /* delete.png */; };
+		6396F6C518CD619100A86088 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396F6C418CD619100A86088 /* go.png */; };
+		63B0AAF018574F4A00B0A40F /* IntervalSectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B0AAEF18574F4A00B0A40F /* IntervalSectionCell.xib */; };
+		63B0AAF31857507A00B0A40F /* IntervalSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0AAF21857507A00B0A40F /* IntervalSectionCell.m */; };
+		63B3F656189D4B160087460A /* SJPlaylists.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F64E189D4B160087460A /* SJPlaylists.m */; };
+		63B3F657189D4B160087460A /* SongJockeySong.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F650189D4B160087460A /* SongJockeySong.m */; };
+		63B3F658189D4B160087460A /* SongJockeyPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F651189D4B160087460A /* SongJockeyPlayer.m */; };
+		63B3F659189D4B160087460A /* SJConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F654189D4B160087460A /* SJConstants.m */; };
+		63D194491902A5C300EA5DCA /* runningTabBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D194481902A5C300EA5DCA /* runningTabBar@2x.png */; };
 		E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233416FE6BE500BEA02C /* SuperViewController.m */; };
 		E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C233816FE702D00BEA02C /* PlayerViewController.m */; };
 		E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = E50C234017008E8E00BEA02C /* WorkoutTimeSetSegue.m */; };
@@ -150,8 +181,6 @@
 		527150711651DF0300111078 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		527150791651DF0300111078 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		5271507B1651DF0300111078 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		5271507D1651DF0300111078 /* CategorizedVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategorizedVC.h; sourceTree = "<group>"; };
-		5271507E1651DF0300111078 /* CategorizedVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategorizedVC.m; sourceTree = "<group>"; };
 		527150801651DF0300111078 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		527150821651DF0300111078 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		527150891651DF0300111078 /* WorkoutMusicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutMusicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,8 +193,6 @@
 		527150A21655D15200111078 /* MusicLibraryBPMs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicLibraryBPMs.m; sourceTree = "<group>"; };
 		529FDDDC17E539F60016B575 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/next.png; sourceTree = "<group>"; };
 		529FDDDD17E539F60016B575 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = images/back.png; sourceTree = "<group>"; };
-		529FDDE017E53CDB0016B575 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = images/pause.png; sourceTree = "<group>"; };
-		529FDDE217E540270016B575 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		52D2BBCF166A7CBC00EBCAB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkoutSongsViewController.xib; path = WorkoutMusic/WorkoutSongsViewController.xib; sourceTree = "<group>"; };
 		52DB39A217E229E400800260 /* retract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retract.png; path = images/retract.png; sourceTree = "<group>"; };
@@ -182,6 +209,10 @@
 		6307EE1D183828BE0034D0CB /* IndividualWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualWorkout.m; sourceTree = "<group>"; };
 		6307EE1F183839D60034D0CB /* DismissAndPushSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissAndPushSegue.h; sourceTree = "<group>"; };
 		6307EE20183839D60034D0CB /* DismissAndPushSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissAndPushSegue.m; sourceTree = "<group>"; };
+		63114E2E18BA734100A43892 /* backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward.png; sourceTree = "<group>"; };
+		63114E2F18BA734100A43892 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		63114E3218BA83D100A43892 /* WorkoutsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutsVC.h; sourceTree = "<group>"; };
+		63114E3318BA83D100A43892 /* WorkoutsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsVC.m; sourceTree = "<group>"; };
 		631606EE183E4E79008C64E5 /* WorkoutListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutListItem.h; sourceTree = "<group>"; };
 		631606EF183E4E79008C64E5 /* WorkoutListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutListItem.m; sourceTree = "<group>"; };
 		631606F1183E7106008C64E5 /* Tempo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tempo.h; sourceTree = "<group>"; };
@@ -195,16 +226,59 @@
 		63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkoutListItemCells.xib; sourceTree = "<group>"; };
 		63197C4F184BBA080004F7E0 /* WorkoutListItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutListItemCell.h; sourceTree = "<group>"; };
 		63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutListItemCell.m; sourceTree = "<group>"; };
+		631FA7BC189D4D6F00C04AFC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		631FA7BE189D697300C04AFC /* WorkoutsHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkoutsHeader.xib; sourceTree = "<group>"; };
+		631FA7C0189D6A8300C04AFC /* playlisticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playlisticon.png; path = images/playlisticon.png; sourceTree = "<group>"; };
+		631FA7C2189D6C8600C04AFC /* PlayListButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListButton.h; sourceTree = "<group>"; };
+		631FA7C3189D6C8600C04AFC /* PlayListButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListButton.m; sourceTree = "<group>"; };
+		631FA7C5189D711600C04AFC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		631FA7C7189D744500C04AFC /* WorkoutsHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutsHeader.h; sourceTree = "<group>"; };
+		631FA7C8189D744500C04AFC /* WorkoutsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsHeader.m; sourceTree = "<group>"; };
+		632C061418BA593A000EBFBE /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		632C061618BA5D82000EBFBE /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
+		633540FF18DD05680007F093 /* PlaylistChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistChooserViewController.h; sourceTree = "<group>"; };
+		6335410018DD05680007F093 /* PlaylistChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistChooserViewController.m; sourceTree = "<group>"; };
+		6335410218DD057B0007F093 /* OptionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionDelegate.h; sourceTree = "<group>"; };
+		6335410318EB8D470007F093 /* MusicItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicItemCell.xib; sourceTree = "<group>"; };
+		6335410518EB90DE0007F093 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicViewController.h; sourceTree = "<group>"; };
+		6335410618EB90DE0007F093 /* MusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicViewController.m; sourceTree = "<group>"; };
+		6335410818EB92290007F093 /* MusicItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicItemCell.h; sourceTree = "<group>"; };
+		6335410918EB92290007F093 /* MusicItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicItemCell.m; sourceTree = "<group>"; };
 		634640C618B6A4E1003D7197 /* NSArray+Range.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Range.h"; sourceTree = "<group>"; };
 		634640C718B6A4E1003D7197 /* NSArray+Range.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Range.m"; sourceTree = "<group>"; };
-		63C0B92018B65FF90027278E /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
-		63C0B92118B65FF90027278E /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
-		63C0B92218B65FF90027278E /* ENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENAPI.h; path = ENAPILibrary/ENAPI.h; sourceTree = "<group>"; };
-		63C0B92318B65FF90027278E /* ENAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENAPI.m; path = ENAPILibrary/ENAPI.m; sourceTree = "<group>"; };
-		63C0B92418B65FF90027278E /* ENAPILibrary-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ENAPILibrary-Prefix.pch"; path = "ENAPILibrary/ENAPILibrary-Prefix.pch"; sourceTree = "<group>"; };
-		63C0B92518B65FF90027278E /* ENAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENAPIRequest.h; path = ENAPILibrary/ENAPIRequest.h; sourceTree = "<group>"; };
-		63C0B92618B65FF90027278E /* ENAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENAPIRequest.m; path = ENAPILibrary/ENAPIRequest.m; sourceTree = "<group>"; };
-		63C0B92718B65FF90027278E /* ENLibrary-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ENLibrary-Prefix.pch"; path = "ENAPILibrary/ENLibrary-Prefix.pch"; sourceTree = "<group>"; };
+		63594A3F18F9E2520058D9EB /* music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music.png; path = images/music.png; sourceTree = "<group>"; };
+		63594A4118FA1DC40058D9EB /* New@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "New@2x.png"; path = "images/New@2x.png"; sourceTree = "<group>"; };
+		63594A4318FAF2E10058D9EB /* runningImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = runningImage.png; path = images/runningImage.png; sourceTree = "<group>"; };
+		63594A4518FC151A0058D9EB /* Shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shuffle@2x.png"; sourceTree = "<group>"; };
+		635E4D5618A26DD90086F2A8 /* newWorkoutCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = newWorkoutCell.xib; sourceTree = "<group>"; };
+		635E4D5818A26E660086F2A8 /* NewWorkoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWorkoutCell.h; sourceTree = "<group>"; };
+		635E4D5918A26E660086F2A8 /* NewWorkoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWorkoutCell.m; sourceTree = "<group>"; };
+		635E4DDD18A83A140086F2A8 /* ActionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionDelegate.h; sourceTree = "<group>"; };
+		6362ABBC18D7512900EE904C /* WorkoutsCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutsCollectionViewLayout.h; sourceTree = "<group>"; };
+		6362ABBD18D7512900EE904C /* WorkoutsCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsCollectionViewLayout.m; sourceTree = "<group>"; };
+		6362ABBF18D7798B00EE904C /* music_note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = music_note.png; sourceTree = "<group>"; };
+		6370AD1A18B6C48D00C71512 /* ENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENAPI.h; path = ENAPILibrary/ENAPI.h; sourceTree = "<group>"; };
+		6370AD1B18B6C48D00C71512 /* ENAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENAPI.m; path = ENAPILibrary/ENAPI.m; sourceTree = "<group>"; };
+		6370AD1C18B6C48D00C71512 /* ENAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENAPIRequest.h; path = ENAPILibrary/ENAPIRequest.h; sourceTree = "<group>"; };
+		6370AD1D18B6C48D00C71512 /* ENAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENAPIRequest.m; path = ENAPILibrary/ENAPIRequest.m; sourceTree = "<group>"; };
+		6370AD2418B6C6B100C71512 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
+		6370AD2518B6C6B100C71512 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
+		6396F6BE18CD47CA00A86088 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = images/add.png; sourceTree = "<group>"; };
+		6396F6C018CD54FB00A86088 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit.png; path = images/edit.png; sourceTree = "<group>"; };
+		6396F6C218CD578C00A86088 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
+		6396F6C418CD619100A86088 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = go.png; path = images/go.png; sourceTree = "<group>"; };
+		63B0AAEF18574F4A00B0A40F /* IntervalSectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntervalSectionCell.xib; sourceTree = "<group>"; };
+		63B0AAF11857507A00B0A40F /* IntervalSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalSectionCell.h; sourceTree = "<group>"; };
+		63B0AAF21857507A00B0A40F /* IntervalSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntervalSectionCell.m; sourceTree = "<group>"; };
+		63B3F64E189D4B160087460A /* SJPlaylists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SJPlaylists.m; path = SongJockey/SJPlaylists.m; sourceTree = "<group>"; };
+		63B3F64F189D4B160087460A /* SongJockeySong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongJockeySong.h; path = SongJockey/SongJockeySong.h; sourceTree = "<group>"; };
+		63B3F650189D4B160087460A /* SongJockeySong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongJockeySong.m; path = SongJockey/SongJockeySong.m; sourceTree = "<group>"; };
+		63B3F651189D4B160087460A /* SongJockeyPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongJockeyPlayer.m; path = SongJockey/SongJockeyPlayer.m; sourceTree = "<group>"; };
+		63B3F652189D4B160087460A /* SJPlaylists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SJPlaylists.h; path = SongJockey/SJPlaylists.h; sourceTree = "<group>"; };
+		63B3F653189D4B160087460A /* SongJockeyPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongJockeyPlayer.h; path = SongJockey/SongJockeyPlayer.h; sourceTree = "<group>"; };
+		63B3F654189D4B160087460A /* SJConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SJConstants.m; path = SongJockey/SJConstants.m; sourceTree = "<group>"; };
+		63B3F655189D4B160087460A /* SJConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SJConstants.h; path = SongJockey/SJConstants.h; sourceTree = "<group>"; };
+		63D194481902A5C300EA5DCA /* runningTabBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "runningTabBar@2x.png"; path = "images/runningTabBar@2x.png"; sourceTree = "<group>"; };
 		E50C233316FE6BE500BEA02C /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
 		E50C233416FE6BE500BEA02C /* SuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperViewController.m; sourceTree = "<group>"; };
 		E50C233716FE702D00BEA02C /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
@@ -284,6 +358,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				631FA7C6189D711600C04AFC /* QuartzCore.framework in Frameworks */,
+				631FA7BD189D4D6F00C04AFC /* CoreMedia.framework in Frameworks */,
 				6307EE1B183193290034D0CB /* Accelerate.framework in Frameworks */,
 				E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */,
 				52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */,
@@ -314,13 +390,20 @@
 		526425771672B360000D6C01 /* interface */ = {
 			isa = PBXGroup;
 			children = (
-				529FDDE217E540270016B575 /* play.png */,
-				529FDDE017E53CDB0016B575 /* pause.png */,
+				632C061418BA593A000EBFBE /* play.png */,
+				631FA7C0189D6A8300C04AFC /* playlisticon.png */,
 				529FDDDC17E539F60016B575 /* next.png */,
 				529FDDDD17E539F60016B575 /* back.png */,
 				52DB39A217E229E400800260 /* retract.png */,
 				52DB39A317E229E400800260 /* expand.png */,
 				E5205DB516C7F40500EDD1DA /* workoutmusic.storyboard */,
+				635E4DDD18A83A140086F2A8 /* ActionDelegate.h */,
+				635E4D5618A26DD90086F2A8 /* newWorkoutCell.xib */,
+				635E4D5818A26E660086F2A8 /* NewWorkoutCell.h */,
+				635E4D5918A26E660086F2A8 /* NewWorkoutCell.m */,
+				631FA7C7189D744500C04AFC /* WorkoutsHeader.h */,
+				631FA7C8189D744500C04AFC /* WorkoutsHeader.m */,
+				631FA7BE189D697300C04AFC /* WorkoutsHeader.xib */,
 				E59DF697172D81A0001B7048 /* orange_fast_foward.png */,
 				E59DF698172D81A0001B7048 /* orange_pause.png */,
 				E59DF699172D81A0001B7048 /* orange_rewind.png */,
@@ -334,6 +417,8 @@
 				E553399216EA115F00255C67 /* SlowToFast.png */,
 				E580F66616C7F24A00E8AD5A /* runner.png */,
 				52D2BBFB166BB56900EBCAB8 /* WorkoutSongsViewController.xib */,
+				631FA7C2189D6C8600C04AFC /* PlayListButton.h */,
+				631FA7C3189D6C8600C04AFC /* PlayListButton.m */,
 			);
 			name = interface;
 			sourceTree = "<group>";
@@ -341,7 +426,22 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
-				634640C918B6BBF4003D7197 /* ENAPI */,
+				63D194481902A5C300EA5DCA /* runningTabBar@2x.png */,
+				63594A4318FAF2E10058D9EB /* runningImage.png */,
+				63594A4118FA1DC40058D9EB /* New@2x.png */,
+				63594A3F18F9E2520058D9EB /* music.png */,
+				6335410318EB8D470007F093 /* MusicItemCell.xib */,
+				6362ABBF18D7798B00EE904C /* music_note.png */,
+				6396F6C418CD619100A86088 /* go.png */,
+				6396F6C218CD578C00A86088 /* delete.png */,
+				63BEDA6E18BF8AF600B64000 /* SongTableVC */,
+				63114E3218BA83D100A43892 /* WorkoutsVC.h */,
+				63114E3318BA83D100A43892 /* WorkoutsVC.m */,
+				63114E2E18BA734100A43892 /* backward.png */,
+				63114E2F18BA734100A43892 /* pause.png */,
+				632C061618BA5D82000EBFBE /* forward.png */,
+				6370AD2018B6C49300C71512 /* ENAPI */,
+				63B3F64D189D4AFB0087460A /* SongJockey */,
 				63197C52184BBBC70004F7E0 /* WorkoutVC */,
 				6307EE17183190870034D0CB /* FXBlurView.h */,
 				6307EE18183190870034D0CB /* FXBlurView.m */,
@@ -352,6 +452,10 @@
 				E5C452A5182990EF0073A8B3 /* WorkoutDesigner */,
 				E5C4529B182990E60073A8B3 /* WorkoutGraph.m */,
 				E5C4529E182990E60073A8B3 /* WorkoutGraph.h */,
+				6335410518EB90DE0007F093 /* MusicViewController.h */,
+				6335410818EB92290007F093 /* MusicItemCell.h */,
+				6335410918EB92290007F093 /* MusicItemCell.m */,
+				6335410618EB90DE0007F093 /* MusicViewController.m */,
 				E5BB4C461731F984001CC2F5 /* SettingsUI */,
 				E5BB4C441731F384001CC2F5 /* Settings.bundle */,
 				E5113E751724175800A52F5A /* background.png */,
@@ -362,6 +466,7 @@
 				6307EE11183164130034D0CB /* TimePickerVCViewController.xib */,
 				E5754ABC170A1E9400998E1D /* ListPickerViewController.m */,
 				E50C233F17008E8E00BEA02C /* WorkoutTimeSetSegue.h */,
+				63594A4518FC151A0058D9EB /* Shuffle@2x.png */,
 				E50C234017008E8E00BEA02C /* WorkoutTimeSetSegue.m */,
 				E50C233A16FE791400BEA02C /* ViewControllers */,
 				E5EB5B0D167FFCD800C3AA63 /* CoreData.framework */,
@@ -390,6 +495,8 @@
 		5271505A1651DF0200111078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				631FA7C5189D711600C04AFC /* QuartzCore.framework */,
+				631FA7BC189D4D6F00C04AFC /* CoreMedia.framework */,
 				6307EE1A183193290034D0CB /* Accelerate.framework */,
 				52449EDE1667E523000A146F /* MediaPlayer.framework */,
 				5271505B1651DF0200111078 /* UIKit.framework */,
@@ -409,9 +516,7 @@
 				E5CD0D2F16EBCBF000332141 /* TransitionSegue.h */,
 				E5CD0D3016EBCBF000332141 /* TransitionSegue.m */,
 				527150791651DF0300111078 /* first.png */,
-				5271507E1651DF0300111078 /* CategorizedVC.m */,
 				5271507B1651DF0300111078 /* first@2x.png */,
-				5271507D1651DF0300111078 /* CategorizedVC.h */,
 				527150801651DF0300111078 /* second.png */,
 				527150821651DF0300111078 /* second@2x.png */,
 				527150621651DF0200111078 /* Supporting Files */,
@@ -465,30 +570,10 @@
 		63197C52184BBBC70004F7E0 /* WorkoutVC */ = {
 			isa = PBXGroup;
 			children = (
-				522E6F5D1667EFAF0036C5DA /* SongTableCell.h */,
-				522E6F5E1667EFAF0036C5DA /* SongTableCell.m */,
-				522E6F601667EFCB0036C5DA /* SongTableCell.xib */,
 				63197C45184A5CA10004F7E0 /* WorkoutViewController.h */,
 				63197C46184A5CA10004F7E0 /* WorkoutViewController.m */,
-				63197C4F184BBA080004F7E0 /* WorkoutListItemCell.h */,
-				63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */,
-				63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */,
 			);
 			name = WorkoutVC;
-			sourceTree = "<group>";
-		};
-		634640C918B6BBF4003D7197 /* ENAPI */ = {
-			isa = PBXGroup;
-			children = (
-				63C0B91F18B65FF90027278E /* Base64 */,
-				63C0B92218B65FF90027278E /* ENAPI.h */,
-				63C0B92318B65FF90027278E /* ENAPI.m */,
-				63C0B92418B65FF90027278E /* ENAPILibrary-Prefix.pch */,
-				63C0B92518B65FF90027278E /* ENAPIRequest.h */,
-				63C0B92618B65FF90027278E /* ENAPIRequest.m */,
-				63C0B92718B65FF90027278E /* ENLibrary-Prefix.pch */,
-			);
-			name = ENAPI;
 			sourceTree = "<group>";
 		};
 		634640CA18B6BC07003D7197 /* Tempo */ = {
@@ -502,14 +587,59 @@
 			name = Tempo;
 			sourceTree = "<group>";
 		};
-		63C0B91F18B65FF90027278E /* Base64 */ = {
+		6370AD2018B6C49300C71512 /* ENAPI */ = {
 			isa = PBXGroup;
 			children = (
-				63C0B92018B65FF90027278E /* Base64Transcoder.c */,
-				63C0B92118B65FF90027278E /* Base64Transcoder.h */,
+				6370AD2318B6C6B100C71512 /* Base64 */,
+				6370AD1C18B6C48D00C71512 /* ENAPIRequest.h */,
+				6370AD1A18B6C48D00C71512 /* ENAPI.h */,
+				6370AD1B18B6C48D00C71512 /* ENAPI.m */,
+				6370AD1D18B6C48D00C71512 /* ENAPIRequest.m */,
+			);
+			name = ENAPI;
+			sourceTree = "<group>";
+		};
+		6370AD2318B6C6B100C71512 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				6370AD2418B6C6B100C71512 /* Base64Transcoder.c */,
+				6370AD2518B6C6B100C71512 /* Base64Transcoder.h */,
 			);
 			name = Base64;
 			path = ENAPILibrary/Base64;
+			sourceTree = "<group>";
+		};
+		63B3F64D189D4AFB0087460A /* SongJockey */ = {
+			isa = PBXGroup;
+			children = (
+				6335410218DD057B0007F093 /* OptionDelegate.h */,
+				633540FF18DD05680007F093 /* PlaylistChooserViewController.h */,
+				6335410018DD05680007F093 /* PlaylistChooserViewController.m */,
+				63B3F64E189D4B160087460A /* SJPlaylists.m */,
+				63B3F64F189D4B160087460A /* SongJockeySong.h */,
+				63B3F650189D4B160087460A /* SongJockeySong.m */,
+				63B3F651189D4B160087460A /* SongJockeyPlayer.m */,
+				63B3F652189D4B160087460A /* SJPlaylists.h */,
+				63B3F653189D4B160087460A /* SongJockeyPlayer.h */,
+				63B3F654189D4B160087460A /* SJConstants.m */,
+				63B3F655189D4B160087460A /* SJConstants.h */,
+			);
+			name = SongJockey;
+			sourceTree = "<group>";
+		};
+		63BEDA6E18BF8AF600B64000 /* SongTableVC */ = {
+			isa = PBXGroup;
+			children = (
+				522E6F5D1667EFAF0036C5DA /* SongTableCell.h */,
+				522E6F5E1667EFAF0036C5DA /* SongTableCell.m */,
+				522E6F601667EFCB0036C5DA /* SongTableCell.xib */,
+				6396F6C018CD54FB00A86088 /* edit.png */,
+				6396F6BE18CD47CA00A86088 /* add.png */,
+				63197C4F184BBA080004F7E0 /* WorkoutListItemCell.h */,
+				63197C50184BBA080004F7E0 /* WorkoutListItemCell.m */,
+				63197C4A184BB6620004F7E0 /* WorkoutListItemCells.xib */,
+			);
+			name = SongTableVC;
 			sourceTree = "<group>";
 		};
 		E50C233A16FE791400BEA02C /* ViewControllers */ = {
@@ -567,11 +697,14 @@
 			isa = PBXGroup;
 			children = (
 				E5C452A9182991210073A8B3 /* intervalcell.xib */,
+				63B0AAF11857507A00B0A40F /* IntervalSectionCell.h */,
+				63B0AAF21857507A00B0A40F /* IntervalSectionCell.m */,
 				E5D77C24182AEC0E000BBFE4 /* SecondsPickerVCViewController.h */,
 				E5D77C25182AEC0E000BBFE4 /* SecondsPickerVCViewController.m */,
 				E5D77C26182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib */,
 				E5C452A8182991210073A8B3 /* WorkoutDesignerVC.h */,
 				E5C452AA182991210073A8B3 /* WorkoutDesignerVC.m */,
+				63B0AAEF18574F4A00B0A40F /* IntervalSectionCell.xib */,
 				6307EE14183184BF0034D0CB /* TimeLabel.h */,
 				6307EE15183184BF0034D0CB /* TimeLabel.m */,
 				E5C452A6182991210073A8B3 /* IntervalCell.h */,
@@ -608,6 +741,8 @@
 				E5C45294182990E60073A8B3 /* WorkoutCVC.xib */,
 				E5C45295182990E60073A8B3 /* WorkoutsCV.h */,
 				E5C45296182990E60073A8B3 /* WorkoutsCV.m */,
+				6362ABBC18D7512900EE904C /* WorkoutsCollectionViewLayout.h */,
+				6362ABBD18D7512900EE904C /* WorkoutsCollectionViewLayout.m */,
 				6307EE1C183828BE0034D0CB /* IndividualWorkout.h */,
 				6307EE1D183828BE0034D0CB /* IndividualWorkout.m */,
 				E5C45297182990E60073A8B3 /* WorkoutsCVC.h */,
@@ -662,6 +797,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = workoutmusic;
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "John La Barge";
 				TargetAttributes = {
@@ -703,33 +839,50 @@
 				5271507C1651DF0300111078 /* first@2x.png in Resources */,
 				527150811651DF0300111078 /* second.png in Resources */,
 				527150831651DF0300111078 /* second@2x.png in Resources */,
+				63114E3118BA734100A43892 /* pause.png in Resources */,
+				6396F6C318CD578C00A86088 /* delete.png in Resources */,
 				E5D77C28182AEC0E000BBFE4 /* SecondsPickerVCViewController.xib in Resources */,
+				632C061518BA593A000EBFBE /* play.png in Resources */,
+				6335410418EB8D470007F093 /* MusicItemCell.xib in Resources */,
+				63594A4218FA1DC40058D9EB /* New@2x.png in Resources */,
 				52449ED81667DA94000A146F /* MusicLibraryTableVC.xib in Resources */,
+				6396F6C518CD619100A86088 /* go.png in Resources */,
 				522E6F611667EFCB0036C5DA /* SongTableCell.xib in Resources */,
 				52D2BBFC166BB56900EBCAB8 /* WorkoutSongsViewController.xib in Resources */,
 				52DB39A517E229E400800260 /* expand.png in Resources */,
+				6396F6C118CD54FB00A86088 /* edit.png in Resources */,
 				523F8F731671827000251C91 /* FilterView.xib in Resources */,
+				6396F6BF18CD47CA00A86088 /* add.png in Resources */,
 				E580F66716C7F24A00E8AD5A /* runner.png in Resources */,
 				E5C4529F182990E60073A8B3 /* WorkoutCVC.xib in Resources */,
-				529FDDE117E53CDB0016B575 /* pause.png in Resources */,
+				631FA7BF189D697300C04AFC /* WorkoutsHeader.xib in Resources */,
 				E5205DB716C7F40500EDD1DA /* workoutmusic.storyboard in Resources */,
 				E553399316EA115F00255C67 /* FastThenSlow.png in Resources */,
+				63594A4418FAF2E10058D9EB /* runningImage.png in Resources */,
 				E553399416EA115F00255C67 /* Pyramid.png in Resources */,
+				63594A4018F9E2530058D9EB /* music.png in Resources */,
+				632C061718BA5D82000EBFBE /* forward.png in Resources */,
 				6307EE13183164130034D0CB /* TimePickerVCViewController.xib in Resources */,
 				E553399516EA115F00255C67 /* SlowToFast.png in Resources */,
 				52DB39A417E229E400800260 /* retract.png in Resources */,
+				63114E3018BA734100A43892 /* backward.png in Resources */,
+				6362ABC018D7798B00EE904C /* music_note.png in Resources */,
 				E5CD0D2B16EBC80B00332141 /* note.jpeg in Resources */,
-				529FDDE317E540270016B575 /* play.png in Resources */,
 				E5CD0D2E16EBC86900332141 /* musicSettings.png in Resources */,
 				E50C234E17011DDF00BEA02C /* set.png in Resources */,
 				E5113E7B1724175900A52F5A /* background.png in Resources */,
 				E5113E7C1724175900A52F5A /* background@2x.png in Resources */,
+				631FA7C1189D6A8300C04AFC /* playlisticon.png in Resources */,
+				63B0AAF018574F4A00B0A40F /* IntervalSectionCell.xib in Resources */,
 				E59DF692172D6F3F001B7048 /* expandSongs.png in Resources */,
 				E59DF694172D718C001B7048 /* retractSongs.png in Resources */,
 				529FDDDE17E539F60016B575 /* next.png in Resources */,
+				63594A4618FC151A0058D9EB /* Shuffle@2x.png in Resources */,
+				63D194491902A5C300EA5DCA /* runningTabBar@2x.png in Resources */,
 				E59DF696172D818F001B7048 /* orange_play.png in Resources */,
 				E59DF69A172D81A0001B7048 /* orange_fast_foward.png in Resources */,
 				529FDDDF17E539F60016B575 /* back.png in Resources */,
+				635E4D5718A26DD90086F2A8 /* newWorkoutCell.xib in Resources */,
 				E59DF69B172D81A0001B7048 /* orange_pause.png in Resources */,
 				E59DF69C172D81A0001B7048 /* orange_rewind.png in Resources */,
 				E5BB4C451731F384001CC2F5 /* Settings.bundle in Resources */,
@@ -770,21 +923,25 @@
 				63197C51184BBA080004F7E0 /* WorkoutListItemCell.m in Sources */,
 				527150681651DF0200111078 /* main.m in Sources */,
 				5271506C1651DF0200111078 /* WOMusicAppDelegate.m in Sources */,
-				5271507F1651DF0300111078 /* CategorizedVC.m in Sources */,
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
+				6370AD1F18B6C48D00C71512 /* ENAPIRequest.m in Sources */,
+				63114E3418BA83D100A43892 /* WorkoutsVC.m in Sources */,
 				6307EE12183164130034D0CB /* TimePickerVCViewController.m in Sources */,
 				631606F0183E4E79008C64E5 /* WorkoutListItem.m in Sources */,
 				E5C452A3182990E60073A8B3 /* WorkoutGraph.m in Sources */,
+				6362ABBE18D7512900EE904C /* WorkoutsCollectionViewLayout.m in Sources */,
 				52449ED71667DA94000A146F /* MusicLibraryTableVC.m in Sources */,
+				63B3F656189D4B160087460A /* SJPlaylists.m in Sources */,
 				E5D77C27182AEC0E000BBFE4 /* SecondsPickerVCViewController.m in Sources */,
 				522E6F5F1667EFAF0036C5DA /* SongTableCell.m in Sources */,
 				E5EB5B12167FFDD300C3AA63 /* songbpmsmodel.xcdatamodeld in Sources */,
 				63197C49184BB5A50004F7E0 /* Tempo.m in Sources */,
 				E5C452A0182990E60073A8B3 /* WorkoutsCV.m in Sources */,
-				63C0B92918B65FF90027278E /* ENAPI.m in Sources */,
+				63B3F659189D4B160087460A /* SJConstants.m in Sources */,
+				631FA7C4189D6C8600C04AFC /* PlayListButton.m in Sources */,
 				63197C44184A5BDA0004F7E0 /* StartWorkoutSegue.m in Sources */,
-				63C0B92A18B65FF90027278E /* ENAPIRequest.m in Sources */,
 				E5C452A1182990E60073A8B3 /* WorkoutsCVC.m in Sources */,
+				6370AD1E18B6C48D00C71512 /* ENAPI.m in Sources */,
 				E5EB5B6B1680BB1E00C3AA63 /* MusicBPMEntry.m in Sources */,
 				E580F67116C7F37900E8AD5A /* Splash.m in Sources */,
 				E5C452AD182991210073A8B3 /* IntervalCell.m in Sources */,
@@ -792,6 +949,7 @@
 				E5CD0D3116EBCBF000332141 /* TransitionSegue.m in Sources */,
 				63197C411848C8710004F7E0 /* SongInstruction.m in Sources */,
 				6307EE1E183828BE0034D0CB /* IndividualWorkout.m in Sources */,
+				6370AD2818B6C6B100C71512 /* Base64Transcoder.c in Sources */,
 				E5DDAC8216F4F3470042D146 /* NSArray+Shuffle.m in Sources */,
 				E5C452B0182991210073A8B3 /* WorkoutInterval.m in Sources */,
 				63197C47184A5CA10004F7E0 /* WorkoutViewController.m in Sources */,
@@ -802,18 +960,25 @@
 				E5C452A2182990E60073A8B3 /* Workouts.m in Sources */,
 				E50C233516FE6BE500BEA02C /* SuperViewController.m in Sources */,
 				E50C233916FE702D00BEA02C /* PlayerViewController.m in Sources */,
+				6335410718EB90DE0007F093 /* MusicViewController.m in Sources */,
 				E50C234117008E8E00BEA02C /* WorkoutTimeSetSegue.m in Sources */,
 				6307EE19183190870034D0CB /* FXBlurView.m in Sources */,
 				6307EE21183839D60034D0CB /* DismissAndPushSegue.m in Sources */,
+				631FA7C9189D744500C04AFC /* WorkoutsHeader.m in Sources */,
 				6307EE16183184BF0034D0CB /* TimeLabel.m in Sources */,
 				E5C452AF182991210073A8B3 /* WorkoutDesignerVC.m in Sources */,
 				E50C235117012A2300BEA02C /* WorkoutTypePickerViewController.m in Sources */,
+				6335410118DD05680007F093 /* PlaylistChooserViewController.m in Sources */,
+				63B3F657189D4B160087460A /* SongJockeySong.m in Sources */,
+				63B0AAF31857507A00B0A40F /* IntervalSectionCell.m in Sources */,
 				E51FD8721704AAA300C52B75 /* TimeUtils.m in Sources */,
+				635E4D5A18A26E660086F2A8 /* NewWorkoutCell.m in Sources */,
+				6335410A18EB92290007F093 /* MusicItemCell.m in Sources */,
+				63B3F658189D4B160087460A /* SongJockeyPlayer.m in Sources */,
 				E5754ABD170A1E9400998E1D /* ListPickerViewController.m in Sources */,
 				634640C818B6A4E1003D7197 /* NSArray+Range.m in Sources */,
 				E5D77C2E182BEC28000BBFE4 /* WorkoutIntervalPicker.m in Sources */,
 				E5BB4C491731F9B1001CC2F5 /* WorkoutMusicSettings.m in Sources */,
-				63C0B92818B65FF90027278E /* Base64Transcoder.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

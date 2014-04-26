@@ -49,7 +49,9 @@
     NSArray * intervalDicts = (NSArray *)[dict objectForKey:@"intervals"];
     [intervalDicts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary * intervalDict =  (NSDictionary *) obj;
-        [self.intervals addObject:[[WorkoutInterval alloc] initFromDict:intervalDict forWorkout:self]];
+        WorkoutInterval * interval = [[WorkoutInterval alloc] initFromDict:intervalDict forWorkout:self];
+        interval.position = idx;
+        [self.intervals addObject:interval];
     }];
     self.changeActions = [[NSMutableArray alloc] initWithCapacity:2];
     return self;

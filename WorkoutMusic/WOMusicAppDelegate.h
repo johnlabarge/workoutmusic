@@ -25,6 +25,8 @@
 @property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong, readonly) WorkoutList * workout;
 @property (nonatomic, strong) MusicLibraryBPMs * musicBPMLibrary; 
-@property (nonatomic, strong) TransitionController * transitionController; 
+@property (nonatomic, strong) TransitionController * transitionController;
+@property (nonatomic, weak) IBOutlet UINavigationController *workoutNavigator;
+@property (nonatomic, readonly) IBOutlet UITabBarController * tabs;
 
 @end

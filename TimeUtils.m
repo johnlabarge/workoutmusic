@@ -15,12 +15,12 @@
     NSInteger remainingSeconds = seconds - (minutes*60);
     NSString * remainingSecondsS;
     if (remainingSeconds < 10) {
-        remainingSecondsS = [NSString stringWithFormat:@"0%d",remainingSeconds];
+        remainingSecondsS = [NSString stringWithFormat:@"0%lu",remainingSeconds];
     } else {
-        remainingSecondsS = [NSString stringWithFormat:@"%d", remainingSeconds];
+        remainingSecondsS = [NSString stringWithFormat:@"%lu", remainingSeconds];
     }
     
-    NSString * ret = [NSString stringWithFormat:@"%d:%@",minutes, remainingSecondsS];
+    NSString * ret = [NSString stringWithFormat:@"%lu:%@",minutes, remainingSecondsS];
     return ret; 
 }
 @end

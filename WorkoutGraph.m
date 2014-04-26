@@ -61,14 +61,20 @@
 CGColorRef getAdjustedColor(CGColorRef inColor, float adjustment) {
     CGFloat * components = (CGFloat *)  CGColorGetComponents(inColor);
  
-    float adjustedComponents[4];
+    CGFloat adjustedComponents[4];
     for (int i= 0; i < 3; i++) {
         adjustedComponents[i] = components[i]+adjustment;
     }
     adjustedComponents[3] = CGColorGetAlpha(inColor);
+    
     return CGColorCreate(CGColorGetColorSpace(inColor),adjustedComponents );
 }
 
+
+void createBar2(CGContextRef context, CGFloat x, CGFloat y, CGFloat width, CGFloat height, CGColorRef color)
+{
+
+}
 
 void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat height, CGColorRef color) {
     
@@ -86,25 +92,19 @@ void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat 
     CGFloat barHeight = height - 1*edgeWidth;
     
     
-   // CGRect leftEdgeRectangle = CGRectMake(x,y, edgeWidth,barHeight+edgeWidth);
-    CGRect middleRectangle = CGRectMake(x+edgeWidth,y+edgeWidth,barWidth,barHeight);
-    //CGRect topRectangle = CGRectMake(x+edgeWidth,y,barWidth, edgeWidth);
-    //CGRect rightEdgeRectangle = CGRectMake(x+edgeWidth+barWidth, y+edgeWidth, edgeWidth, barHeight);
+     CGRect middleRectangle = CGRectMake(x+edgeWidth,y+edgeWidth,barWidth,barHeight);
+
     
     CGContextSetFillColorWithColor(context, getAdjustedColor(color, adjustment));
     CGContextSetStrokeColorWithColor(context, getAdjustedColor(color, adjustment)); 
-  //  CGContextFillRect(context,leftEdgeRectangle);
-   // CGContextStrokeRect(context, leftEdgeRectangle);
-    
-   // CGContextSetFillColorWithColor(context, color);
-   // CGContextStrokeRect(context, middleRectangle);
+
     
     NSArray * gradientColors = @[(__bridge id)topGradient,(__bridge id)lowGradient];
     CGFloat locations[2] = {0.0,1.0}; 
     CGGradientRef gradient = CGGradientCreateWithColors(CGColorGetColorSpace(color), (__bridge CFArrayRef)(gradientColors), locations);
     
     CGContextSaveGState(context);
-    //CGContextAddEllipseInRect(context, middleRectangle);
+
     CGContextAddRect(context, middleRectangle);
     CGContextClip(context);
     
@@ -115,9 +115,7 @@ void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat 
     
     CGContextRestoreGState(context);
 
-    
-    //CGContextDrawLinearGradient(context, gradient, CGPointMake(x+edgeWidth,y+edgeWidth), CGPointMake(x+edgeWidth+barWidth,barHeight),  kCGGradientDrawsAfterEndLocation);
-  //  CGContextSetFillColorWithColor(context, middleGradient);
+
     
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, x+edgeWidth+barWidth,y+edgeWidth);
@@ -131,11 +129,7 @@ void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat 
     CGColorRef rightEdgeColor = getAdjustedColor(color,0-adjustment);
     CGContextSetFillColorWithColor(context, rightEdgeColor);
     CGContextSetStrokeColorWithColor(context, rightEdgeColor);
-    //CGContextStrokeRect(context,rightEdgeRectangle);
-    //CGContextFillRect(context, rightEdgeRectangle);
-    
-    // rightEdgeColor = getAdjustedColor(color,0-2*adjustment);
-   // CGContextSetFillColorWithColor(context, color);
+
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, x+edgeWidth+barWidth,y+edgeWidth);
     CGContextAddLineToPoint(context, x+edgeWidth+barWidth+edgeWidth+0.5, y+edgeWidth);
@@ -145,18 +139,9 @@ void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat 
     CGContextClosePath(context);
     CGContextFillPath(context);
     CGContextSetLineWidth(context, 1.2f);
-   //CGContextSetStrokeColorWithColor(context, color);
-   CGContextStrokePath(context);
-   // CGContextFillRect(context,rightEdgeRectangle);
-    /*CGContextMoveToPoint(context, 0, 0);
-    
-    CGContextAddLineToPoint(context, 0, 50);
-    CGContextAddLineToPoint(context, 50, 0);
-    CGContextAddLineToPoint(context, 0,0);*/
 
-   // CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
-   //CGContextStrokePath(context);
-    
+   CGContextStrokePath(context);
+
     
 
 
@@ -236,7 +221,7 @@ void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat 
             
             CGFloat lineWidth = [self intervalWidth:rect interval:interval];
             
-            if (me.currentInterval != idx) {
+            if (!self.active || me.currentInterval != idx) {
                  createBar(context, currentXPos+space, (rect.size.height - lineHeightN.floatValue)+voff, lineWidth, lineHeightN.floatValue+voff, self.defaultColor.CGColor);
             } else {
                 if (me.animateInterval == 0) {

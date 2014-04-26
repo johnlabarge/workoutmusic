@@ -21,6 +21,12 @@
     return self;
 }
 
+-(void) setWorkoutInterval:(WorkoutInterval *)workoutInterval
+{
+    _workoutInterval = workoutInterval;
+    self.tempoSlider.value = (float) workoutInterval.speed;
+    
+}
 -(void) awakeFromNib
 {
     UITapGestureRecognizer *timeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editTime)];
@@ -28,6 +34,7 @@
     timeTap.delaysTouchesBegan = NO;
 
     [self.timeLabel addGestureRecognizer:timeTap];
+    self.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -46,25 +53,8 @@
 
 
 
-
--(void) selectCell
-{
-    
-    //self.selected = true;
-    self.contentView.layer.borderColor = [UIColor blackColor].CGColor;
-    self.contentView.layer.borderWidth = 1.0;
-    
-}
--(void) deselectCell
-{
-    //self.selected = false;
-    self.contentView.layer.borderWidth = 0.0;
-    self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
-}
 - (IBAction)editTime {
     
-    NSLog(@"edit time");
-
     [self.parent presentTimePickerForInterval:self.workoutInterval];
 
     
@@ -76,12 +66,8 @@
     
 }
 - (IBAction)sliderChanged:(id)sender {
-    NSLog(@"slider value=%.2f",self.tempoSlider.value);
-    
     NSInteger intVal = round(self.tempoSlider.value);
-    
     [self.tempoSlider setValue:intVal animated:NO];
-    NSLog(@"slider int value=%d", intVal);
     self.workoutInterval.speed = intVal;
 }
 
