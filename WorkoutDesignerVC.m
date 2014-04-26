@@ -55,15 +55,15 @@
         self.model  = [[Workout alloc] init];
     }
     self.nameField.text = self.model.name;
-    [[self.model.intervals objectAtIndex:0] addObserver:self forKeyPath:@"speed"  options:NSKeyValueObservingOptionNew context:NULL];
+
     
     
-    [self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
-    [self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
-    __weak typeof(self) weakSelf = self;
-    [self.model addChangeAction:^(Workout *changedWorkout) {
-        [weakSelf.intervalsTable reloadData];
-    }];
+    //[self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
+    //[self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self listenForModelChanges];
+    [self update];
+
     self.workoutGraph.workout = self.model;
     
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -72,6 +72,20 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void) listenForModelChanges
+{
+    __weak typeof(self) weakSelf = self;
+    [self.model addChangeAction:^(Workout *changedWorkout) {
+        [weakSelf update];
+    }];
+}
+
+-(void) update
+{
+    self.workoutTimeLabel.text = [NSString stringWithFormat:@"%ld minutes",self.model.workoutSeconds/60];
+    [self.intervalsTable reloadData];
+    [self.workoutGraph reloadData];
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -125,26 +139,11 @@
 - (IBAction)addInterval:(id)sender {
 
     WorkoutInterval * interval = [self.model newInterval];
-    [interval addObserver:self forKeyPath:@"speed" options:NSKeyValueObservingOptionNew context:NULL];
     [self.intervalsTable reloadData];
 
 }
 
--(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (object == self.model) {
-        if ([keyPath isEqualToString:@"workoutSeconds"]) {
-            self.workoutTimeLabel.text = [NSString stringWithFormat:@"%d minutes",self.model.workoutSeconds/60];
-            [self.workoutGraph reloadData];
-        }
-        else if ([keyPath isEqualToString:@"intervals"]) {
-            [self.intervalsTable reloadData];
-            [self.workoutGraph reloadData];
-        }
-    }  else {
-        [self.workoutGraph reloadData];
-    }
-}
+
 
 -(void) updateStateForSelection
 {
@@ -212,45 +211,15 @@
 
 }
 - (IBAction)repeatIntervals:(id)sender {
-    __block NSIndexPath * lastIntervalIndex;
-     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-         
-         NSIndexPath * indexPath = obj;
-         if (lastIntervalIndex && lastIntervalIndex.row  < indexPath.row) {
-             lastIntervalIndex = indexPath;
-         }
-    }];
-    
-    
-    NSArray * copiesOfSelectedIntervals = [self copiesOfSelectedIntervals];
-    /*
-      TODO encapsulate in model
-     */
-    
-    
-    if ([self selectedIndexesAreConsecutive]) {
-        [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSIndexPath * indexPath = obj;
-            [self.model.intervals insertObject:copiesOfSelectedIntervals[idx] atIndex:idx+indexPath.row];
-        }];
+    BOOL consecutive = [self selectedIndexesAreConsecutive];
+    if (consecutive) {
+        NSUInteger location = ((NSIndexPath *) self.selectedIndexes[0]).row;
+        NSUInteger length = self.selectedIndexes.count;
+        [self.model repeatIntervalsInRange:NSMakeRange(location,length)];
     }
- 
-    [self.model save];
-    [self.intervalsTable reloadData];
-    [self.workoutGraph reloadData];
 }
 
--(NSArray *) copiesOfSelectedIntervals
-{
-    __weak NSMutableArray * intervals = self.model.intervals;
-    NSMutableArray * copies = [[NSMutableArray alloc] initWithCapacity:self.selectedIndexes.count];
-    __weak NSArray *sortedSelectedIndexes = self.selectedIndexes;
-     [sortedSelectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-         NSIndexPath * index = obj;
-         [copies addObject:[intervals[index.row] copy]];
-     }];
-     return copies;
-}
+
 -(void) keyboardDidShow:(NSNotification *)note;
 {
     self.originalCenter = self.view.center;

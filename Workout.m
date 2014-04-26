@@ -28,9 +28,7 @@
     self = [super init];
     
     _intervals = [[NSMutableArray alloc] initWithCapacity:20];
-    WorkoutInterval * firstInterval = [[WorkoutInterval alloc] initForWorkout:self];
-    firstInterval.speed = SLOW;
-    
+    WorkoutInterval * firstInterval = [[WorkoutInterval alloc] initFromDict:@{@"speed": @0, @"intervalSeconds": @60} forWorkout:self];
     
     [self.intervals addObject:firstInterval];
     [self recalculate];
@@ -132,9 +130,11 @@
     [self.intervals addObject:interval];
     
     
-    [self recalculate];
+   
     
     [self save];
+    [self intervalChanged:interval];
+    
     return interval;
     
 }
@@ -176,6 +176,11 @@
 {
     [self recalculate];
     [self save];
+    [self dispatchChanged];
+}
+
+-(void) dispatchChanged
+{
     __weak typeof(self) weakSelf = self;
     [self.changeActions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         void (^action)(Workout *) =  (void (^)(Workout *)) obj;
@@ -186,5 +191,21 @@
 -(void) addChangeAction:(void (^)(Workout *))changeAction
 {
     [self.changeActions addObject:[changeAction copy]];
+}
+
+-(void) repeatIntervalsInRange:(NSRange)range
+{
+    NSMutableArray * copies = [[NSMutableArray alloc]initWithCapacity:range.length];
+    NSUInteger i;
+    NSUInteger ending = range.location+range.length;
+    for (i= range.location; i < ending; i++ ) {
+        [copies addObject:[self.intervals[i] copy]];
+    }
+    [copies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        [self.intervals insertObject:obj atIndex:i+idx];
+    }];
+    [self intervalChanged:nil];
+  
 }
 @end

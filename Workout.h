@@ -22,4 +22,5 @@
 -(void) renameFile:(NSString *)newName;
 -(void) intervalChanged:(WorkoutInterval *)sender;
 -(void) addChangeAction:(void(^)(Workout * changedWorkout))changeAction;
+-(void) repeatIntervalsInRange:(NSRange)range;
 @end

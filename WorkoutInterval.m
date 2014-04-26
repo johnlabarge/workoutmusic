@@ -55,7 +55,14 @@
 }
 -(id) copyWithZone:(NSZone *)zone
 {
-    WorkoutInterval *another = [[WorkoutInterval alloc] initForWorkout:self.workout];
+    /*
+    *TODO : better design.
+    * hacked up properties to tell workout of change
+    * because of that copy has to use the side door.
+    */
+    NSNumber * speedNumber = [NSNumber numberWithInteger:self.speed];
+    NSNumber * secondsNumber = [NSNumber numberWithInteger:self.intervalSeconds];
+    WorkoutInterval *another = [[WorkoutInterval alloc] initFromDict:@{@"intervalSeconds":secondsNumber,@"speed":speedNumber} forWorkout:self.workout];
     another.speed = self.speed;
     another.intervalSeconds = self.intervalSeconds;
     return another;
