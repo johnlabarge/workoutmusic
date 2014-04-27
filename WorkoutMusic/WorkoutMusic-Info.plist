@@ -47,6 +47,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>appIcon@2x.png</string>
+	</array>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
 	<key>UIBackgroundModes</key>
