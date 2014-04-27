@@ -100,11 +100,6 @@
 #pragma mark - UICollectionViewDelegate
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Selection event...%d", [indexPath indexAtPosition:1]);
-   /* WorkoutsCVC * cell = (WorkoutsCVC *)[collectionView cellForItemAtIndexPath:indexPath];
-     [cell highlight];
-    Workout * workout = [self workoutForIndexPath: indexPath];
-    NSLog(@"workout %@ selected.", workout.name);*/
     self.selectedWorkout = [self workoutForIndexPath:indexPath];
     [self.parentViewController performSegueWithIdentifier:@"individualWorkout" sender:self];
     //WorkoutsCVC * cell = [(WorkoutsCVC *) collectionView:collectionView cellForItemAtIndexPath:indexPath];

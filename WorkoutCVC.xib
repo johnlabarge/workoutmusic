@@ -15,19 +15,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g0d-1j-sSk" customClass="WorkoutGraph">
-                        <rect key="frame" x="23" y="20" width="57" height="67"/>
+                        <rect key="frame" x="14" y="16" width="77" height="67"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-bf-0Ss">
-                        <rect key="frame" x="30" y="25" width="73" height="53"/>
+                        <rect key="frame" x="19" y="25" width="73" height="53"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRX-B2-AXV">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="68" translatesAutoresizingMaskIntoConstraints="NO" id="cRX-B2-AXV">
                                 <rect key="frame" x="0.0" y="0.0" width="68" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -35,12 +35,14 @@
                                 <rect key="frame" x="-15" y="34" width="68" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="23"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="23"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="0.32000000000000001" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cRX-B2-AXV" firstAttribute="leading" secondItem="Jdm-bf-0Ss" secondAttribute="leading" constant="2" id="HXs-Sg-0bU"/>
+                            <constraint firstAttribute="trailing" secondItem="cRX-B2-AXV" secondAttribute="trailing" constant="5" id="hyz-2H-5vu"/>
                             <constraint firstItem="4pL-9k-o2M" firstAttribute="top" secondItem="cRX-B2-AXV" secondAttribute="bottom" constant="13" id="p35-Eg-PEt"/>
                             <constraint firstAttribute="centerX" secondItem="cRX-B2-AXV" secondAttribute="centerX" id="qzm-sa-GgY"/>
                             <constraint firstAttribute="centerX" secondItem="4pL-9k-o2M" secondAttribute="centerX" id="vge-DJ-omC"/>

@@ -29,7 +29,6 @@
     
 }
 -(void) setIntervals:(NSArray *) array {
-    NSLog(@"setting intervals to array of size %d",array.count);
     _intervals = array;
     [self setNeedsDisplay];
 }

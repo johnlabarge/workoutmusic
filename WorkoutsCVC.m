@@ -42,7 +42,7 @@
     [self.graph reloadData];
     self.timeLabel.text = [NSString stringWithFormat:@"%d min", _workout.workoutSeconds/60];
     self.nameLabel.text = _workout.name;
-    self.graph.backgroundColor = [UIColor blackColor]; 
+   // self.graph.backgroundColor = [UIColor blackColor];
 }
 
 

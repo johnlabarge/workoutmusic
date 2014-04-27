@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WorkoutGraph.h"
-@interface IndividualWorkout : UIViewController
+@interface IndividualWorkout : UIViewController <UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property (strong, nonatomic) IBOutlet UIButton *deleteButton;

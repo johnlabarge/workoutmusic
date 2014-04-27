@@ -11,7 +11,7 @@
 #import "WorkoutGraph.h"
 #import "TimePickerVCViewController.h"
 
-@interface WorkoutDesignerVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface WorkoutDesignerVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *nameField; 
 @property (strong, nonatomic) IBOutlet UITableView *intervalsTable;

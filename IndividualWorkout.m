@@ -11,7 +11,7 @@
 #import "WorkoutViewController.h"
 
 @interface IndividualWorkout ()
-
+@property (nonatomic, strong) UIAlertView * alert;
 @end
 
 @implementation IndividualWorkout
@@ -31,7 +31,7 @@
     self.nameLabel.text = self.workout.name;
     self.graphView.workout = self.workout;
     self.workoutTimeLabel.text = [self timeText];
-    NSLog(@"intervals = %d",self.workout.intervals.count);
+    NSLog(@"intervals = %lu",(unsigned long)self.workout.intervals.count);
 }
 	// Do any additional setup after loading the view.
 
@@ -53,9 +53,9 @@
     NSInteger minutes = self.workout.workoutSeconds/60;
     NSInteger seconds = self.workout.workoutSeconds - (60*minutes);
     if (seconds > 0) {
-        text = [NSString stringWithFormat:@"%d min %d sec", minutes, seconds];
+        text = [NSString stringWithFormat:@"%ld min %ld sec", (long)minutes, (long)seconds];
     } else {
-        text = [NSString stringWithFormat:@"%d min", minutes];
+        text = [NSString stringWithFormat:@"%ld min", (long)minutes];
     }
     return text;
 }
@@ -64,16 +64,33 @@
 {
     if ([segue.identifier isEqualToString:@"editWorkout"]) {
         WorkoutDesignerVC * wdvc = (WorkoutDesignerVC *) segue.destinationViewController;
-        NSLog(@"workout intervals = %d",self.workout.intervals.count);
+        NSLog(@"workout intervals = %lu",(unsigned long)self.workout.intervals.count);
         wdvc.model = self.workout;
     } else if ([segue.identifier isEqualToString:@"startWorkout"]) {
         WorkoutViewController * wovc = (WorkoutViewController *) segue.destinationViewController;
         wovc.workout = self.workout;
-        NSLog(@"workout intervals = %d",self.workout.intervals.count);
+        NSLog(@"workout intervals = %lu",(unsigned long)self.workout.intervals.count);
 
     }
 }
+- (IBAction)deleteWorkout:(id)sender {
+    self.alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Delete this workout forever?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Do it!", nil];
+    
+    [self.alert show];
+}
 
 
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex) {
+        [self.workout destroy];
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+}
 
 @end

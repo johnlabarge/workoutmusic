@@ -67,6 +67,11 @@
 		631FA7C9189D744500C04AFC /* WorkoutsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FA7C8189D744500C04AFC /* WorkoutsHeader.m */; };
 		632C061518BA593A000EBFBE /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 632C061418BA593A000EBFBE /* play.png */; };
 		632C061718BA5D82000EBFBE /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 632C061618BA5D82000EBFBE /* forward.png */; };
+		633280E4190C2CDD00EF6FC0 /* repeat.png in Resources */ = {isa = PBXBuildFile; fileRef = 633280E3190C2CDD00EF6FC0 /* repeat.png */; };
+		633280E7190C2E7C00EF6FC0 /* add_interval.png in Resources */ = {isa = PBXBuildFile; fileRef = 633280E5190C2E7C00EF6FC0 /* add_interval.png */; };
+		633280E8190C2E7C00EF6FC0 /* delete_interval.png in Resources */ = {isa = PBXBuildFile; fileRef = 633280E6190C2E7C00EF6FC0 /* delete_interval.png */; };
+		633280EA190D4B7500EF6FC0 /* new_workout.png in Resources */ = {isa = PBXBuildFile; fileRef = 633280E9190D4B7500EF6FC0 /* new_workout.png */; };
+		633280ED190D513F00EF6FC0 /* EditWorkoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 633280EC190D513F00EF6FC0 /* EditWorkoutSegue.m */; };
 		6335410118DD05680007F093 /* PlaylistChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6335410018DD05680007F093 /* PlaylistChooserViewController.m */; };
 		6335410418EB8D470007F093 /* MusicItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6335410318EB8D470007F093 /* MusicItemCell.xib */; };
 		6335410718EB90DE0007F093 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6335410618EB90DE0007F093 /* MusicViewController.m */; };
@@ -236,6 +241,12 @@
 		631FA7C8189D744500C04AFC /* WorkoutsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutsHeader.m; sourceTree = "<group>"; };
 		632C061418BA593A000EBFBE /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		632C061618BA5D82000EBFBE /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
+		633280E3190C2CDD00EF6FC0 /* repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = repeat.png; path = images/repeat.png; sourceTree = "<group>"; };
+		633280E5190C2E7C00EF6FC0 /* add_interval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_interval.png; path = images/add_interval.png; sourceTree = "<group>"; };
+		633280E6190C2E7C00EF6FC0 /* delete_interval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_interval.png; path = images/delete_interval.png; sourceTree = "<group>"; };
+		633280E9190D4B7500EF6FC0 /* new_workout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = new_workout.png; path = images/new_workout.png; sourceTree = "<group>"; };
+		633280EB190D513F00EF6FC0 /* EditWorkoutSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditWorkoutSegue.h; sourceTree = "<group>"; };
+		633280EC190D513F00EF6FC0 /* EditWorkoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditWorkoutSegue.m; sourceTree = "<group>"; };
 		633540FF18DD05680007F093 /* PlaylistChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistChooserViewController.h; sourceTree = "<group>"; };
 		6335410018DD05680007F093 /* PlaylistChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistChooserViewController.m; sourceTree = "<group>"; };
 		6335410218DD057B0007F093 /* OptionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionDelegate.h; sourceTree = "<group>"; };
@@ -426,6 +437,12 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
+				633280EB190D513F00EF6FC0 /* EditWorkoutSegue.h */,
+				633280EC190D513F00EF6FC0 /* EditWorkoutSegue.m */,
+				633280E9190D4B7500EF6FC0 /* new_workout.png */,
+				633280E5190C2E7C00EF6FC0 /* add_interval.png */,
+				633280E6190C2E7C00EF6FC0 /* delete_interval.png */,
+				633280E3190C2CDD00EF6FC0 /* repeat.png */,
 				63D194481902A5C300EA5DCA /* runningTabBar@2x.png */,
 				63594A4318FAF2E10058D9EB /* runningImage.png */,
 				63594A4118FA1DC40058D9EB /* New@2x.png */,
@@ -838,6 +855,7 @@
 				5271507A1651DF0300111078 /* first.png in Resources */,
 				5271507C1651DF0300111078 /* first@2x.png in Resources */,
 				527150811651DF0300111078 /* second.png in Resources */,
+				633280E8190C2E7C00EF6FC0 /* delete_interval.png in Resources */,
 				527150831651DF0300111078 /* second@2x.png in Resources */,
 				63114E3118BA734100A43892 /* pause.png in Resources */,
 				6396F6C318CD578C00A86088 /* delete.png in Resources */,
@@ -845,6 +863,7 @@
 				632C061518BA593A000EBFBE /* play.png in Resources */,
 				6335410418EB8D470007F093 /* MusicItemCell.xib in Resources */,
 				63594A4218FA1DC40058D9EB /* New@2x.png in Resources */,
+				633280E4190C2CDD00EF6FC0 /* repeat.png in Resources */,
 				52449ED81667DA94000A146F /* MusicLibraryTableVC.xib in Resources */,
 				6396F6C518CD619100A86088 /* go.png in Resources */,
 				522E6F611667EFCB0036C5DA /* SongTableCell.xib in Resources */,
@@ -856,6 +875,8 @@
 				E580F66716C7F24A00E8AD5A /* runner.png in Resources */,
 				E5C4529F182990E60073A8B3 /* WorkoutCVC.xib in Resources */,
 				631FA7BF189D697300C04AFC /* WorkoutsHeader.xib in Resources */,
+				633280E7190C2E7C00EF6FC0 /* add_interval.png in Resources */,
+				633280EA190D4B7500EF6FC0 /* new_workout.png in Resources */,
 				E5205DB716C7F40500EDD1DA /* workoutmusic.storyboard in Resources */,
 				E553399316EA115F00255C67 /* FastThenSlow.png in Resources */,
 				63594A4418FAF2E10058D9EB /* runningImage.png in Resources */,
@@ -923,6 +944,7 @@
 				63197C51184BBA080004F7E0 /* WorkoutListItemCell.m in Sources */,
 				527150681651DF0200111078 /* main.m in Sources */,
 				5271506C1651DF0200111078 /* WOMusicAppDelegate.m in Sources */,
+				633280ED190D513F00EF6FC0 /* EditWorkoutSegue.m in Sources */,
 				527150A31655D15200111078 /* MusicLibraryBPMs.m in Sources */,
 				6370AD1F18B6C48D00C71512 /* ENAPIRequest.m in Sources */,
 				63114E3418BA83D100A43892 /* WorkoutsVC.m in Sources */,

@@ -64,7 +64,6 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="d7W-gw-PBJ" firstAttribute="bottom" secondItem="MWr-yP-RvY" secondAttribute="bottom" id="49n-ND-1oD"/>
-                    <constraint firstItem="1hy-Rg-XQR" firstAttribute="leading" secondItem="27" secondAttribute="trailing" constant="1" id="8Sv-Sw-Lsu"/>
                     <constraint firstItem="121" firstAttribute="top" secondItem="fVC-wJ-AdG" secondAttribute="top" constant="5" id="Ctu-SA-H2o"/>
                     <constraint firstItem="d7W-gw-PBJ" firstAttribute="leading" secondItem="MWr-yP-RvY" secondAttribute="trailing" constant="1" id="Dkn-BQ-Y4R"/>
                     <constraint firstItem="VQS-dd-PSF" firstAttribute="top" secondItem="fVC-wJ-AdG" secondAttribute="top" constant="10" id="MSi-8f-hYz"/>

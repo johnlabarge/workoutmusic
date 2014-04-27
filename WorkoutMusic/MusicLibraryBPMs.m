@@ -241,12 +241,6 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 
     }];
     
-
-    NSError *error;
-    NSFetchRequest * request = [NSFetchRequest fetchRequestWithEntityName:@"MusicBPMEntry"];
-    NSArray * entityObjs = [self.managedObjectContext executeFetchRequest:request error:&error];
-    NSLog(@"total entities in store : %lu",entityObjs.count);
-    
 }
 
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title

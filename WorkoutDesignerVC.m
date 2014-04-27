@@ -21,6 +21,7 @@
 @property UITextField * editingField;
 @property TimePickerVCViewController * presentedTimePicker;
 @property (nonatomic, strong) NSMutableArray * selectedIndexes;
+@property (nonatomic, strong) UIAlertView * alert;
 @end
 
 @implementation WorkoutDesignerVC
@@ -34,7 +35,11 @@
 }
 
 
-
+-(void) viewWillAppear:(BOOL)animated
+{
+    [self listenForModelChanges];
+    [self update];
+}
 
 - (void)viewDidLoad
 {
@@ -48,11 +53,9 @@
         UINib * intervalCell = [UINib  nibWithNibName:@"intervalcell" bundle:nil];
     [self.intervalsTable registerNib:intervalCell forCellReuseIdentifier:@"IntervalCell"];
     [self.navigationController setToolbarHidden:false animated:YES];
-    /*
-      TODO handle editing an existing 
-     */
+  
     if (self.model == nil) {
-        self.model  = [[Workout alloc] init];
+        [self newWorkout];
     }
     self.nameField.text = self.model.name;
 
@@ -61,10 +64,9 @@
     //[self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
     //[self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
     
-    [self listenForModelChanges];
-    [self update];
+    
 
-    self.workoutGraph.workout = self.model;
+    
     
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -72,8 +74,37 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (IBAction)newWorkoutAction:(id)sender {
+    [self newWorkout];
+}
+
+-(void) newWorkout
+{
+    if ((self.model == nil) || (!self.model.changed) || (self.model.name)) {
+        self.model = [[Workout alloc] init];
+        [self listenForModelChanges];
+        [self update];
+    }
+    else {
+       self.alert =  [[UIAlertView alloc] initWithTitle:@"Lose changes" message:@"Creating a new workout without naming this one will lose changes to existing workout. Continue?" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"Continue", nil];
+        [self.alert show];
+    }
+}
+#pragma mark UIAlertViewDelegate
+
+-(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"alert view dismissed with button %ld", (long)buttonIndex);
+    if (buttonIndex) {
+        self.model = [[Workout alloc] init];
+        [self listenForModelChanges];
+        [self update];
+    }
+}
+
 -(void) listenForModelChanges
 {
+    self.workoutGraph.workout = self.model;
     __weak typeof(self) weakSelf = self;
     [self.model addChangeAction:^(Workout *changedWorkout) {
         [weakSelf update];
@@ -83,6 +114,12 @@
 -(void) update
 {
     self.workoutTimeLabel.text = [NSString stringWithFormat:@"%ld minutes",self.model.workoutSeconds/60];
+    if (self.model.name) {
+        self.nameField.text = self.model.name;
+    } else {
+        self.nameField.text = nil;
+    }
+    
     [self.intervalsTable reloadData];
     [self.workoutGraph reloadData];
 }

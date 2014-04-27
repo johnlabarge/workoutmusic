@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray * intervals;
 @property (readwrite, assign) NSInteger workoutSeconds;
 @property (nonatomic, strong) NSString * name;
+@property (nonatomic, assign) BOOL changed;
 +(NSString *) pathToWorkout:(NSString *)workoutName;
 -(instancetype) initFromDict:(NSDictionary *) dict;
 -(WorkoutInterval *) newInterval;
@@ -21,6 +22,7 @@
 -(void) save;
 -(void) renameFile:(NSString *)newName;
 -(void) intervalChanged:(WorkoutInterval *)sender;
+-(void) destroy; 
 -(void) addChangeAction:(void(^)(Workout * changedWorkout))changeAction;
 -(void) repeatIntervalsInRange:(NSRange)range;
 @end

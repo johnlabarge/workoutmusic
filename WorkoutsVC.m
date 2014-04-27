@@ -47,18 +47,11 @@
         
     }
 }
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (NSUInteger)supportedInterfaceOrientations
 {
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
-        NSLog(@" did rotate to landscape");
-        CGPoint position = self.workoutSelector.frame.origin;
-        CGSize size = self.workoutSelector.frame.size;
-        NSLog(@"%.2f, %.2f, %.2f x %.2f", position.x, position.y, size.width, size.height);
-    }
+    return UIInterfaceOrientationMaskPortrait;
 }
+
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -68,15 +61,7 @@
     }
     else if ([segue.identifier isEqualToString:@"embeddedWorkoutsCV"]) {
         self.workoutsCV = segue.destinationViewController;
-    } else if ([segue.identifier isEqualToString:@"changeworkoutsongs"]) {
-        PlaylistChooserViewController * playlistChooser = (PlaylistChooserViewController *) segue.destinationViewController;
-        playlistChooser.delegate = self;
-        
     }
 }
--(void)optionChosen:(NSObject *)option
-{
-    NSString * playListName = (NSString *)option;
-    [WorkoutMusicSettings setWorkoutSongsPlaylist:playListName];
-}
+
 @end

@@ -181,6 +181,7 @@
 
 -(void) dispatchChanged
 {
+    self.changed = YES;
     __weak typeof(self) weakSelf = self;
     [self.changeActions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         void (^action)(Workout *) =  (void (^)(Workout *)) obj;
@@ -207,5 +208,16 @@
     }];
     [self intervalChanged:nil];
   
+}
+
+-(void) destroy
+{
+    NSString * path = [Workout pathToWorkout:self.name];
+    NSError *error;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+    if (!success) {
+        NSLog(@" couldn't destroy workout : %@ because %@", self.name, [error localizedDescription]);
+    }
+        
 }
 @end

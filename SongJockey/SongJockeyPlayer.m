@@ -9,6 +9,9 @@
 #import "SongJockeyPlayer.h"
 #import "SongJockeySong.h"
 #import "AVFoundation/AVPlayer.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 @interface SongJockeyPlayer() {
         dispatch_queue_t _timer_queue;
         dispatch_source_t _timer;
@@ -57,6 +60,22 @@
     
     _playerLoadingQueue = dispatch_queue_create("playerLoading", NULL);
     
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    
+    NSError *setCategoryError = nil;
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!success) {
+    
+        NSLog(@"audio session setCategory error: %@",[setCategoryError localizedDescription]);
+    
+    }
+    
+    NSError *activationError = nil;
+    success = [audioSession setActive:YES error:&activationError];
+    if (!success) {
+        NSLog(@"audio session activation Error: %@",[activationError localizedDescription]);
+    }
 
    
     return self;
