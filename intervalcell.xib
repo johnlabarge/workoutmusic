@@ -14,17 +14,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="aZv-cD-qOh">
-                        <rect key="frame" x="83" y="19" width="99" height="31"/>
+                    <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="aZv-cD-qOh">
+                        <rect key="frame" x="96" y="20" width="150" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="95" id="NIq-ci-QY2"/>
+                            <constraint firstAttribute="width" constant="150" id="NIq-ci-QY2"/>
                         </constraints>
                         <connections>
                             <action selector="sliderChanged:" destination="IUX-Jm-5Nf" eventType="valueChanged" id="lhd-oG-Tox"/>
                         </connections>
                     </slider>
-                    <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0z-GW-6Pe" customClass="TimeLabel">
+                    <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0z-GW-6Pe" customClass="TimeLabel">
                         <rect key="frame" x="6" y="15" width="78" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="31"/>
@@ -33,8 +33,10 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="aZv-cD-qOh" firstAttribute="leading" secondItem="K0z-GW-6Pe" secondAttribute="trailing" constant="1" id="Hz0-YB-XWa"/>
                     <constraint firstItem="K0z-GW-6Pe" firstAttribute="leading" secondItem="P8g-rF-hpa" secondAttribute="leading" constant="6" id="eRx-gr-bgV"/>
+                    <constraint firstAttribute="centerY" secondItem="K0z-GW-6Pe" secondAttribute="centerY" id="lc5-fG-a5w"/>
+                    <constraint firstItem="aZv-cD-qOh" firstAttribute="leading" secondItem="K0z-GW-6Pe" secondAttribute="trailing" constant="14" id="raP-QE-3on"/>
+                    <constraint firstAttribute="centerY" secondItem="aZv-cD-qOh" secondAttribute="centerY" id="z0M-ir-PfL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

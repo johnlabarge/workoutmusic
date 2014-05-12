@@ -20,6 +20,7 @@
     return intensities;
     
 }
+
 +(NSUInteger) toIntensityNum:(NSString *)tempo{
     return [[self classifications] indexOfObject:tempo];
 }

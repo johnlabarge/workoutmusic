@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OptionDelegate.h"
-@interface WorkoutsVC : UIViewController <OptionDelegate>
+@interface WorkoutsVC : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *workoutSelector;
 
 @end

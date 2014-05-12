@@ -48,13 +48,13 @@
 
     NSInteger minutes = seconds/60;
     NSInteger leftOverSeconds = seconds-(minutes*60);
-   return [NSString stringWithFormat:@"%d min %ds", minutes, leftOverSeconds];
+   return [NSString stringWithFormat:@"%ld min %lds", (long)minutes, (long)leftOverSeconds];
     
 }
 - (IBAction)doneAction:(id)sender {
     NSInteger selectedRow= [self.timePicker selectedRowInComponent:0];
     self.interval.intervalSeconds = (selectedRow+1)*10;
-    NSLog(@"new interval seconds = %d", self.interval.intervalSeconds);
+    NSLog(@"new interval seconds = %ld", (long)self.interval.intervalSeconds);
     [self.view removeFromSuperview];
     [self.blurView removeFromSuperview];
     
@@ -91,7 +91,7 @@
     return label;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSLog(@"number of rows :%d",self.timeOptions.count);
+    NSLog(@"number of rows :%lu",(unsigned long)self.timeOptions.count);
   //  NSLog(@"did select row");
    //  self.selectedSeconds = ([self.timePicker selectedRowInComponent:0]+1)*10;
     //[self.blurView removeFromSuperview];
@@ -110,7 +110,7 @@
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    NSLog(@"numberOfRowsInComponent %d",self.timeOptions.count);
+    NSLog(@"numberOfRowsInComponent %lu",(unsigned long)self.timeOptions.count);
     return 60;
 }
 - (IBAction)doneWithTime:(id)sender {

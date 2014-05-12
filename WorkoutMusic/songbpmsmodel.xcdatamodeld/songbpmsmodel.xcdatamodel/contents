@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="MusicBPMEntry" representedClassName="MusicBPMEntry" syncable="YES">
         <attribute name="artist" optional="YES" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="bpm" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="danceability" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="energy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="liveliness" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="notfound" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" minValueString="1" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MusicBPMEntry" positionX="-63" positionY="-18" width="180" height="135"/>
+        <element name="MusicBPMEntry" positionX="-63" positionY="-18" width="180" height="150"/>
     </elements>
 </model>

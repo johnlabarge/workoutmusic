@@ -39,7 +39,7 @@
     NSUInteger currentIndex =  ((NSNumber *)note.userInfo[@"currentIndexBeingProcessed"]).integerValue;
     double progress = (0.0+currentIndex)/total;
     
-    NSLog(@"#####\n Processed : %lul out of Total items : %lul %.2f", (unsigned long)currentIndex, (unsigned long)total, progress);
+    NSLog(@"#####\n Processed : %lu out of Total items : %lu %.2f", (unsigned long)currentIndex, (unsigned long)total, progress);
     MusicLibraryItem * mi = note.userInfo[@"itemBeingProcessed"];
     __weak NSString * artist = (NSString *) mi.artist;
     __weak NSString * title = (NSString *) mi.title;
@@ -58,9 +58,14 @@
 {
     [super viewDidUnload];
    }
--(void) afterSplash
+-(void)afterSplash
+{
+    [self performSelectorOnMainThread:@selector(doAfterSplash) withObject:self waitUntilDone:YES];
+}
+-(void) doAfterSplash
 {
   
+    NSLog(@" performing segue"); 
     [self performSegueWithIdentifier:@"splashOut" sender:self];
     
 

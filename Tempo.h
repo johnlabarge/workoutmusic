@@ -16,6 +16,7 @@
 
 @interface Tempo : NSObject
 +(NSArray *) intensities;
++(NSArray *) speedDescriptions;
 +(NSUInteger) toIntensityNum:(NSString *)tempoClass;
 +(NSArray *) classifications;
 +(NSString *) tempoToIntensity:(NSString *) tempo;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pL-9k-o2M">
-                                <rect key="frame" x="-15" y="34" width="68" height="28"/>
+                                <rect key="frame" x="-8" y="29" width="68" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="23"/>
@@ -41,9 +41,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.32000000000000001" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cRX-B2-AXV" firstAttribute="leading" secondItem="Jdm-bf-0Ss" secondAttribute="leading" constant="2" id="HXs-Sg-0bU"/>
-                            <constraint firstAttribute="trailing" secondItem="cRX-B2-AXV" secondAttribute="trailing" constant="5" id="hyz-2H-5vu"/>
-                            <constraint firstItem="4pL-9k-o2M" firstAttribute="top" secondItem="cRX-B2-AXV" secondAttribute="bottom" constant="13" id="p35-Eg-PEt"/>
+                            <constraint firstItem="cRX-B2-AXV" firstAttribute="top" secondItem="Jdm-bf-0Ss" secondAttribute="top" id="21F-Gx-Pot"/>
+                            <constraint firstAttribute="bottom" secondItem="4pL-9k-o2M" secondAttribute="bottom" constant="-4" id="4f7-5J-hx9"/>
                             <constraint firstAttribute="centerX" secondItem="cRX-B2-AXV" secondAttribute="centerX" id="qzm-sa-GgY"/>
                             <constraint firstAttribute="centerX" secondItem="4pL-9k-o2M" secondAttribute="centerX" id="vge-DJ-omC"/>
                         </constraints>

@@ -10,7 +10,11 @@
 
 
 @implementation MusicBPMEntry
-
-
-
+@dynamic artist;
+@dynamic bpm;
+@dynamic energy;
+@dynamic danceability;
+@dynamic title;
+@dynamic notfound;
+@dynamic liveliness;
 @end

@@ -16,6 +16,13 @@
     self.userInfo = [[NSMutableDictionary alloc] init];
     return self;
 }
++(NSMutableDictionary *)assetCache {
+    static NSMutableDictionary * cache;
+    if (!cache) {
+        cache = [[NSMutableDictionary alloc] initWithCapacity:50];
+    }
+    return cache;
+}
 -(NSString *) songTitle
 {
     return [self.mediaItem valueForProperty:MPMediaItemPropertyTitle];
@@ -66,12 +73,19 @@
 }
 
 -(void) loadAsset:(void(^)(void))complete {
-    self.avAsset = [[AVURLAsset alloc] initWithURL:self.url options:nil];
-    [self.avAsset loadValuesAsynchronouslyForKeys:@[@"tracks"]
+    self.avAsset = [[self class] assetCache][self.url];
+    if (!self.avAsset) {
+        self.avAsset = [[AVURLAsset alloc] initWithURL:self.url options:nil];
+        [self.avAsset loadValuesAsynchronouslyForKeys:@[@"tracks"]
      
                             completionHandler:^{
+                                [[self class] assetCache][self.url] = self.avAsset;
                                 complete();
-                            }];
+                        }];
+        
+    } else {
+        complete();
+    }
     
 }
 

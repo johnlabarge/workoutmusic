@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) IBOutlet UILabel * tempoClass;
 @property (nonatomic, strong) IBOutlet UILabel * time;
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIImageView *artworkImageView;
 @property (nonatomic, strong) UIImage * artworkImage;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, strong) NSString *description;

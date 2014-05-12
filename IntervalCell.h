@@ -28,6 +28,4 @@
 @property (strong, nonatomic) IBOutlet UISlider *tempoSlider;
 @property (nonatomic, strong) WorkoutDesignerVC * parent;
 
--(void) selectCell;
--(void) deselectCell; 
 @end

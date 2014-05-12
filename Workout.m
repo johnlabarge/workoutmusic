@@ -80,7 +80,7 @@
     NSMutableArray * workoutIntervals = [[NSMutableArray alloc] initWithCapacity:[self.intervals count]];
     
     [workoutDict setObject:self.name forKey:@"name"];
-    [workoutDict setObject:[NSNumber numberWithInt:self.workoutSeconds] forKey:@"workoutSeconds"];
+    [workoutDict setObject:[NSNumber numberWithInteger:self.workoutSeconds] forKey:@"workoutSeconds"];
     
     [self.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         WorkoutInterval * interval = (WorkoutInterval *) obj;
@@ -124,18 +124,21 @@
 
 -(WorkoutInterval *) newInterval
 {
-    WorkoutInterval * interval = [[WorkoutInterval alloc] initForWorkout:self];
-    interval.speed = 0;
+    WorkoutInterval * interval = nil;
+    if (self.intervals.count < 50) {
+        interval = [[WorkoutInterval alloc] initForWorkout:self];
+        interval.speed = 0;
     
-    [self.intervals addObject:interval];
+        [self.intervals addObject:interval];
     
     
    
     
-    [self save];
-    [self intervalChanged:interval];
+        [self save];
+        [self intervalChanged:interval];
+    }
+        return interval;
     
-    return interval;
     
 }
 
@@ -196,17 +199,19 @@
 
 -(void) repeatIntervalsInRange:(NSRange)range
 {
-    NSMutableArray * copies = [[NSMutableArray alloc]initWithCapacity:range.length];
-    NSUInteger i;
-    NSUInteger ending = range.location+range.length;
-    for (i= range.location; i < ending; i++ ) {
-        [copies addObject:[self.intervals[i] copy]];
-    }
-    [copies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    if (self.intervals.count + range.length < 50) {
+        NSMutableArray * copies = [[NSMutableArray alloc]initWithCapacity:range.length];
+        NSUInteger i;
+        NSUInteger ending = range.location+range.length;
+        for (i= range.location; i < ending; i++ ) {
+            [copies addObject:[self.intervals[i] copy]];
+        }
+        [copies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
-        [self.intervals insertObject:obj atIndex:i+idx];
-    }];
-    [self intervalChanged:nil];
+            [self.intervals insertObject:obj atIndex:i+idx];
+        }];
+        [self intervalChanged:nil];
+    }
   
 }
 

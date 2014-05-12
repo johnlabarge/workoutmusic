@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSNumber * bpm;
 @property (nonatomic, strong) NSNumber * energy;
 @property (nonatomic, strong) NSNumber * danceability;
+@property (nonatomic, strong) NSNumber * liveliness;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSNumber * notfound;
 

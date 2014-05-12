@@ -59,7 +59,7 @@
         
         }
     }];
-     NSLog(@"Returning array of size:%d",theArray.count);
+     NSLog(@"Returning array of size:%lu",(unsigned long)theArray.count);
     return theArray;
         
     

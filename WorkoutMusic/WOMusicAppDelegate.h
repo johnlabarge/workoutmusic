@@ -11,7 +11,7 @@
 #import "MusicLibraryBPMS.h"
 #import "WorkoutList.h"
 
-@interface WOMusicAppDelegate : UIResponder <UIApplicationDelegate> {
+@interface WOMusicAppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate> {
     NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -27,6 +27,7 @@
 @property (nonatomic, strong) MusicLibraryBPMs * musicBPMLibrary; 
 @property (nonatomic, strong) TransitionController * transitionController;
 @property (nonatomic, weak) IBOutlet UINavigationController *workoutNavigator;
-@property (nonatomic, readonly) IBOutlet UITabBarController * tabs;
+
+@property (nonatomic, strong) UITabBarController * tabs;
 
 @end

@@ -11,6 +11,7 @@
 #import "IndividualWorkout.h"
 #import "WorkoutMusicSettings.h"
 #import "PlayListChooserViewController.h"
+#import "WOMusicAppDelegate.h" 
 
 
 @interface WorkoutsVC ()
@@ -31,6 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    WOMusicAppDelegate * app = [UIApplication sharedApplication].delegate;
+    
+    NSLog(@"app.tabs");
 	// Do any additional setup after loading the view.
 }
 

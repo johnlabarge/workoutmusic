@@ -54,15 +54,19 @@
 @property (nonatomic, assign) NSUInteger totalNumberOfItems;
 @property (nonatomic, assign) NSUInteger currentIndexBeingProcessed;
 @property (nonatomic, assign) BOOL shouldPruneICloudItems;
-@property (nonatomic, assign) BOOL didContainICloudItems; 
-@property (nonatomic, assign) BOOL override_notfound; 
+@property (nonatomic, assign) BOOL didContainICloudItems;
+@property (nonatomic, assign) BOOL didContainOldDRMItems; 
+@property (nonatomic, assign) BOOL override_notfound;
+@property (nonatomic, assign) BOOL processed;
+@property (nonatomic, strong) NSMutableDictionary * classifiedItems;
 +(instancetype) currentInstance:(id)instance;
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;
 - (void)unfilter;
 -(NSArray *) sortByClassification; 
--(NSString *) classificationForMusicItem:(MusicLibraryItem *)item; 
+-(NSString *) classificationForMusicItem:(MusicLibraryItem *)item;
+-(NSMutableArray *) randomItemsForIntensity:(NSString *)classification;
 /**
  * random MusicLibraryItems
  */
@@ -87,10 +91,12 @@
 @property (readonly) MPMediaItemArtwork * artwork;
 @property (nonatomic, assign) BOOL overridden;
 @property (nonatomic, assign) BOOL notfound;
+@property (nonatomic, assign) double liveliness;
 
 
 
 
 -(BOOL) isICloudItem;
+-(BOOL) isOldDRM;
 
 @end;

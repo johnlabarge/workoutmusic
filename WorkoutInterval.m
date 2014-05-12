@@ -30,13 +30,13 @@
 -(NSDictionary *) toDict
 {
     NSMutableDictionary *retDict = [[NSMutableDictionary alloc] initWithCapacity:2];
-    [retDict setObject:[NSNumber numberWithInt:self.intervalSeconds] forKey:@"intervalSeconds"];
-    [retDict setObject:[NSNumber numberWithInt:self.speed] forKey:@"speed"];
+    [retDict setObject:[NSNumber numberWithInteger:self.intervalSeconds] forKey:@"intervalSeconds"];
+    [retDict setObject:[NSNumber numberWithInteger:self.speed] forKey:@"speed"];
     return retDict;
 }
 
 -(NSString *) representation {
-    return [NSString stringWithFormat:@"%d", self.speed];
+    return [NSString stringWithFormat:@"%ld", (long)self.speed];
 }
 
 -(void) setIntervalSeconds:(NSInteger)intervalSeconds

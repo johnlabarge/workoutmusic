@@ -87,7 +87,7 @@
         if (self.selectedWorkout == workout) {
             woCell.selected = true;
         }
-        NSLog(@"Index Path: %d-%d", [indexPath indexAtPosition:0], [indexPath indexAtPosition:1]);
+        NSLog(@"Index Path: %lu-%lu", (unsigned long)[indexPath indexAtPosition:0], (unsigned long)[indexPath indexAtPosition:1]);
         cell = woCell;
     }  
     

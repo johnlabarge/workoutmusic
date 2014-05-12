@@ -14,10 +14,12 @@
 
 @interface WOMusicAppDelegate () {
     dispatch_queue_t _processqueue;
+    UITabBarController * _tabs;
 }
 @property (nonatomic, strong) WorkoutList * workout;
 @property (nonatomic, strong) Splash *splashScreen;
--(void) processMusicLibrary;
+@property (readonly) NSString *playListSetting;
+-(void) processMusicLibrary:(NSNotification *)note;
 @end
 
 @implementation WOMusicAppDelegate
@@ -26,37 +28,56 @@
 {
     // Override point for customization after application launch.
     [WorkoutMusicSettings sharedInstance]; 
-    
-    if (![WorkoutMusicSettings workoutSongsPlaylist] || [self cantFindWorkoutPlaylist]) {
-
-        [self informUserMissingPlaylist];
-    }
-    
-     _processqueue = dispatch_queue_create("music processor", NULL);
-   
- 
-    [self processMusicLibrary:nil];
-    
+    _processqueue = dispatch_queue_create("music processor", NULL);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processMusicLibrary:) name:@"workoutsongschanged" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processedMusicLibrary:) name:@"workoutsongsprocessed" object:nil];
     
+    if (![WorkoutMusicSettings workoutSongsPlaylist] || [self cantFindWorkoutPlaylist]) {
+
+        [self informUserMissingPlaylist];
+    } else {
+    
+        [self processMusicLibrary:nil];
+    }
+
+
     
     return YES;
    
 }
+-(void) setTabs:(UITabBarController *)t
+{
+    _tabs = t;
+    _tabs.delegate = self;
+}
+
+-(UITabBarController *) tabs
+{
+    return _tabs;
+}
+-(NSString *) playListSetting
+{
+    return [WorkoutMusicSettings workoutSongsPlaylist];
+}
 -(void) processedMusicLibrary:(NSNotification *)note
 {
+    NSLog(@"Done processing songs calling after splash ... \n\n");
     [self.splashScreen afterSplash];
+    [WorkoutList setInstance:[[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary]];
+
+    
 }
 -(BOOL) cantFindWorkoutPlaylist
 {
-    return NO;
-}
+    return ![SJPlaylists availableFor:self.playListSetting];
 
+}
 -(void) informUserMissingPlaylist
 {
     NSLog(@"should present message here.");
+    [self splash]; 
+    [self.splashScreen afterSplash];
 }
 -(void) processMusicLibrary:(NSNotification *)note
 {
@@ -80,8 +101,7 @@
         
         
         NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
-       [WorkoutList setInstance:[[WorkoutList alloc] initWithLibrary:me.musicBPMLibrary]];
-       [[NSRunLoop currentRunLoop]run];
+              [[NSRunLoop currentRunLoop]run];
     });
     self.workout = [WorkoutList sharedInstance];
     [self splash];
@@ -92,6 +112,7 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"workoutmusic" bundle:nil];
     self.splashScreen = (Splash *) [storyboard instantiateViewControllerWithIdentifier:@"Splash"];
+    [self.splashScreen removeFromParentViewController]; //workarond for strange view bug
     
     //self.transitionController = [[TransitionController alloc] initWithViewController:vc];
     self.window.rootViewController = self.splashScreen;
@@ -172,11 +193,10 @@
 - (NSString *)applicationDocumentsDirectory {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
--(UITabBarController *) tabs {
-    if ([self.window.rootViewController isKindOfClass:[UITabBarController class]]) {
-        return (UITabBarController *) self.window.rootViewController;
-    }
-    return nil;
-         
+
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    NSLog(@"should select View controller");
+    return viewController != tabBarController.selectedViewController;
 }
 @end

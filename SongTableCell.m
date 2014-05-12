@@ -39,7 +39,7 @@
 -(void) setArtworkImage:(UIImage *)inImage
 {
     _artworkImage = inImage;
-    self.imageView.image = _artworkImage;
+    self.artworkImageView.image = _artworkImage;
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

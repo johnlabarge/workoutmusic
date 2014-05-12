@@ -165,18 +165,13 @@
     cell.timeLabel.seconds = interval.intervalSeconds;
     cell.parent = self;
     
-
-    
-    
-    //cell.timePicker.hidden = YES;
     
     return cell;
 }
 
 - (IBAction)addInterval:(id)sender {
 
-    WorkoutInterval * interval = [self.model newInterval];
-    [self.intervalsTable reloadData];
+    [self.model newInterval];
 
 }
 
@@ -236,7 +231,6 @@
 }
 
 - (IBAction)deleteIntervals:(id)sender {
-    NSLog(@"deleting Intervals");
     
     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath * index = (NSIndexPath *)obj;
@@ -266,12 +260,10 @@
         self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 180);
         [self.intervalsTable scrollToRowAtIndexPath:self.selectedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }
-   // [self.intervalsTable setContentOffset:CGPointMake(0,100.0)];
 }
 -(void) keyboardDidHide:(NSNotification *)note;
 {
     self.view.center = self.originalCenter;
-    //[self.intervalsTable setContentOffset:CGPointMake(0,0.0)];
 }
 
 -(void) presentTimePickerForInterval:(WorkoutInterval *)interval

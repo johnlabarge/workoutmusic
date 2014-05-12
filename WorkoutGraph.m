@@ -5,38 +5,50 @@
 //  Created by La Barge, John on 3/29/13.
 //  Copyright (c) 2013 La Barge, John. All rights reserved.
 //
+//TODO: Doxygen!
 
 #import "WorkoutGraph.h"
 #import "WorkoutInterval.h"
 #import "Workout.h"
 @interface WorkoutGraph ()
-@property (nonatomic, assign) NSInteger animateInterval;
-@property (nonatomic, assign) NSTimer * animateTimer;
+@property (nonatomic, assign) BOOL isAnimating;
 @property (nonatomic, strong) UIColor * defaultColor;
 @property (nonatomic, strong) UIColor * activeColor;
+@property (nonatomic, assign) CGFloat horizontalOffset;
+@property (nonatomic, strong) CALayer * activeLayer;
+@property (nonatomic, strong) CABasicAnimation * activeLayerAnimation;
 @end
 
 @implementation WorkoutGraph
 
 -(void) initProperties
 {
+    /*
+     * hardcoded colors for now
+     */
     self.defaultColor = [UIColor colorWithRed:170/255.0 green:214/255.0 blue:250/255.0 alpha:1.0];
     self.activeColor = [UIColor colorWithRed:67/255.0 green:250/255.0 blue:71/255.0 alpha:1.0];
+    self.horizontalOffset = 3;
+    self.layer.delegate = self;
 }
+
+/*
+ * originally this represented a list of intervals, now simply representing the whole workout
+ */
 -(void) setWorkout:(Workout *) workout {
     _workout = workout;
-    self.intervals = workout.intervals;
-    
-}
--(void) setIntervals:(NSArray *) array {
-    _intervals = array;
     [self setNeedsDisplay];
 }
 
-
+-(void) setCurrentInterval:(NSInteger)interval
+{
+    _currentInterval = interval;
+    [self setNeedsDisplay];
+    
+}
 -(void) reloadData
 {
-    [self setNeedsDisplay]; 
+    [self setNeedsDisplay];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -44,8 +56,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initProperties];
-        // Initialization code
-        
     }
     return self;
 }
@@ -57,9 +67,176 @@
     
 }
 
-CGColorRef getAdjustedColor(CGColorRef inColor, float adjustment) {
+-(void) startAnimate
+{
+    if (!self.activeLayerAnimation) {
+        [self createFadeAnimation];
+    }
+    if (self.activeLayer.animationKeys.count < 1) {
+        [self.activeLayer addAnimation:self.activeLayerAnimation forKey:@"opacity"];
+    }
+    self.isAnimating = YES;
+
+}
+
+-(void) stopAnimate
+{
+    [self.activeLayer removeAllAnimations];
+    self.isAnimating = NO;
+}
+
+
+
+-(CGFloat) totalWidth:(CGRect)rect
+{
+    return(rect.size.width-2*self.horizontalOffset);
+}
+-(CGFloat) pixelsPerSecond:(CGRect)rect
+{
+    return [self totalWidth:rect]/self.workout.workoutSeconds;
+    
+}
+-(CGFloat) intervalWidth:(CGRect)rect interval:(WorkoutInterval *)interval {
+    CGFloat pixelsPerSecond = [self pixelsPerSecond:rect];
+    return (pixelsPerSecond*interval.intervalSeconds);
+}
+
+-(void) createFadeAnimation
+{
+    CABasicAnimation * fadeAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeAnim.fromValue = @1.0;
+    fadeAnim.toValue = @0.0;
+    fadeAnim.duration = 0.8;
+    self.activeLayerAnimation = fadeAnim;
+}
+
+-(CALayer *) createActiveBarLayerAt:(CGFloat)x y:(CGFloat)y Width:(CGFloat)width Height:(CGFloat)height
+{
+    CALayer * activebarLayer = [CALayer layer];
+    activebarLayer.frame = CGRectMake(x, y, width, height);
+    activebarLayer.backgroundColor = self.activeColor.CGColor;
+    return activebarLayer;
+}
+-(void) drawLayer:(CALayer *)theLayer inContext:(CGContextRef)context {
+    
+    if (self.workout && self.workout.intervals && self.workout.intervals.count > 0) {
+        [self.activeLayer removeFromSuperlayer];
+        CGRect rect = self.layer.frame;
+        CGFloat graphicHeight = rect.size.height;
+        CGFloat graphicHeightSegment = graphicHeight/4;
+        
+        NSDictionary * lineHeights = @{
+                                       SLOWINTERVAL: @(graphicHeightSegment),
+                                       MEDIUMINTERVAL:@(graphicHeightSegment*2),
+                                       FASTINTERVAL:@(graphicHeightSegment*3),
+                                       VERYFASTINTERVAL: @(graphicHeightSegment*4)};
+        
+        
+        
+        
+        CGContextSetFillColorWithColor(context, getAdjustedColor(self.backgroundColor.CGColor, 0.05f));
+        CGContextFillRect(context, theLayer.bounds);
+        
+        CGFloat space = self.horizontalOffset/self.workout.intervals.count;
+        __block CGFloat currentXPos =space;
+        __block CGFloat activeBarX;
+        __block CGFloat activeBarY;
+        __block CGFloat activeBarWidth;
+        __block CGFloat activeBarHeight;
+        __weak typeof(self) weakSelf = self;
+        
+        [self.workout.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            WorkoutInterval * interval = (WorkoutInterval *) obj;
+            
+            NSNumber * lineHeightN = lineHeights[[interval representation]];
+            
+            CGFloat lineWidth = [weakSelf intervalWidth:rect interval:interval];
+            
+            createBar(context, currentXPos+space, (rect.size.height - lineHeightN.doubleValue), lineWidth, lineHeightN.doubleValue, weakSelf.defaultColor.CGColor);
+            /*
+             * capture the active interval
+             */
+            if (weakSelf.currentInterval == idx) {
+                activeBarX = currentXPos;
+                activeBarY = rect.size.height - lineHeightN.doubleValue;
+                activeBarHeight = lineHeightN.doubleValue;
+                activeBarWidth = lineWidth;
+            }
+            
+            currentXPos+=lineWidth+space;
+            
+        }];
+
+        if (self.active) {
+
+            self.activeLayer = [self createActiveBarLayerAt:activeBarX  y:activeBarY Width:activeBarWidth Height:activeBarHeight];
+            [theLayer addSublayer:self.activeLayer];
+            /*
+             * if we already were animating start animating again.
+             */
+            if (self.isAnimating) {
+                [self startAnimate];
+            }
+        }
+        
+        
+        
+        
+    }
+}
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    
+}
+void createBar(CGContextRef context, const CGFloat x, const CGFloat y, const CGFloat width, const CGFloat height, const CGColorRef color) {
+    
+    
+    CGContextSetAllowsAntialiasing(context, true);
+    CGFloat adjustment = 0.2f;
+    
+    
+    CGRect rectangle = CGRectMake(x,y,width,height);
+    
+    
+    CGContextSetFillColorWithColor(context, getAdjustedColor(color, adjustment));
+    CGContextSetStrokeColorWithColor(context, getAdjustedColor(color, adjustment));
+    
+    CGFloat locations[2] = {0.0,1.0};
+    CGGradientRef gradient = makeGradient(color,adjustment, locations);
+    
+    CGContextSaveGState(context);
+    
+    CGContextAddRect(context, rectangle);
+    CGContextClip(context);
+    
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rectangle), CGRectGetMinY(rectangle));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rectangle), CGRectGetMaxY(rectangle));
+    
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    
+    CGContextRestoreGState(context);
+    
+}
+
+
+
+
+CGGradientRef makeGradient(const CGColorRef color, const CGFloat adjustment, const CGFloat * locations)
+{
+    CGColorRef topGradient = getAdjustedColor(color,adjustment);
+    CGColorRef lowGradient = color;
+    NSArray * gradientColors = @[(__bridge id)topGradient,(__bridge id)lowGradient];
+    
+    return CGGradientCreateWithColors(CGColorGetColorSpace(color), (__bridge CFArrayRef)(gradientColors), locations);
+    
+}
+
+
+CGColorRef getAdjustedColor(const CGColorRef inColor, const float adjustment) {
     CGFloat * components = (CGFloat *)  CGColorGetComponents(inColor);
- 
+    
     CGFloat adjustedComponents[4];
     for (int i= 0; i < 3; i++) {
         adjustedComponents[i] = components[i]+adjustment;
@@ -68,177 +245,4 @@ CGColorRef getAdjustedColor(CGColorRef inColor, float adjustment) {
     
     return CGColorCreate(CGColorGetColorSpace(inColor),adjustedComponents );
 }
-
-
-void createBar2(CGContextRef context, CGFloat x, CGFloat y, CGFloat width, CGFloat height, CGColorRef color)
-{
-
-}
-
-void createBar(CGContextRef context, CGFloat x,CGFloat y,CGFloat width, CGFloat height, CGColorRef color) {
-    
-   
-    //create left edge
-    CGContextSetAllowsAntialiasing(context, true); 
-    CGFloat adjustment = 0.2f;
-    CGFloat edgeWidth = 0;
-    CGColorRef topGradient = getAdjustedColor(color, 0.15f);
-    CGColorRef lowGradient = color;
-    
-    edgeWidth = (CGFloat)ceil( edgeWidth * 100.0 ) / 100.0;
-    
-    CGFloat barWidth = width - 2*edgeWidth;
-    CGFloat barHeight = height - 1*edgeWidth;
-    
-    
-     CGRect middleRectangle = CGRectMake(x+edgeWidth,y+edgeWidth,barWidth,barHeight);
-
-    
-    CGContextSetFillColorWithColor(context, getAdjustedColor(color, adjustment));
-    CGContextSetStrokeColorWithColor(context, getAdjustedColor(color, adjustment)); 
-
-    
-    NSArray * gradientColors = @[(__bridge id)topGradient,(__bridge id)lowGradient];
-    CGFloat locations[2] = {0.0,1.0}; 
-    CGGradientRef gradient = CGGradientCreateWithColors(CGColorGetColorSpace(color), (__bridge CFArrayRef)(gradientColors), locations);
-    
-    CGContextSaveGState(context);
-
-    CGContextAddRect(context, middleRectangle);
-    CGContextClip(context);
-    
-    CGPoint startPoint = CGPointMake(CGRectGetMidX(middleRectangle), CGRectGetMinY(middleRectangle));
-    CGPoint endPoint = CGPointMake(CGRectGetMidX(middleRectangle), CGRectGetMaxY(middleRectangle));
-    
-    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-    
-    CGContextRestoreGState(context);
-
-
-    
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, x+edgeWidth+barWidth,y+edgeWidth);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth, y-0.5);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth+edgeWidth+0.5, y-0.5);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth,y+edgeWidth);
-    CGContextClosePath(context);
-    CGContextFillPath(context);
-    CGContextStrokePath(context);
-    
-    CGColorRef rightEdgeColor = getAdjustedColor(color,0-adjustment);
-    CGContextSetFillColorWithColor(context, rightEdgeColor);
-    CGContextSetStrokeColorWithColor(context, rightEdgeColor);
-
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, x+edgeWidth+barWidth,y+edgeWidth);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth+edgeWidth+0.5, y+edgeWidth);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth+edgeWidth+0.5, y-0.5);
-    CGContextAddLineToPoint(context, x+edgeWidth+barWidth, y+edgeWidth);
-    
-    CGContextClosePath(context);
-    CGContextFillPath(context);
-    CGContextSetLineWidth(context, 1.2f);
-
-   CGContextStrokePath(context);
-
-    
-
-
-
-}
-
--(void) startAnimate
-{
-    [self stopAnimate];
-    self.animateTimer =  [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(animate) userInfo:nil repeats:YES];
-}
-
--(void) stopAnimate
-{
-    [self.animateTimer invalidate];
-    self.animateTimer=  nil;
-}
-
--(void) animate
-{
-    self.animateInterval = (self.animateInterval == 1?0:1);
-    [self setNeedsDisplay];
-}
-
-
--(CGFloat) totalWidth:(CGRect)rect
-{
-     return(rect.size.width-6);
-}
--(CGFloat) pixelsPerSecond:(CGRect)rect
-{
-    return [self totalWidth:rect]/self.workout.workoutSeconds;
-
-}
--(CGFloat) intervalWidth:(CGRect)rect interval:(WorkoutInterval *)interval {
-    CGFloat pixelsPerSecond = [self pixelsPerSecond:rect];
-        return (pixelsPerSecond* interval.intervalSeconds);
-}
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-
-    
-    if (self.intervals && self.intervals.count > 0) {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-       
-        CGFloat graphicHeight = rect.size.height;
-        CGFloat graphicHeightSegment = graphicHeight/4;
-        
-        NSDictionary * lineHeights = @{
-    SLOWINTERVAL: [NSNumber numberWithFloat:graphicHeightSegment],
-    MEDIUMINTERVAL:[NSNumber numberWithFloat:graphicHeightSegment*2],
-    FASTINTERVAL:[NSNumber numberWithFloat:graphicHeightSegment*3],
-    VERYFASTINTERVAL: [NSNumber numberWithFloat:graphicHeightSegment*4]};
-        
-      
-
-        int hoff = 3;
-        int voff = 3;
-          
-        CGContextSetFillColorWithColor(context, getAdjustedColor(self.backgroundColor.CGColor, 0.05f));
-        CGContextFillRect(context, rect);
-        //self.backgroundColor =  self.view.backgroundColor;
-        __block WorkoutGraph * me = self;
-        CGFloat space = self.frame.size.width/45;
-        space = 0.0;
-        __block NSInteger currentXPos =hoff;
-        
-        [self.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-   
-            WorkoutInterval * interval = (WorkoutInterval *) obj;
-           
-            NSNumber * lineHeightN = [lineHeights objectForKey:[interval representation]];
-            
-            CGFloat lineWidth = [self intervalWidth:rect interval:interval];
-            
-            if (!self.active || me.currentInterval != idx) {
-                 createBar(context, currentXPos+space, (rect.size.height - lineHeightN.floatValue)+voff, lineWidth, lineHeightN.floatValue+voff, self.defaultColor.CGColor);
-            } else {
-                if (me.animateInterval == 0) {
-                    CGColorRef activeColor = self.activeColor.CGColor;
-                    
-                    
-                    createBar(context, currentXPos+space, (rect.size.height - lineHeightN.floatValue)+voff, lineWidth, lineHeightN.floatValue+voff, activeColor);
-                }
-            }
-           
-            currentXPos+=lineWidth;
-            
-        }];
-        
-        
-    }
-    
-    
-}
-
 @end

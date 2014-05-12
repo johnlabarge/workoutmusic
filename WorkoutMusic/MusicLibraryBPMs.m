@@ -7,6 +7,7 @@
 
 #import "MusicLibraryBPMs.h"
 #import "WorkoutMusicSettings.h"
+#import "WOMusicAppDelegate.h"
 #import "Tempo.h"
 
 
@@ -22,13 +23,13 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 
 @property (nonatomic, strong) dispatch_queue_t itemSaverQueue;
 
-@property (nonatomic, assign) BOOL processed;
+
 @property (nonatomic, strong) NSArray * filters;
 @property (nonatomic, strong) Updater updater;
 @property (nonatomic, strong) NSMutableArray * pendingAPIRequests;
 @property (nonatomic, strong) Classifier musicClassifier;
+@property (nonatomic, strong) NSManagedObjectContext * requestMoc;
 
--(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: (ItemUpdatedCallback) itemUpdated;
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title;
 -(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item;
 -(void) addRequest:(ENAPIRequest *)request;
@@ -43,31 +44,38 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 {
     self.filters = [Tempo ranges];
     
-    self.musicClassifier = [[self class] energyTimesBPMClassifier];
+   // self.musicClassifier = [[self class] energyTimesBPMClassifier];
+    self.musicClassifier = [[self class] energyClassifier];
     self.override_notfound = NO;
-    //self.musicClassifier = [[self class] energyClassifier];
-    
-    _requestQueue = dispatch_queue_create("echnoest_request_queue", NULL);
-    
+    self.unfilteredItems = self.libraryItems;
+    self.managedObjectContext = moc;
+    self.processed = NO;
+    [self initENAPI];
+    [self initMusicItems];
+    [self createUpdater];                                                         
+    return self;
+}
+-(void) initENAPI
+{
     [ENAPIRequest setApiKey:@"4N3RGRQDQPUETU3BV" andConsumerKey:@"433d5d6e8f39a40ea0fed4bff7556acd" andSharedSecret:@"jTppHq3qQCaeF3+kUgbmTQ"];
-    NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
+    _requestQueue = dispatch_queue_create("echnoest_request_queue", NULL);
     self.pendingAPIRequests = [[NSMutableArray alloc] initWithCapacity:50];
+}
+-(void) initMusicItems
+{
+    NSArray * mpItems = [MusicLibraryBPMs getMusicItems];
     self.libraryItems = [[NSMutableArray alloc] initWithCapacity:mpItems.count];
-    __block MusicLibraryBPMs * me = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        me.totalNumberOfItems = me.libraryItems.count;
-    });
     
     NSMutableArray * mutLibraryItems = (NSMutableArray *) self.libraryItems;
     for (MPMediaItem * item in mpItems)
     {
         [mutLibraryItems addObject:[[MusicLibraryItem alloc] initWithMediaItem:item]];
     }
-    self.unfilteredItems = self.libraryItems;
-    self.managedObjectContext = moc;
-    self.processed = NO;
-    [self createUpdater];                                                         
-    return self;
+    __weak MusicLibraryBPMs * me = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        me.totalNumberOfItems = me.libraryItems.count;
+    });
+    
 }
 
 +(instancetype) currentInstance:(id)instance
@@ -81,6 +89,20 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 
 -(void) pruneICloudItems
 {
+    [[Tempo classifications] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSMutableArray * items = self.classifiedItems[obj];
+        [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            MusicLibraryItem * item = (MusicLibraryItem *)obj;
+            if (item.isICloudItem) {
+                [items removeObject:item];
+                self.didContainICloudItems = YES;
+            }
+            
+        }];
+       }
+     ];
     [self.libraryItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MusicLibraryItem * item = obj;
         if (item.isICloudItem) {
@@ -91,12 +113,52 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     }];
 }
 
+-(void) pruneOldDRMItems
+{
+    [[Tempo classifications] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSMutableArray * items = self.classifiedItems[obj];
+        [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            MusicLibraryItem * item = (MusicLibraryItem *)obj;
+            if (item.isOldDRM) {
+                [items removeObject:item];
+                self.didContainOldDRMItems = YES;
+            }
+            
+        }];
+    }
+     ];
+    [self.libraryItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MusicLibraryItem * item = obj;
+        if (item.isOldDRM) {
+            [self.libraryItems removeObject:item];
+            self.didContainOldDRMItems = YES;
+        }
+        
+    }];
+}
+-(void) applyAudioSummary:(NSDictionary *)summary toMusicItem:(MusicLibraryItem *)item
+{
+    double danceability = [[summary valueForKeyPath:@"audio_summary.danceability"] doubleValue];
+    double liveliness = [[summary valueForKeyPath:@"audio_summary.liveliness"] doubleValue];
+    
+    double tempo = [[summary valueForKeyPath:@"audio_summary.tempo"] doubleValue];
+    item.energy = [[summary valueForKeyPath:@"audio_summary.energy"] doubleValue];
+    item.bpm = tempo;
+    item.danceability = danceability;
+    item.liveliness = liveliness;
+    [self saveMusicBPMEntryInCache:item];
+    
+   
+}
+
 -(void) createUpdater {
      self.itemSaverQueue = dispatch_queue_create("item saver", NULL);
     __weak typeof(self)weakSelf = self;
     self.updater = ^(MusicLibraryItem *item, ItemUpdatedCallback callback) {
         
-        MusicLibraryItem * weakItem = item;
+        __weak MusicLibraryItem * weakItem = item;
         __weak ItemUpdatedCallback weakCallback = callback;
         
         
@@ -109,13 +171,8 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
                     NSArray * songs = [req.response valueForKeyPath:@"response.songs"];
                     if (songs.count > 0) {
                         NSDictionary * song = [songs objectAtIndex:0];
-                        NSLog(@"%@ ",[song valueForKeyPath:@"audio_summary.danceability"]);
-                        double tempo = [[song valueForKeyPath:@"audio_summary.tempo"] doubleValue];
-                        weakItem.energy = [[song valueForKeyPath:@"audio_summary.energy"] doubleValue];
-                        weakItem.bpm = tempo;
-                        [weakSelf saveMusicBPMEntryInCache:weakItem];
-                        weakCallback(weakItem);
-                        
+                        [weakSelf applyAudioSummary:song toMusicItem:weakItem];
+                        weakCallback(item);
                     } else {
                         weakItem.notfound = YES;
                         [weakSelf saveMusicBPMEntryInCache:weakItem];
@@ -139,8 +196,22 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 
 -(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem * item) ) itemUpdated
 {
+        __weak typeof(self) weakSelf = self;
+    
+    dispatch_async(_requestQueue, ^{
+        weakSelf.requestMoc = [[NSManagedObjectContext alloc ]init];
+        /*
+          TODO fix encapsulation */
+        WOMusicAppDelegate * app = (WOMusicAppDelegate *) [UIApplication sharedApplication].delegate;
+        [weakSelf.requestMoc setPersistentStoreCoordinator:app.persistentStoreCoordinator];
+    });
     NSLog(@"processing itunes library....%lu items",(unsigned long)self.libraryItems.count);
-    __weak MusicLibraryBPMs * me = self;
+
+    
+    void(^afterUpdating)(MusicLibraryItem *) = ^(MusicLibraryItem * item) {
+        [weakSelf addToClassificationBucket:item];
+        itemUpdated(item);
+    };
     int count = 0;
     for (int i=0; i < self.libraryItems.count; i++) {
         BOOL last = (i == (self.libraryItems.count - 1));
@@ -150,12 +221,13 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         beforeUpdatingItem(mi);
         if (mi.bpm == 0) {
             dispatch_async(_requestQueue, ^{
-                [self lookupBPMFor:mi whenUpdated:itemUpdated last:last];
+                
+                [self lookupBPMFor:mi whenUpdated:afterUpdating last:last];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"media_processed"
-                                                                    object:me
+                                                                    object:weakSelf
                                                                   userInfo:@{@"currentIndexBeingProcessed":[NSNumber numberWithInteger:count],
                                                                              @"itemBeingProcessed":mi,
-                                                                             @"totalItems":[NSNumber numberWithInteger:me.libraryItems.count]}];
+                                                                             @"totalItems":[NSNumber numberWithInteger:weakSelf.libraryItems.count]}];
 
                 [[NSRunLoop currentRunLoop]run];
             });
@@ -163,12 +235,21 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         }
         count++;
     }
-    if (self.shouldPruneICloudItems) {
-        [self pruneICloudItems];
-    }
+
     self.processed = YES;
 }
-
+-(void) addToClassificationBucket:(MusicLibraryItem *)item
+{
+    if (!self.classifiedItems) {
+        self.classifiedItems = [[NSMutableDictionary alloc] initWithCapacity:self.libraryItems.count];
+    }
+    
+    NSString * classification = self.musicClassifier(item);
+    if (!self.classifiedItems[classification]) {
+        self.classifiedItems[classification] = [[NSMutableArray alloc] initWithCapacity:self.libraryItems.count/4];
+    }
+    [self.classifiedItems[classification] addObject:item];
+}
 
 -(void) lookupBPMFor:(MusicLibraryItem *)item whenUpdated: ( void (^)(MusicLibraryItem *) ) itemUpdated last:(BOOL)last {
     
@@ -187,15 +268,23 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     double energy = [entry.energy doubleValue];
     if (entry != nil && energy != 0.0) {
         NSLog(@"COREDATA - found %@ - %@ in database", artist, title);
+        item.danceability =  [entry.danceability doubleValue];
         item.bpm = [entry.bpm doubleValue];
         item.energy = energy;
+        
         itemUpdated(item);
     } else if ((![entry.notfound boolValue]) || self.override_notfound){
         NSLog(@"ECHONEST - going to echonest for %@ - %@ ", artist, title);
       
         [self lookupBPMFromEchonest:item whenUpdated:itemUpdated artist:lookupArtist song:lookupTitle];
     }
+    
     if (last) {
+        self.processed = YES;
+        if (self.shouldPruneICloudItems) {
+            [self pruneICloudItems];
+        }
+        [self pruneOldDRMItems];
         [[NSNotificationCenter defaultCenter ] postNotificationName:@"workoutsongsprocessed" object:self];
     }
 
@@ -211,17 +300,19 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     __weak NSString * title  = [item.mediaItem valueForProperty:MPMediaItemPropertyTitle];
     __weak MusicLibraryItem * weakItem = item;
     NSLog(@"Saving song : %@ by %@", title, artist);
-   [self.managedObjectContext performBlock:^{
-    MusicBPMEntry *entry = (MusicBPMEntry *)[NSEntityDescription insertNewObjectForEntityForName:@"MusicBPMEntry" inManagedObjectContext:managedObjectContext];
-    entry.artist = artist;
-    entry.title = title;
-    entry.bpm = [[NSNumber alloc ] initWithDouble:weakItem.bpm];
-    entry.energy = [[NSNumber alloc] initWithDouble:weakItem.energy];
-    entry.notfound = [[NSNumber alloc] initWithBool:weakItem.notfound];
-    entry.danceability = [[NSNumber alloc] initWithDouble:weakItem.danceability];
-  
-    
-          NSError *error = nil;
+    [self.managedObjectContext lock];
+    [self.managedObjectContext performBlock:^{
+        MusicBPMEntry *entry = (MusicBPMEntry *)[NSEntityDescription insertNewObjectForEntityForName:@"MusicBPMEntry" inManagedObjectContext:managedObjectContext];
+        entry.artist = artist;
+        entry.title = title;
+        entry.bpm = [[NSNumber alloc ] initWithDouble:weakItem.bpm];
+        entry.energy = [[NSNumber alloc] initWithDouble:weakItem.energy];
+        entry.notfound = [[NSNumber alloc] initWithBool:weakItem.notfound];
+        entry.danceability = [[NSNumber alloc] initWithDouble:weakItem.danceability];
+        entry.liveliness = [[NSNumber alloc] initWithDouble:weakItem.liveliness];
+        
+        
+        NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {
             NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
             NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
@@ -234,12 +325,12 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
                 NSLog(@"  %@", error.localizedDescription);
             }
         }
-       NSLog(@"total managed Objects: %lu", (unsigned long)self.managedObjectContext.registeredObjects.count);
-       if (error != nil) {
-           NSLog(@"error: %@", error.localizedDescription);
-       }
-
+        if (error != nil) {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+        
     }];
+    [self.managedObjectContext unlock];
     
 }
 
@@ -248,7 +339,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     NSLog(@"****** finding BMP Entry in cache******");
     NSLog(@"looking for artist=%@ and title=%@",artist,title);
     MusicBPMEntry * entry = nil;
-    NSManagedObjectContext *moc = [self managedObjectContext];
+    NSManagedObjectContext *moc = self.requestMoc;
     NSEntityDescription *entityDescription = [NSEntityDescription
                                               entityForName:@"MusicBPMEntry" inManagedObjectContext:moc];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MusicBPMEntry"];
@@ -269,15 +360,17 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     }
     NSLog(@"resulting predicate string = %@",predicateS);
     if (predicateS) {
-        
-    
+       
         [request setPredicate:predicate];
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
                                         initWithKey:@"artist" ascending:YES];
         [request setSortDescriptors:@[sortDescriptor]];
     
+  
+        NSArray *array;
         NSError *error;
-        NSArray *array = [moc executeFetchRequest:request error:&error];
+       array = [moc executeFetchRequest:request error:&error];
+
         NSLog(@"***** found %lu entries matching %@ and %@", (unsigned long)array.count, artist, title);
    
         if (array == nil) {
@@ -295,10 +388,10 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 }
 
 -(void) lookupBPMFromEchonest:(MusicLibraryItem *)item whenUpdated:(ItemUpdatedCallback)itemUpdated artist:(NSString *)theArtist song:(NSString *)theSong {
-    NSLog(@"calling echonest....");
+    NSLog(@"callingq....");
     ENAPIRequest * request;
     if (theArtist && theSong) {
-      [NSThread sleepForTimeInterval:0.6];
+      [NSThread sleepForTimeInterval:0.5];
         request = [ENAPIRequest GETWithEndpoint:@"song/search"
                                             andParameters:@{@"artist": theArtist,
                                                             @"title" : theSong,
@@ -308,7 +401,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
                       ];
         
     } else {
-        [NSThread sleepForTimeInterval:0.6];
+        [NSThread sleepForTimeInterval:0.5];
         request = [ENAPIRequest GETWithEndpoint:@"song/search"
                                   andParameters:@{
                                                   @"title" : theSong,
@@ -365,7 +458,8 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 #pragma mark filtering
 -(void) filterByClassification:(NSString *)classification
 {
-    self.libraryItems = [self doFilter:self.unfilteredItems withClassification:classification andClassifier:self.musicClassifier];
+    self.unfilteredItems = self.libraryItems;
+    self.libraryItems = self.classifiedItems[classification];
 }
 
 -(NSString *)classificationForMusicItem:(MusicLibraryItem *)item
@@ -377,12 +471,14 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
    return ^NSString *(MusicLibraryItem * item) {
         if (item.energy < 0.3 && item.energy > 0.01) {
             return [Tempo speedDescription:SLOW];
-        } else if (item.energy < 0.6) {
+        } else if (item.energy < 0.65) {
             return [Tempo speedDescription:MEDIUM];
-        } else if (item.energy < 0.92) {
+        } else if (item.energy < 0.89) {
             return [Tempo speedDescription:FAST];
-        } else {
+        } else if (item.energy > 0.89){
             return [Tempo speedDescription:VERYFAST];
+        } else {
+            return [Tempo speedDescription:UNKNOWN];
         }
     };
 }
@@ -390,12 +486,12 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
    
     return ^NSString *(MusicLibraryItem *item) {
         
-        double value = ((item.energy*3)+(2*(item.bpm/170)))/5;
-        if (value > .86)  {
+        double value = ((item.energy*3)+(1*(item.bpm/170)))/4;
+        if (value > .80)  {
             return [Tempo speedDescription:VERYFAST];
-        } else if (value> .7) {
+        } else if (value> .75) {
             return [Tempo speedDescription:FAST];
-        } else if (value > .5) {
+        } else if (value > .55) {
             return [Tempo speedDescription:MEDIUM];
         } else if (value > .01) {
             return [Tempo speedDescription:SLOW];
@@ -426,25 +522,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     }];
 
 }
--(NSMutableArray *) doFilter:(NSArray *)list withClassification:(NSString *)classification  andClassifier:(Classifier)classify
-{
-    NSMutableArray * theFilteredItems = [[NSMutableArray alloc] initWithCapacity:[list count]];
-    if (!self.processed) {
-        [self processLibraryAndLogOutput];
-    }
-    __weak Classifier classifyIt = classify;
-    __weak NSMutableArray * filtered = theFilteredItems;
-    [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MusicLibraryItem * item = (MusicLibraryItem *)obj;
-        NSString * itemClassification =  classifyIt(item);
-        if ([itemClassification isEqualToString:classification]) {
-            [filtered addObject:item];
-        }
-        
-    }];
 
-    return theFilteredItems;
-}
 -(void) unfilter
 {
     self.libraryItems = self.unfilteredItems;
@@ -462,6 +540,10 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     return theRandomItems;
 }
 
+
+-(NSMutableArray *) randomItemsForIntensity:(NSString *)classification {
+    return [self.classifiedItems[classification] shuffle];
+}
 
 
 -(NSArray *) randomFilteredItems:(NSInteger)secondsLength {
@@ -484,17 +566,16 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 -(NSArray *) sortByClassification {
     
     NSMutableArray * result = [[NSMutableArray alloc] initWithCapacity:self.libraryItems.count];
+    
+    
     NSArray * classifications = [Tempo classifications];
     [classifications enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-       
-        [self filterByClassification:obj];
-        [self.libraryItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-            [result addObject:obj];
-        }];
+        /*
+         * Todo - sort this array by song title
+         */
+        [result addObjectsFromArray:self.classifiedItems[obj]];
         
     }];
-    [self unfilter];
 
     self.sortedItems = result;
     return result;
@@ -524,9 +605,6 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     return songSecondsN.integerValue;
 }
 
-
-
-
 -(NSString *)tempoClassification
 {
     return [Tempo tempoClassificationForBPM:self.bpm];
@@ -534,9 +612,14 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 
 -(BOOL) isICloudItem
 {
-    BOOL mediaItemICloud = [[self.mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
     
-    return ( mediaItemICloud || (self.url == nil) );
+    return [[self.mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
+    
+}
+
+-(BOOL) isOldDRM
+{
+    return (self.url == nil); 
 }
 
 -(NSURL *) url

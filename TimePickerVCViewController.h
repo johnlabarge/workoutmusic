@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UIPickerView *timePicker;
 @property (strong, nonatomic) WorkoutInterval *interval;
-@property NSInteger selectedSeconds;
+@property (nonatomic, assign) NSInteger selectedSeconds;
 @property (strong, nonatomic) IBOutlet FXBlurView *blurView;
 
 @property (strong, nonatomic) IBOutlet UIView *topView;

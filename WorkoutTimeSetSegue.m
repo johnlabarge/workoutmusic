@@ -18,7 +18,7 @@
     
     
     
-    WOMusicAppDelegate * app = [[UIApplication sharedApplication] delegate];
+    WOMusicAppDelegate * app = (WOMusicAppDelegate *)[[UIApplication sharedApplication] delegate];
     WorkoutTimeViewController * wtvc = (WorkoutTimeViewController *) src;
     wtvc.workoutlist.workoutTime =  wtvc.selectedTime;
     

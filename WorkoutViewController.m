@@ -40,6 +40,8 @@
     
     [super viewDidLoad];
     self.paused = YES;
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
     UINib * intervalCell = [UINib  nibWithNibName:@"SongTableCell" bundle:nil];
     [self.songTable registerNib:intervalCell forCellReuseIdentifier:@"songTableCell"];
    /* self.songTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -50,6 +52,7 @@
     self.songTable.separatorColor = [UIColor clearColor];
 //self.songTable.superview.backgroundColor = [UIColor blueColor];
     self.songTable.contentInset = UIEdgeInsetsZero;
+    [self.songTable setHidden:YES];
         // Do any additional setup after loading the view.
     
     
@@ -75,10 +78,19 @@
             [[NSNotificationCenter defaultCenter] addObserverForName:kSJTimerNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                 [me timeTick];
             }];
+            [[NSNotificationCenter defaultCenter] addObserverForName:kSJPlayingNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                [me makePlaying];
+            }];
+            [[NSNotificationCenter defaultCenter] addObserverForName:kSJPausedNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                [me makePaused];
+            }];
             [me.spinner removeFromSuperview];
+            [me.songTable setHidden:NO];
         });
         
     }];
+
+ 
 }
  
 - (void)didReceiveMemoryWarning
@@ -146,7 +158,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"Interval %d - %@",section, [Tempo speedDescription:((WorkoutInterval *)[self.workout.intervals objectAtIndex:section]).speed]];
+    return [NSString stringWithFormat:@"Interval %ld - %@",(long)section, [Tempo speedDescription:((WorkoutInterval *)[self.workout.intervals objectAtIndex:section]).speed]];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -203,7 +215,6 @@
     WorkoutInterval * interval = (WorkoutInterval *)self.sjPlayer.currentSong.userInfo[@"workoutInterval"];
     
     
-    NSLog(@"active Interval: %d length: %d songlength: %d",interval.position, interval.intervalSeconds, self.sjPlayer.currentSong.seconds );
     self.graph.currentInterval = interval.position;
 }
 - (IBAction)back:(id)sender {
@@ -211,17 +222,12 @@
 }
 - (IBAction)play:(id)sender {
     if (self.paused) {
-        [self makePlaying];
         [self.sjPlayer play];
     } else {
         [self.sjPlayer pause];
-        [self makePaused];
     }
 }
-- (IBAction)pause:(id)sender {
-    [self paused];
-    [self.sjPlayer pause];
-}
+
 - (IBAction)forward:(id)sender {
     [self.sjPlayer next];
 }

@@ -10,7 +10,7 @@
 #import "PlaylistChooserViewController.h"
 #import "OptionDelegate.h"
 
-@interface MusicViewController : UIViewController <OptionDelegate>
+@interface MusicViewController : UIViewController <OptionDelegate, UIAlertViewDelegate>
 /*
  *   private UI outlets.
  */
