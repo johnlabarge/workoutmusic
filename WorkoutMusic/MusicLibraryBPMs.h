@@ -102,5 +102,6 @@
 -(BOOL) isOldDRM;
 
 -(void) overrideIntensityTo:(NSInteger)intensityNum;
+-(void) clearOverride;
 
 @end;

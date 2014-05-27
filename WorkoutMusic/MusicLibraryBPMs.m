@@ -1,4 +1,3 @@
-//
 //  MusicLibraryBPMs.m
 //  WorkoutMusicSlow//
 //  Created by John La Barge on 11/15/12.
@@ -538,14 +537,17 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
      NSError * error;
     [self.requestMoc save:&error];
 }
--(void) reclassify:(MusicLibraryItem *)item as:(NSInteger)newIntensity  {
+
+
+-(void) reclassify:(MusicLibraryItem *)item from:(NSInteger) oldIntensity as:(NSInteger)newIntensity  {
     
-    NSString * classification = self.musicClassifier(item);
-    [self.classifiedItems[classification] removeObject:item];
-    item.overridden = YES;
-    item.overridden_intensity = newIntensity;
-    [self addToClassificationBucket:item];
+    NSString * old = [Tempo speedDescription:oldIntensity];
+    [self.classifiedItems[old] removeObject:item];
+    NSString * new = [Tempo speedDescription:newIntensity];
+    [self.classifiedItems[new] addObject:item];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reclassified_media" object:nil userInfo:@{@"musicItem":item, @"newIntensity":[NSNumber numberWithInteger:newIntensity]}];
+
 }
 
 -(void) saveMusicBPMEntryInCache:(MusicLibraryItem *) item
@@ -908,26 +910,53 @@ BOOL internetConnection()
                 NSLog(@"found overridden song..");
             }
             self.overridden_intensity = [entry.overridden_intensity integerValue];
+        }else {
+            self.notfound = [entry.notfound boolValue];
         }
      }
 }
 
 -(MusicBPMEntry *) findCacheEntry {
     
+    if ( self.cacheEntry) {
+        return self.cacheEntry;
+    }
     MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
     MusicBPMEntry * entry = [library findBPMEntryInCacheFor:self.artist andTitle:self.title];
     return entry;
 }
 
+
 -(void)overrideIntensityTo:(NSInteger)intensityNum
 {
+    MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
     MusicBPMEntry * cacheEntry = [self findCacheEntry];
+    NSUInteger oldIntensity;
+    if (self.overridden) {
+        oldIntensity = self.overridden_intensity;
+    } else {
+        oldIntensity = [Tempo toIntensityNum:library.musicClassifier(self)];
+    }
     cacheEntry.overridden = [NSNumber numberWithBool:YES];
     cacheEntry.overridden_intensity = [NSNumber numberWithInteger:intensityNum];
-    MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
+    self.overridden = YES;
+    self.overridden_intensity = intensityNum;
     [library saveCacheEntry:cacheEntry];
-    [library reclassify:self as:intensityNum];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reclassified_media" object:nil userInfo:@{@"musicItem":self}];
+    [library reclassify:self from:oldIntensity as:intensityNum];
+}
+-(void) clearOverride {
+    if (self.overridden) {
+        MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
+        MusicBPMEntry * cacheEntry = [self findCacheEntry];
+        NSUInteger oldIntensity = self.overridden_intensity;
+        self.overridden = NO;
+        cacheEntry.overridden = [NSNumber numberWithBool:NO];
+        cacheEntry.overridden_intensity = 0;
+        NSString * newClass = library.musicClassifier(self);
+        NSUInteger intensityNum = [Tempo toIntensityNum:newClass];
+        [library saveCacheEntry:cacheEntry];
+        [library reclassify:self from:oldIntensity as:intensityNum];
+    }
 }
 -(id) copyWithZone:(NSZone *)zone
 {
@@ -981,6 +1010,7 @@ BOOL internetConnection()
 {
     return [self.mediaItem valueForKey:MPMediaItemPropertyAlbumArtist];
 }
+
 
 @end
 

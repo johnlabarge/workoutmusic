@@ -11,6 +11,7 @@
 #import "WorkoutList.h"
 #import "Splash.h"
 #import "WorkoutMusicSettings.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface WOMusicAppDelegate () {
     dispatch_queue_t _processqueue;
@@ -41,7 +42,7 @@
         [self processMusicLibrary:nil];
     }
 
-
+    [Crashlytics startWithAPIKey:@"53e6ee98d2eea1210fba97747d3e1ea5ad02d119"];
     
     return YES;
    

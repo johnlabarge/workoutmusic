@@ -31,7 +31,7 @@
     self.wasLoaded = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaProcessedNotificationHandler:) name:@"media_processed" object:nil];
        
-  
+
 }
 -(void) mediaProcessedNotificationHandler:(NSNotification *)note
 {

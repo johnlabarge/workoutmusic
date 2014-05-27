@@ -55,7 +55,7 @@
     [self.tableView registerClass:[TempoSectionHeader class] forHeaderFooterViewReuseIdentifier:@"TempoHeader"];
 
     [self.tableView registerNib:intervalCell forCellReuseIdentifier:@"musicItemCell"];
-    [self.tableView setRowHeight:132.0];
+    [self.tableView setRowHeight:140.0];
   /*  dispatch_async(
                    dispatch_queue_create("sortq", NULL) , ^{
                        [[MusicLibraryBPMs currentInstance:nil] sortByClassification];
@@ -77,12 +77,13 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"reclassified_media" object:nil queue:nil usingBlock:^(NSNotification *note) {
         [weakSelf.app.workout reloadLibrary];
         MusicLibraryItem * item = note.userInfo[@"musicItem"];
-        NSString * itemType = [Tempo speedDescription:item.overridden_intensity];
+        NSInteger newIntensity = ((NSNumber *)note.userInfo[@"newIntensity"]).integerValue;
+        NSString * itemType = [Tempo speedDescription:newIntensity];
         
         NSArray * sectionArray = weakSelf.library.classifiedItems[itemType];
         NSUInteger row = [sectionArray indexOfObject:item];
     
-        NSIndexPath * scrollTo = [NSIndexPath indexPathForRow:row inSection:item.overridden_intensity];
+        NSIndexPath * scrollTo = [NSIndexPath indexPathForRow:row inSection:newIntensity];
         __block UITableViewCell * cell;
         dispatch_async(dispatch_get_main_queue(),
                        ^{
@@ -90,7 +91,7 @@
                            
                            UIColor * oldBackground  = cell.contentView.backgroundColor;
 
-                           [UIView animateWithDuration:1.0 animations:^{
+                           [UIView animateWithDuration:0.5 animations:^{
                                
                                BOOL expanded = ((NSNumber *) weakSelf.expandedSections[scrollTo.section]).boolValue;
                                if (!expanded) {
@@ -104,7 +105,7 @@
                            } completion:^(BOOL finished) {
                                if (finished) {
                                    cell = [weakSelf.tableView cellForRowAtIndexPath:scrollTo];
-                                   [UIView animateWithDuration:1.0 animations:^{
+                                   [UIView animateWithDuration:0.5 animations:^{
                                    
                                        cell.contentView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:204/255.0 blue:51/255.0 alpha:1.0];
                                    
@@ -152,7 +153,7 @@
     TempoSectionHeader * header = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"TempoHeader"];
     header.sectionNumber = section;
     header.expansionDelegate = self;
-    header.sectionNameLabel.text = [Tempo tempoToIntensity:[Tempo speedDescription:section]];
+    header.sectionNameLabel.text = [NSString stringWithFormat:@"%@ Intensity", [Tempo tempoToIntensity:[Tempo speedDescription:section]]];
     BOOL expansionState = ((NSNumber *)self.expandedSections[section]).boolValue;
     header.expansionState = expansionState; 
     //header.sectionNameLabel.text = [Tempo speedDescription:section];
@@ -164,6 +165,7 @@
 {
     return 50.0;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

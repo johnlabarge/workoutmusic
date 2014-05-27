@@ -96,6 +96,7 @@
 		63AF6744190D80A20043F8FD /* appIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AF6743190D80A20043F8FD /* appIcon@2x.png */; };
 		63B0AAF018574F4A00B0A40F /* IntervalSectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B0AAEF18574F4A00B0A40F /* IntervalSectionCell.xib */; };
 		63B0AAF31857507A00B0A40F /* IntervalSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0AAF21857507A00B0A40F /* IntervalSectionCell.m */; };
+		63B336DE193533CE0090A9C9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B336DD193533CE0090A9C9 /* Crashlytics.framework */; };
 		63B3F656189D4B160087460A /* SJPlaylists.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F64E189D4B160087460A /* SJPlaylists.m */; };
 		63B3F657189D4B160087460A /* SongJockeySong.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F650189D4B160087460A /* SongJockeySong.m */; };
 		63B3F658189D4B160087460A /* SongJockeyPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F651189D4B160087460A /* SongJockeyPlayer.m */; };
@@ -283,6 +284,7 @@
 		63B0AAEF18574F4A00B0A40F /* IntervalSectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntervalSectionCell.xib; sourceTree = "<group>"; };
 		63B0AAF11857507A00B0A40F /* IntervalSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalSectionCell.h; sourceTree = "<group>"; };
 		63B0AAF21857507A00B0A40F /* IntervalSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntervalSectionCell.m; sourceTree = "<group>"; };
+		63B336DD193533CE0090A9C9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		63B3F64E189D4B160087460A /* SJPlaylists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SJPlaylists.m; path = SongJockey/SJPlaylists.m; sourceTree = "<group>"; };
 		63B3F64F189D4B160087460A /* SongJockeySong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongJockeySong.h; path = SongJockey/SongJockeySong.h; sourceTree = "<group>"; };
 		63B3F650189D4B160087460A /* SongJockeySong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongJockeySong.m; path = SongJockey/SongJockeySong.m; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				E5EB5B0E167FFCD800C3AA63 /* CoreData.framework in Frameworks */,
 				52D2BBD0166A7CBC00EBCAB8 /* MobileCoreServices.framework in Frameworks */,
 				52D2BBCE166A7C2400EBCAB8 /* libz.dylib in Frameworks */,
+				63B336DE193533CE0090A9C9 /* Crashlytics.framework in Frameworks */,
 				524B970616691AEF003E39B6 /* SystemConfiguration.framework in Frameworks */,
 				524B970416691AD4003E39B6 /* AVFoundation.framework in Frameworks */,
 				524B970216691ABC003E39B6 /* CFNetwork.framework in Frameworks */,
@@ -487,6 +490,7 @@
 		5271505A1651DF0200111078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63B336DD193533CE0090A9C9 /* Crashlytics.framework */,
 				631FA7C5189D711600C04AFC /* QuartzCore.framework */,
 				631FA7BC189D4D6F00C04AFC /* CoreMedia.framework */,
 				6307EE1A183193290034D0CB /* Accelerate.framework */,
@@ -839,6 +843,7 @@
 				527150531651DF0200111078 /* Sources */,
 				527150541651DF0200111078 /* Frameworks */,
 				527150551651DF0200111078 /* Resources */,
+				63B336DC193533250090A9C9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1000,6 +1005,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		63B336DC193533250090A9C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 53e6ee98d2eea1210fba97747d3e1ea5ad02d119 e7142dc1fe02fb586af4f190d2c593c2e65116c69f9ebd6c390ca02281fb3ead";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1135,7 +1153,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1162,7 +1180,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1179,6 +1197,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
 				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
@@ -1197,6 +1219,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkoutMusic/WorkoutMusic-Prefix.pch";
 				INFOPLIST_FILE = "WorkoutMusic/WorkoutMusic-Info.plist";
