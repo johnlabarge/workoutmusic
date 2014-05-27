@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 John La Barge. All rights reserved.
 //
 
-#import "NSArray+Shuffle.h"
+#import "NSMutableArray+Shuffle.h"
 #import <stdlib.h>
 
-@implementation NSArray (Shuffle)
+@implementation NSMutableArray (Shuffle)
 
 -(NSMutableArray *) shuffle {
     NSMutableArray * shuffled = [[NSMutableArray alloc] init];
@@ -18,10 +18,12 @@
     for (NSUInteger i=0; i < self.count; i++ ){
         [shuffled addObject:[self objectAtIndex:i]];
     }
-    //Fisher-Yates shuffle
-    for (NSUInteger i=count-1; i > 0; i--) {
-        int r = arc4random() % i;
-        [shuffled exchangeObjectAtIndex:r withObjectAtIndex:i];
+    if (count > 0) {
+        //Fisher-Yates linear time shuffle
+        for (NSUInteger i=count-1; i > 0; i--) {
+            int r = arc4random() % i;
+            [shuffled exchangeObjectAtIndex:r withObjectAtIndex:i];
+        }
     }
     return shuffled;
 }

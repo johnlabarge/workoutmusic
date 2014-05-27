@@ -25,4 +25,5 @@
 -(void) destroy; 
 -(void) addChangeAction:(void(^)(Workout * changedWorkout))changeAction;
 -(void) repeatIntervalsInRange:(NSRange)range;
+-(void) removeIntervalsAtIndexes:(NSIndexSet *)indexes;
 @end

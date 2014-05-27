@@ -113,10 +113,7 @@
     NSLog(@"numberOfRowsInComponent %lu",(unsigned long)self.timeOptions.count);
     return 60;
 }
-- (IBAction)doneWithTime:(id)sender {
-    // self.selectedSeconds = ([self.timePicker selectedRowInComponent:0]+1)*10;
-    //[self.blurView removeFromSuperview];
-}
+ 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return 20.0; 

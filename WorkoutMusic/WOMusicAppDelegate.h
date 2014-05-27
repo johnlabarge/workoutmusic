@@ -18,6 +18,7 @@
 
 }
 - (NSManagedObjectContext *) managedObjectContext;
+- (void) reprocessSongs; 
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;

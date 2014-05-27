@@ -61,12 +61,15 @@
     
     self.workoutList = [WorkoutList sharedInstance];
     [self.spinner startAnimating];
+    self.songTable.hidden = YES;
     self.spinner.hidesWhenStopped = YES;
+  
     __weak typeof(self) me = self;
-    
+
     [self.workoutList generateListForWorkout:self.workout afterGenerated:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [me.spinner stopAnimating];
+             me.songTable.hidden = NO;
             [me.songTable reloadData];
             SJPlaylist * list = [me.workoutList toSJPlaylist];
             [list eachSong:^(SongJockeySong *song, NSUInteger index, BOOL *stop) {

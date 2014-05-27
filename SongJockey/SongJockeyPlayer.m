@@ -240,7 +240,7 @@
         [NSThread sleepForTimeInterval:0.2f];
         [self.fadingQueue addOperationWithBlock:^{
             NSLog(@"fading out %.2f", self.currentPlayer.volume);
-            [weakSelf fadeOut];
+            [weakSelf fadeIn];
         }];
     }
 }

@@ -388,6 +388,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="w6f-hW-JGa" id="5ef-W3-QUF"/>
+                                    <outlet property="delegate" destination="w6f-hW-JGa" id="Txu-Rr-WFU"/>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Je-dz0">
@@ -418,6 +419,9 @@
                                 <state key="normal" title="Re-process Songs">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="reProcess:" destination="w6f-hW-JGa" eventType="touchUpInside" id="e1Q-8i-zMf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -428,7 +432,7 @@
                             <constraint firstItem="zoN-OB-17j" firstAttribute="leading" secondItem="gBj-kQ-qfC" secondAttribute="leading" id="XBl-OZ-KN4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Music" image="music.png" id="Eph-HO-7z0"/>
+                    <tabBarItem key="tabBarItem" title="Music" image="noteTab2" id="Eph-HO-7z0"/>
                     <connections>
                         <outlet property="changePlayListButton" destination="Jug-Je-dz0" id="Pvb-uG-p3o"/>
                         <outlet property="changePlaylistButton" destination="Jug-Je-dz0" id="dI9-jF-ato"/>
@@ -437,7 +441,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUB-uA-xar" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1286" y="-2903"/>
+            <point key="canvasLocation" x="-1509" y="-2937"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="XET-ll-K87">
@@ -605,6 +609,9 @@
                                         <state key="normal" image="delete_interval.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteIntervals:" destination="obp-Lr-5SH" eventType="touchUpInside" id="tHr-SC-gNv"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.80000001192092896" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -773,8 +780,8 @@
         <image name="delete_interval.png" width="48" height="48"/>
         <image name="edit.png" width="25" height="30"/>
         <image name="forward.png" width="58" height="60"/>
-        <image name="music.png" width="30" height="30"/>
         <image name="new_workout.png" width="50" height="47"/>
+        <image name="noteTab2" width="58" height="60"/>
         <image name="play.png" width="58" height="60"/>
         <image name="repeat.png" width="48" height="48"/>
         <image name="runningImage.png" width="200" height="200"/>

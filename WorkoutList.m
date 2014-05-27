@@ -51,9 +51,14 @@
 -(instancetype) initWithLibrary:(MusicLibraryBPMs *) library {
     self.bpmLibrary = library;
     listmakerqueue = dispatch_queue_create("listmaker",NULL);
+    [self reloadLibrary];
+    return self;
+}
+
+-(void) reloadLibrary {
     self.shuffledSongsByIntensity = [[NSMutableDictionary alloc] initWithCapacity:[Tempo classifications].count];
-      __weak typeof(self) me = self;
-      __weak NSMutableDictionary * songs = self.shuffledSongsByIntensity;
+    __weak typeof(self) me = self;
+    __weak NSMutableDictionary * songs = self.shuffledSongsByIntensity;
     [[Tempo classifications] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSString * classification = (NSString *)obj;
         NSMutableArray * songList = [me.bpmLibrary randomItemsForIntensity:classification];
@@ -62,21 +67,25 @@
         }
         
     }];
-    return self;
+
 }
 
 -(NSArray *) randomItemsForClassification:(NSString *) classification andDuration:(NSInteger)secondsLength {
     NSMutableArray * array  = [[NSMutableArray alloc] initWithCapacity:3];
     __weak NSMutableArray *list = array;
-    __weak NSMutableArray * shuffledLibrary = self.shuffledSongsByIntensity[classification];
+    __block NSMutableArray * shuffledLibrary = self.shuffledSongsByIntensity[classification];
     __block NSInteger totalLength = secondsLength;
     [shuffledLibrary enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
      {
+         
          MusicLibraryItem * item = (MusicLibraryItem *) obj;
+         NSLog(@"adding %@",item.title);
          [list addObject:item];
          totalLength -= item.durationInSeconds;
          if (totalLength <= 0) {
+             NSLog(@"before startFrom first Item is %@",((MusicLibraryItem *)shuffledLibrary[0]).title);
              [shuffledLibrary startFrom:idx+1];
+             NSLog(@"after startFrom first Item is %@",((MusicLibraryItem *)shuffledLibrary[0]).title);
              *stop = YES;
          }
          
@@ -116,14 +125,15 @@
                 NSLog(@"Zero listItems for interval %lu", (unsigned long)idx);
             }
             [listItems addObject:listItem];
-            me.generating = NO;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                me.workoutListItems = listItems;
-                after();
-            });
+
             
         }];
+        me.generating = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"dispatching done..");
+            me.workoutListItems = listItems;
+            after();
+        });
      
         
     });

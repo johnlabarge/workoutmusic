@@ -17,4 +17,6 @@
 @dynamic title;
 @dynamic notfound;
 @dynamic liveliness;
+@dynamic overridden_intensity;
+@dynamic overridden;
 @end

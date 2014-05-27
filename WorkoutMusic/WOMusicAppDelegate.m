@@ -79,6 +79,19 @@
     [self splash]; 
     [self.splashScreen afterSplash];
 }
+-(void) reprocessSongs
+{
+    dispatch_async(_processqueue, ^{
+        self.musicBPMLibrary.override_notfound = YES;
+        [self.musicBPMLibrary processItunesLibrary];
+        NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
+        [[NSRunLoop currentRunLoop]run];
+
+    });
+    self.workout = [WorkoutList sharedInstance];
+    [self splash];
+
+}
 -(void) processMusicLibrary:(NSNotification *)note
 {
     
@@ -89,12 +102,7 @@
 
     dispatch_async(_processqueue, ^{
         
-        [self.musicBPMLibrary processItunesLibrary:^(MusicLibraryItem *item) {
-            NSLog(@"%@ processing", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
-            
-        } afterUpdatingItem:^(MusicLibraryItem *item) {
-            NSLog(@"%@ processed", [item.mediaItem valueForProperty:MPMediaItemPropertyTitle]);
-        }];
+        [self.musicBPMLibrary processItunesLibrary];
         
        
        

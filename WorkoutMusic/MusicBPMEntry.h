@@ -19,5 +19,7 @@
 @property (nonatomic, strong) NSNumber * liveliness;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSNumber * notfound;
+@property (nonatomic, strong) NSNumber * overridden_intensity;
+@property (nonatomic, strong) NSNumber * overridden; 
 
 @end

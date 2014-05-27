@@ -10,6 +10,7 @@
 #import "MusicLibraryBPMs.h"
 
 @interface MusicItemCell()
+@property (weak, nonatomic) IBOutlet UIButton *clear_override_button;
 @property (weak, nonatomic) IBOutlet UIButton *classificationButton;
 @property (weak, nonatomic) IBOutlet UILabel *overrideStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
@@ -63,7 +64,7 @@
     self.livelyLabel.text = [NSString stringWithFormat:@"%.2f", musicItem.liveliness];
     self.albumArtImageView.image = [musicItem.artwork imageWithSize:CGSizeMake(50.0,50.0)];
     
-    if (!musicItem.notfound) {
+    if (!musicItem.notfound && (intensityIndex != UNKNOWN)) {
         [self.intensityControl setSelectedSegmentIndex:intensityIndex];
         self.backgroundColor= [UIColor whiteColor];
     } else if (!musicItem.overridden ){
@@ -76,9 +77,16 @@
     self.bpmAmt.text = [NSString stringWithFormat:@"%.2f", musicItem.bpm];
     self.energyAmt.text = [NSString stringWithFormat:@"%.2f", musicItem.energy];
     
+    if (!musicItem.overridden) {
+        self.clear_override_button.enabled = NO;
+        self.clear_override_button.hidden = YES;
+    }
     
 }
 - (IBAction)overrideIntensityForItem:(id)sender {
+    
+    
+    [self.musicItem overrideIntensityTo:self.intensityControl.selectedSegmentIndex];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

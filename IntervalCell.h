@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Workout.h"
 #import "WorkoutInterval.h"
-#import "WorkoutIntervalPicker.h"
 #import "WorkoutDesignerVC.h"
 #import "TimeLabel.h"
 

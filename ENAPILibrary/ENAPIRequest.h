@@ -126,6 +126,8 @@ static NSString __attribute__((unused)) * const ECHONEST_API_URL = @"http://deve
  */
 @property (readonly) NSDictionary *response;
 
+
+@property (nonatomic, strong, readwrite) NSHTTPURLResponse *urlResponse;
 /**
  * The http response code, 200 is a successful response.
  */

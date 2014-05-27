@@ -10,6 +10,9 @@
 #import "MusicLibraryBPMs.h" 
 #import "MusicItemCell.h"
 #import "WorkoutMusicSettings.h"
+#import "WOMusicAppDelegate.h"
+#import "TempoSectionHeader.h"
+
 
 @interface MusicViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -21,6 +24,9 @@
 @property (nonatomic, assign) BOOL doNoPlaylistAlert;
 @property (nonatomic, assign) BOOL doICloudAlert;
 @property (nonatomic, assign) BOOL doOldDRMAlert;
+@property (readonly) WOMusicAppDelegate * app;
+@property (nonatomic, strong) NSMutableArray * sectionHeaders;
+@property (nonatomic, strong) NSMutableArray * expandedSections;
 @end
 
 @implementation MusicViewController
@@ -41,7 +47,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initExpandedSections];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
     UINib * intervalCell = [UINib  nibWithNibName:@"MusicItemCell" bundle:nil];
+    //UINib * tempoHeader = [UINib nibWithNibName:@"TempoSectionHeader" bundle:nil];
+    [self.tableView registerClass:[TempoSectionHeader class] forHeaderFooterViewReuseIdentifier:@"TempoHeader"];
+
     [self.tableView registerNib:intervalCell forCellReuseIdentifier:@"musicItemCell"];
     [self.tableView setRowHeight:132.0];
   /*  dispatch_async(
@@ -60,12 +72,70 @@
     if (self.library.processed && self.library.didContainICloudItems) {
         self.doICloudAlert = YES;
     }
-    
+    typeof(self) weakSelf = self;
     [self.changePlayListButton setTitle:playListTitle forState:UIControlStateNormal];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"reclassified_media" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [weakSelf.app.workout reloadLibrary];
+        MusicLibraryItem * item = note.userInfo[@"musicItem"];
+        NSString * itemType = [Tempo speedDescription:item.overridden_intensity];
+        
+        NSArray * sectionArray = weakSelf.library.classifiedItems[itemType];
+        NSUInteger row = [sectionArray indexOfObject:item];
+    
+        NSIndexPath * scrollTo = [NSIndexPath indexPathForRow:row inSection:item.overridden_intensity];
+        __block UITableViewCell * cell;
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           
+                           
+                           UIColor * oldBackground  = cell.contentView.backgroundColor;
+
+                           [UIView animateWithDuration:1.0 animations:^{
+                               
+                               BOOL expanded = ((NSNumber *) weakSelf.expandedSections[scrollTo.section]).boolValue;
+                               if (!expanded) {
+                                   [self expandSection:scrollTo.section];
+                               } else {
+                                 [weakSelf.tableView reloadData];
+                               }
+                               [weakSelf.tableView scrollToRowAtIndexPath:scrollTo atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+
+                               
+                           } completion:^(BOOL finished) {
+                               if (finished) {
+                                   cell = [weakSelf.tableView cellForRowAtIndexPath:scrollTo];
+                                   [UIView animateWithDuration:1.0 animations:^{
+                                   
+                                       cell.contentView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:204/255.0 blue:51/255.0 alpha:1.0];
+                                   
+                                   } completion:^(BOOL finished) {
+                                       [UIView animateWithDuration:1.0 animations:^{
+                                           cell.contentView.backgroundColor = oldBackground;
+                                           
+                                       } completion:^(BOOL finished) {
+                                           
+                                       }];
+                                   }];
+                               }
+                               
+                               
+                           }];
+                       });
+                       
+                           
+    }];
+    
 
     NSLog(@"#######\n viewDidLoad Complete \n#######");
 }
-
+-(void) initExpandedSections
+{
+    self.expandedSections = [[NSMutableArray alloc] initWithCapacity:[Tempo speedDescriptions].count];
+    
+    for (NSUInteger i = 0; i < [Tempo speedDescriptions].count; i++) {
+        self.expandedSections[i] = [NSNumber numberWithBool:NO];
+    }
+}
 -(void) viewDidAppear:(BOOL)animated
 {
     if (self.doNoPlaylistAlert) {
@@ -77,7 +147,23 @@
     }
     [self.alert show];
 }
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    TempoSectionHeader * header = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"TempoHeader"];
+    header.sectionNumber = section;
+    header.expansionDelegate = self;
+    header.sectionNameLabel.text = [Tempo tempoToIntensity:[Tempo speedDescription:section]];
+    BOOL expansionState = ((NSNumber *)self.expandedSections[section]).boolValue;
+    header.expansionState = expansionState; 
+    //header.sectionNameLabel.text = [Tempo speedDescription:section];
+    return header;
+}
 
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50.0;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -86,21 +172,26 @@
 
 #pragma mark UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return [Tempo speedDescriptions].count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
-    NSArray * list = (NSArray *)library.classifiedItems[[Tempo speedDescription:section]];
-    return list.count;
+    NSInteger result = 0;
+    BOOL expanded =  ((NSNumber *)self.expandedSections[section]).boolValue;
+    if (expanded) {
+        MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
+        NSArray * list = (NSArray *)library.classifiedItems[[Tempo speedDescription:section]];
+    
+        result  = list.count;
+    }
+    return result;
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"cell for row at indexPath");
     MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
     
     NSString * itemType = [Tempo speedDescription:indexPath.section];
@@ -126,7 +217,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [Tempo tempoToIntensity:[Tempo speedDescription:section]];
+    return @"";//[Tempo tempoToIntensity:[Tempo speedDescription:section]];
 }
 
 /*
@@ -146,9 +237,33 @@
         playlistChooser.delegate = self;
         
 }
+-(void)expandSection:(NSUInteger)sectionNum
+{
+    if (sectionNum < [Tempo speedDescriptions].count) {
+        self.expandedSections[sectionNum] = [NSNumber numberWithBool:YES];
+    }
+    [self.tableView reloadData];
+    NSInteger rowsForSection = [self.tableView numberOfRowsInSection:sectionNum];
+    if (rowsForSection > 0 ) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sectionNum] atScrollPosition: UITableViewScrollPositionTop animated:YES];
+    }
+}
+-(void)contractSection:(NSUInteger)sectionNum
+{
+    self.expandedSections[sectionNum] = [NSNumber numberWithBool:NO];
+    [self.tableView reloadData];
+}
 -(void)optionChosen:(NSObject *)option
 {
     NSString * playListName = (NSString *)option;
     [WorkoutMusicSettings setWorkoutSongsPlaylist:playListName];
 }
+
+-(WOMusicAppDelegate *)app {
+    return (WOMusicAppDelegate *)[UIApplication sharedApplication].delegate;
+}
+- (IBAction)reProcess:(id)sender {
+    [self.app reprocessSongs];
+}
+
 @end

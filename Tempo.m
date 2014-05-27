@@ -41,7 +41,9 @@
     }
     return speedDescriptions;
 }
-
++(NSArray *)speedDescriptions  {
+    return [self classifications];
+}
 
 +(NSString *) speedDescription:(NSInteger)speed
 {
@@ -52,6 +54,8 @@
         return @"Unknown";
     }
 }
+
+
 
 
 +(NSString *) tempoClassificationForBPM:(double)bpm

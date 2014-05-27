@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "MusicBPMEntry.h"
-#import "NSArray+Shuffle.h"
+#import "NSMutableArray+Shuffle.h"
 #import "ENAPI.h"
 #import "Tempo.h"
 
@@ -62,11 +62,12 @@
 +(instancetype) currentInstance:(id)instance;
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
--(void) processItunesLibrary:(void (^)(MusicLibraryItem * item))beforeUpdatingItem  afterUpdatingItem:( void (^)(MusicLibraryItem *item ) ) itemUpdated;
+-(void) processItunesLibrary;
 - (void)unfilter;
 -(NSArray *) sortByClassification; 
 -(NSString *) classificationForMusicItem:(MusicLibraryItem *)item;
 -(NSMutableArray *) randomItemsForIntensity:(NSString *)classification;
+
 /**
  * random MusicLibraryItems
  */
@@ -92,11 +93,14 @@
 @property (nonatomic, assign) BOOL overridden;
 @property (nonatomic, assign) BOOL notfound;
 @property (nonatomic, assign) double liveliness;
+@property (nonatomic, assign) NSUInteger overridden_intensity;
+@property (readonly) NSString * albumArtist;
+@property (nonatomic, strong) MusicBPMEntry * cacheEntry; 
 
-
-
-
+-(void) applyMusicBPMEntry:(MusicBPMEntry *)entry;
 -(BOOL) isICloudItem;
 -(BOOL) isOldDRM;
+
+-(void) overrideIntensityTo:(NSInteger)intensityNum;
 
 @end;

@@ -199,7 +199,7 @@
 
 -(void) repeatIntervalsInRange:(NSRange)range
 {
-    if (self.intervals.count + range.length < 50) {
+    if ((self.intervals.count > 0) && (range.length > 0) && (self.intervals.count+range.length < 50)) {
         NSMutableArray * copies = [[NSMutableArray alloc]initWithCapacity:range.length];
         NSUInteger i;
         NSUInteger ending = range.location+range.length;
@@ -213,6 +213,11 @@
         [self intervalChanged:nil];
     }
   
+}
+
+-(void) removeIntervalsAtIndexes:(NSIndexSet *)indexes {
+    [self.intervals removeObjectsAtIndexes:indexes];
+    [self intervalChanged:nil];
 }
 
 -(void) destroy

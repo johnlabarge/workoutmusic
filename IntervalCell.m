@@ -50,12 +50,17 @@
     self.workoutInterval.speed = [speedControl selectedSegmentIndex];
 }
 
-
+-(void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    [super setUserInteractionEnabled:userInteractionEnabled];
+     self.tempoSlider.userInteractionEnabled = userInteractionEnabled;
+}
 
 
 - (IBAction)editTime {
-    
-    [self.parent presentTimePickerForInterval:self.workoutInterval];
+    if (self.userInteractionEnabled) {
+        [self.parent presentTimePickerForInterval:self.workoutInterval];
+    }
 
     
     /* [self.parent presentViewController:timePickerVC animated:YES completion:^{

@@ -15,7 +15,8 @@
     NSUInteger pivot = index;
     if (pivot >0 && pivot < self.count) {
         NSUInteger pointer = 0;
-        while (pointer < pivot) {
+        while (pointer <= pivot) {
+            NSLog(@"moving item %lu to back",(unsigned long)pointer);
             id object = self[pointer];
             [self removeObjectAtIndex:pointer];
             [self addObject:object];

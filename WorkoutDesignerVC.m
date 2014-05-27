@@ -10,7 +10,6 @@
 #import "Workout.h" 
 #import "WorkoutInterval.h"
 #import "IntervalCell.h"
-#import "WorkoutIntervalPicker.h"
 #import "TimePickerVCViewController.h"
 
 @interface WorkoutDesignerVC ()
@@ -119,7 +118,7 @@
     } else {
         self.nameField.text = nil;
     }
-    
+    [self.model recalculate];
     [self.intervalsTable reloadData];
     [self.workoutGraph reloadData];
 }
@@ -232,24 +231,33 @@
 
 - (IBAction)deleteIntervals:(id)sender {
     
+    NSMutableIndexSet * indexSet = [[NSMutableIndexSet alloc] init];
+    
     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath * index = (NSIndexPath *)obj;
-        [self.model.intervals removeObjectAtIndex:index.row];
-    }];
-    [self.intervalsTable reloadData];
-    [self.workoutGraph reloadData];
-    
+        [indexSet addIndex:index.row];
 
+    }];
+    [self.model  removeIntervalsAtIndexes:indexSet];
 }
 - (IBAction)repeatIntervals:(id)sender {
     BOOL consecutive = [self selectedIndexesAreConsecutive];
-    if (consecutive) {
+    
+    if (consecutive && self.selectedIndexes.count  > 0) {
         NSUInteger location = ((NSIndexPath *) self.selectedIndexes[0]).row;
         NSUInteger length = self.selectedIndexes.count;
         [self.model repeatIntervalsInRange:NSMakeRange(location,length)];
     }
 }
-
+-(void) setCellInteraction:(BOOL) allowed
+{
+    [self.intervalsTable.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UITableViewCell * cell = (UITableViewCell *)obj;
+        cell.userInteractionEnabled = allowed;
+    }];
+         
+    
+}
 
 -(void) keyboardDidShow:(NSNotification *)note;
 {
@@ -259,11 +267,15 @@
         NSLog(@"%2.f", myRect.origin.y);
         self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 180);
         [self.intervalsTable scrollToRowAtIndexPath:self.selectedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [self.intervalsTable setUserInteractionEnabled:NO];
+        [self setCellInteraction:NO];
     }
 }
 -(void) keyboardDidHide:(NSNotification *)note;
 {
     self.view.center = self.originalCenter;
+    [self.intervalsTable setUserInteractionEnabled:YES];
+    [self setCellInteraction:YES];
 }
 
 -(void) presentTimePickerForInterval:(WorkoutInterval *)interval

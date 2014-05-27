@@ -37,6 +37,7 @@
 -(NSArray *) songsForInterval:(NSInteger)interval;
 -(SJPlaylist *)toSJPlaylist;
 -(NSInteger) playListIndex:(WorkoutListItem *) item andSong: (SongJockeySong *) song;
+-(void) reloadLibrary;
 
 
 @end

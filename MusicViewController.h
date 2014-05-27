@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PlaylistChooserViewController.h"
 #import "OptionDelegate.h"
+#import "TableSectionExpansionDelegate.h"
 
-@interface MusicViewController : UIViewController <OptionDelegate, UIAlertViewDelegate>
+@interface MusicViewController : UIViewController <OptionDelegate, UIAlertViewDelegate,TableSectionExpansionDelegate>
 /*
  *   private UI outlets.
  */
