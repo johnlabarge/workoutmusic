@@ -9,6 +9,10 @@
 #import "WOMusicAppDelegate.h"
 #import "Tempo.h"
 #import "Reachability.h" 
+#import <math.h>
+
+#define MIN_TEMPO 50
+#define MAX_TEMPO 180
 
 
 
@@ -46,7 +50,8 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     self.filters = [Tempo ranges];
     
    // self.musicClassifier = [[self class] energyTimesBPMClassifier];
-    self.musicClassifier = [[self class] energyClassifier];
+  //  self.musicClassifier = [[self class] energyClassifier];
+    self.musicClassifier = [[self class] livelinessClassifier];
     self.override_notfound = NO;
     self.unfilteredItems = self.libraryItems;
     self.managedObjectContext = moc;
@@ -159,13 +164,13 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
 -(void) applyAudioSummary:(NSDictionary *)summary toMusicItem:(MusicLibraryItem *)item
 {
     double danceability = [[summary valueForKeyPath:@"audio_summary.danceability"] doubleValue];
-    double liveliness = [[summary valueForKeyPath:@"audio_summary.liveliness"] doubleValue];
+    double loudness = [[summary valueForKeyPath:@"audio_summary.loudness"] doubleValue];
     
     double tempo = [[summary valueForKeyPath:@"audio_summary.tempo"] doubleValue];
     item.energy = [[summary valueForKeyPath:@"audio_summary.energy"] doubleValue];
     item.bpm = tempo;
     item.danceability = danceability;
-    item.liveliness = liveliness;
+    item.loudness = loudness;
     [self saveMusicBPMEntryInCache:item];
     
    
@@ -571,7 +576,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         entry.energy = [[NSNumber alloc] initWithDouble:weakItem.energy];
         entry.notfound = [[NSNumber alloc] initWithBool:weakItem.notfound];
         entry.danceability = [[NSNumber alloc] initWithDouble:weakItem.danceability];
-        entry.liveliness = [[NSNumber alloc] initWithDouble:weakItem.liveliness];
+        entry.loudness = [[NSNumber alloc] initWithDouble:weakItem.loudness];
         
         
         NSError *error = nil;
@@ -777,6 +782,29 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         }
     };
 }
+
++(Classifier) livelinessClassifier {
+    return ^NSString * (MusicLibraryItem * item) {
+        if (item.overridden) {
+            return [Tempo speedDescription:item.overridden_intensity];
+        } else if (item.notfound) {
+            return [Tempo speedDescription:UNKNOWN];
+        }else {
+            double item_liveliness = liveliness(item.bpm, item.loudness, item.energy);
+            NSLog(@"\n item artist = %@ item title = %@  ### loudness = %.2f liveliness = %.2f\n", item.artist, item.title, item.loudness, item_liveliness);
+            if ( item_liveliness > 0.1 && item_liveliness <= 0.3) {
+                return [Tempo speedDescription:SLOW];
+            } else if (item_liveliness  >  0.3 && item_liveliness <= 0.65) {
+                return [Tempo speedDescription:MEDIUM];
+            } else if (item_liveliness > 0.65 && item_liveliness <= 0.85) {
+                return [Tempo speedDescription:FAST];
+            } else if (item_liveliness >= 0.85) {
+                return [Tempo speedDescription:VERYFAST];
+            }
+        }
+        return [Tempo speedDescription:UNKNOWN];
+    };
+}
 +(Classifier) energyTimesBPMClassifier {
    
     return ^NSString *(MusicLibraryItem *item) {
@@ -889,6 +917,21 @@ BOOL internetConnection()
     Reachability * r = [Reachability reachabilityForInternetConnection];
     return ([r currentReachabilityStatus] >  NotReachable);
 }
+
+double clamp(double n, double mn, double mx){
+    return fmin(mx, fmax(mn,n));
+}
+double norm(double n, double mn, double mx){
+    return (n-mn)/(mx-mn);
+}
+double nclamp(double n, double mn, double mx){
+    return norm(clamp(n,mn,mx),mn,mx);
+}
+
+double liveliness(double tempo, double loudness, double energy)
+{
+    return (0.75*nclamp(tempo, MIN_TEMPO, MAX_TEMPO) + 1.25*nclamp(loudness, -25, 0) + 1.75*energy)/3.75;
+}
 @end
 
 @implementation MusicLibraryItem /* TODO: merge with SongJockey stuff - redundant. */
@@ -906,6 +949,7 @@ BOOL internetConnection()
             self.bpm = [entry.bpm doubleValue];
             self.energy = energy;
             self.overridden = [entry.overridden boolValue];
+            self.loudness = [entry.loudness doubleValue];
             if (self.overridden) {
                 NSLog(@"found overridden song..");
             }

@@ -5,7 +5,7 @@
         <attribute name="bpm" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="danceability" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="energy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="liveliness" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="loudness" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="notfound" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="overridden" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="overridden_intensity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>

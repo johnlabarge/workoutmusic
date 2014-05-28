@@ -16,7 +16,7 @@
 @dynamic danceability;
 @dynamic title;
 @dynamic notfound;
-@dynamic liveliness;
+@dynamic loudness;
 @dynamic overridden_intensity;
 @dynamic overridden;
 @end

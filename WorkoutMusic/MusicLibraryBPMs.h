@@ -92,7 +92,7 @@
 @property (readonly) MPMediaItemArtwork * artwork;
 @property (nonatomic, assign) BOOL overridden;
 @property (nonatomic, assign) BOOL notfound;
-@property (nonatomic, assign) double liveliness;
+@property (nonatomic, assign) double loudness;
 @property (nonatomic, assign) NSUInteger overridden_intensity;
 @property (readonly) NSString * albumArtist;
 @property (nonatomic, strong) MusicBPMEntry * cacheEntry; 
