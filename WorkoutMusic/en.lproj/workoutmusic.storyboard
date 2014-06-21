@@ -344,25 +344,31 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="runningImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="bYB-VI-Rs3">
-                                <rect key="frame" x="60" y="37" width="200" height="200"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EN_P_on_Light_Transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ynh-dO-CmG">
+                                <rect key="frame" x="98" y="350" width="125" height="29"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EN_P_on_Light_Transparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="ynh-dO-CmG">
-                                <rect key="frame" x="98" y="419" width="125" height="29"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Processing your songs... This may Take a While, if It's the First Time the Workout DJ Has Seen Your Songs" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="L9Q-wI-qNn">
-                                <rect key="frame" x="73" y="297" width="200" height="80"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="202" translatesAutoresizingMaskIntoConstraints="NO" id="L9Q-wI-qNn">
+                                <rect key="frame" x="59" y="421" width="202" height="23"/>
+                                <string key="text">Processing your songs... 
+</string>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="19"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="runningImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="bYB-VI-Rs3">
+                                <rect key="frame" x="60" y="37" width="200" height="200"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6yV-Vp-lRU" firstAttribute="top" secondItem="4oS-Fu-rct" secondAttribute="bottom" constant="27" id="1bJ-Fp-mGH"/>
                             <constraint firstItem="4oS-Fu-rct" firstAttribute="top" secondItem="h5z-0u-CkV" secondAttribute="bottom" constant="8" symbolic="YES" id="B5E-Nh-T9C"/>
+                            <constraint firstAttribute="centerX" secondItem="L9Q-wI-qNn" secondAttribute="centerX" id="DL7-ic-yTc"/>
                             <constraint firstItem="bYB-VI-Rs3" firstAttribute="top" secondItem="pJy-7Z-2bp" secondAttribute="top" constant="37" id="EY3-WY-Wgv"/>
                             <constraint firstItem="h5z-0u-CkV" firstAttribute="centerX" secondItem="4oS-Fu-rct" secondAttribute="centerX" id="J5o-ub-KmX"/>
+                            <constraint firstItem="ynh-dO-CmG" firstAttribute="top" secondItem="bYB-VI-Rs3" secondAttribute="bottom" constant="113" id="KoF-Wm-KQ7"/>
+                            <constraint firstAttribute="centerX" secondItem="ynh-dO-CmG" secondAttribute="centerX" id="YOz-31-0CP"/>
+                            <constraint firstItem="L9Q-wI-qNn" firstAttribute="top" secondItem="bYB-VI-Rs3" secondAttribute="bottom" constant="184" id="eTn-bB-jwu"/>
                             <constraint firstItem="4oS-Fu-rct" firstAttribute="centerX" secondItem="pJy-7Z-2bp" secondAttribute="centerX" id="m0p-yU-cm3"/>
                             <constraint firstAttribute="centerX" secondItem="bYB-VI-Rs3" secondAttribute="centerX" id="sCz-z0-4uI"/>
                         </constraints>
@@ -413,8 +419,8 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="# of Songs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4Y-1C-6mU">
-                                        <rect key="frame" x="8" y="43" width="307" height="21"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <rect key="frame" x="8" y="39" width="307" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="22"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -433,19 +439,25 @@
                                             <action selector="reProcess:" destination="w6f-hW-JGa" eventType="touchUpInside" id="09Y-3Z-Yls"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="iCloud Items Excluded" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCS-xf-wb4">
+                                        <rect key="frame" x="115" y="69" width="92" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="d4Y-1C-6mU" secondAttribute="centerX" id="Ybx-dK-xoU"/>
                                     <constraint firstItem="7Ie-Gj-y85" firstAttribute="top" secondItem="s2N-sk-R0g" secondAttribute="top" constant="5" id="Ynt-HL-Pla"/>
                                     <constraint firstItem="LlU-6L-aWW" firstAttribute="top" secondItem="s2N-sk-R0g" secondAttribute="top" constant="9" id="hmK-hB-plj"/>
-                                    <constraint firstItem="d4Y-1C-6mU" firstAttribute="top" secondItem="Qrm-6o-ACf" secondAttribute="bottom" constant="12" id="lfO-Dl-6i2"/>
                                     <constraint firstAttribute="height" constant="110" id="myl-xy-XFk"/>
                                     <constraint firstItem="Qrm-6o-ACf" firstAttribute="top" secondItem="s2N-sk-R0g" secondAttribute="top" constant="9" id="xJt-bg-AMg"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZyM-hJ-dzk">
-                                <rect key="frame" x="0.0" y="133" width="320" height="271"/>
+                                <rect key="frame" x="-1" y="172" width="320" height="271"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="musicCategoryTableCell" rowHeight="50" id="W4n-Nk-5db" customClass="MusicCategoryCell">
@@ -456,22 +468,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="All Songs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebq-tu-EHa">
-                                                    <rect key="frame" x="80" y="9" width="90" height="28"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                                    <rect key="frame" x="87" y="7" width="113" height="35"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hV-87-TTJ">
-                                                    <rect key="frame" x="31" y="12" width="49" height="21"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7hV-87-TTJ" firstAttribute="leading" secondItem="hiN-xR-OFl" secondAttribute="leading" constant="12" id="6YQ-0f-LLP"/>
                                                 <constraint firstAttribute="centerY" secondItem="Ebq-tu-EHa" secondAttribute="centerY" id="UzX-sO-Irv"/>
                                                 <constraint firstAttribute="centerX" secondItem="Ebq-tu-EHa" secondAttribute="centerX" id="WBv-Ns-bAa"/>
                                                 <constraint firstAttribute="centerY" secondItem="Ebq-tu-EHa" secondAttribute="centerY" id="dlc-U1-xY5"/>
-                                                <constraint firstItem="Ebq-tu-EHa" firstAttribute="leading" secondItem="7hV-87-TTJ" secondAttribute="trailing" constant="19" id="fUW-qo-QP0"/>
-                                                <constraint firstAttribute="centerY" secondItem="7hV-87-TTJ" secondAttribute="centerY" id="skJ-vC-85j"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -487,16 +492,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZyM-hJ-dzk" firstAttribute="top" secondItem="s2N-sk-R0g" secondAttribute="bottom" id="60s-S5-yrU"/>
                             <constraint firstItem="ZyM-hJ-dzk" firstAttribute="leading" secondItem="gBj-kQ-qfC" secondAttribute="leading" id="cY8-M9-0ud"/>
-                            <constraint firstAttribute="trailing" secondItem="ZyM-hJ-dzk" secondAttribute="trailing" id="ch1-W9-igu"/>
-                            <constraint firstAttribute="trailing" secondItem="ZyM-hJ-dzk" secondAttribute="trailing" id="e0d-1Z-gng"/>
-                            <constraint firstAttribute="trailing" secondItem="ZyM-hJ-dzk" secondAttribute="trailing" id="rl5-f2-CXe"/>
-                            <constraint firstItem="ZyM-hJ-dzk" firstAttribute="top" secondItem="gBj-kQ-qfC" secondAttribute="top" constant="133" id="scq-MZ-T6C"/>
                             <constraint firstItem="ZyM-hJ-dzk" firstAttribute="leading" secondItem="gBj-kQ-qfC" secondAttribute="leading" id="zwR-bb-qut"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Lee-Jt-u6Z"/>
                     <connections>
+                        <outlet property="iCloudLabel" destination="aCS-xf-wb4" id="Xdi-oI-zUJ"/>
                         <outlet property="playListButton" destination="7Ie-Gj-y85" id="qkT-eg-vPq"/>
                         <outlet property="tableView" destination="ZyM-hJ-dzk" id="UJV-Mh-GXE"/>
                         <outlet property="totalNumberSongsLabel" destination="d4Y-1C-6mU" id="6zK-Eg-aVy"/>

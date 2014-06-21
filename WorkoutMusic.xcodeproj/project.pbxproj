@@ -961,6 +961,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E7F9A6193BD4A5007D1FD9 /* sample.json in Resources */,
 				63B3372119375E6F0090A9C9 /* EN_P_on_Light_Transparent.png in Resources */,
 				E5C452AE182991210073A8B3 /* intervalcell.xib in Resources */,
 				527150661651DF0200111078 /* InfoPlist.strings in Resources */,
@@ -1015,7 +1016,6 @@
 				63F8AD0D1933BB33002B3DE1 /* expand_section@2x.png in Resources */,
 				63D66A6819488361007B24EC /* WOMSelectionBox.xib in Resources */,
 				631FA7C1189D6A8300C04AFC /* playlisticon.png in Resources */,
-				63E7F9A6193BD4A5007D1FD9 /* sample.json in Resources */,
 				63B3371D193577CA0090A9C9 /* launchImage.png in Resources */,
 				63AF6740190D7C520043F8FD /* appIcon-old.png in Resources */,
 				63B0AAF018574F4A00B0A40F /* IntervalSectionCell.xib in Resources */,

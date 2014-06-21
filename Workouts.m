@@ -74,8 +74,10 @@
     NSString * destination = [self path];
     NSString * sourcePath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"json"];
     NSError * error;
+    
+    
     [[NSFileManager defaultManager] copyItemAtPath:sourcePath
-                                            toPath:destination
+                                            toPath:[destination stringByAppendingPathComponent:@"sample.json"]
                                              error:&error];
 }
 

@@ -18,6 +18,7 @@
 @property (nonatomic, assign) BOOL doNoPlaylistAlert;
 @property (nonatomic, assign) BOOL doICloudAlert;
 @property (nonatomic, assign) BOOL doOldDRMAlert;
+@property (weak, nonatomic) IBOutlet UILabel *iCloudLabel;
 @property (nonatomic, weak) UIButton * changePlayListButton;
 @property (readonly) MusicLibraryBPMs * library;
 @end
@@ -39,7 +40,11 @@
     self.navigationItem.title = @"Music Manager";
     NSString * playListTitle = @"none selected!";
     NSLog(@"library processed status=%d",self.library.processed);
-    
+    if (self.library.didContainICloudItems) {
+        self.iCloudLabel.hidden = NO;
+    } else {
+        self.iCloudLabel.hidden = YES;
+    }
     if (self.library.processed) {
         playListTitle = [WorkoutMusicSettings workoutSongsPlaylist];
     } else {
@@ -65,7 +70,10 @@
     return ((NSArray *)self.library.classifiedItems[[Tempo speedDescription:classNum]]).count;
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
