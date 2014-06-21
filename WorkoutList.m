@@ -79,14 +79,18 @@
      {
          
          MusicLibraryItem * item = (MusicLibraryItem *) obj;
-         NSLog(@"adding %@",item.title);
+         NSLog(@"adding  %@ - %@",@(idx), item.title);
          [list addObject:item];
          totalLength -= item.durationInSeconds;
          if (totalLength <= 0) {
              NSLog(@"before startFrom first Item is %@",((MusicLibraryItem *)shuffledLibrary[0]).title);
+             NSLog(@"circling - idx+1=%@ and count=%@",@(idx+1),@(shuffledLibrary.count));
+             
              [shuffledLibrary startFrom:idx+1];
+             
              NSLog(@"after startFrom first Item is %@",((MusicLibraryItem *)shuffledLibrary[0]).title);
              *stop = YES;
+             
          }
          
      }];
