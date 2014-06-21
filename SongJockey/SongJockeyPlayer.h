@@ -25,6 +25,7 @@
 @property (nonatomic, strong) SJPlaylist * songQueue;
 @property (readonly) SongJockeySong * currentSong;
 @property (nonatomic, assign) NSInteger remainingSeconds;
+@property (nonatomic, assign) NSInteger totalRemainingTime;
 @property (nonatomic, assign) BOOL isPlaying; 
 -(instancetype) initWithSJPlaylist:(SJPlaylist *)sjplaylist;
 

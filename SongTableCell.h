@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TimeLabel.h"
 
 @interface SongTableCell : UITableViewCell 
 
 @property (nonatomic, strong) IBOutlet UILabel * tempoClass;
-@property (nonatomic, strong) IBOutlet UILabel * time;
+@property (nonatomic, strong) IBOutlet TimeLabel * time;
 @property (nonatomic, strong) IBOutlet UIImageView *artworkImageView;
 @property (nonatomic, strong) UIImage * artworkImage;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
