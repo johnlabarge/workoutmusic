@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOMMediaReclassifiedView">
+            <connections>
+                <outlet property="artImageView" destination="gIy-pZ-VUg" id="uyW-jF-5mF"/>
+                <outlet property="artistLabel" destination="M9C-gl-bOp" id="bbk-bH-ASm"/>
+                <outlet property="titleLabel" destination="iT6-f8-0PX" id="huz-vX-DyS"/>
+                <outlet property="viewTitle" destination="xOt-Np-gwd" id="LTx-1D-6nA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Media Moved to #New Classification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOt-Np-gwd">
+                    <rect key="frame" x="6" y="0.0" width="316" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                    <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9C-gl-bOp">
+                    <rect key="frame" x="71" y="38" width="90" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iT6-f8-0PX">
+                    <rect key="frame" x="71" y="68" width="82" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gIy-pZ-VUg">
+                    <rect key="frame" x="6" y="31" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="xOt-Np-gwd" secondAttribute="centerX" id="2jy-r3-XBU"/>
+                <constraint firstItem="iT6-f8-0PX" firstAttribute="leading" secondItem="gIy-pZ-VUg" secondAttribute="trailing" constant="5" id="EJ2-l2-PoC"/>
+                <constraint firstItem="xOt-Np-gwd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="Iq5-j9-If9"/>
+                <constraint firstAttribute="bottom" secondItem="gIy-pZ-VUg" secondAttribute="bottom" constant="9" id="UNx-ib-351"/>
+                <constraint firstItem="xOt-Np-gwd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Zve-gn-YcJ"/>
+                <constraint firstItem="M9C-gl-bOp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="71" id="e64-TE-nej"/>
+                <constraint firstAttribute="bottom" secondItem="iT6-f8-0PX" secondAttribute="bottom" constant="11" id="hV6-Px-Xfz"/>
+                <constraint firstItem="gIy-pZ-VUg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="kCe-fI-GwU"/>
+                <constraint firstItem="iT6-f8-0PX" firstAttribute="top" secondItem="M9C-gl-bOp" secondAttribute="bottom" constant="9" id="uf3-cx-9yH"/>
+                <constraint firstItem="gIy-pZ-VUg" firstAttribute="top" secondItem="xOt-Np-gwd" secondAttribute="bottom" constant="10" id="v6r-8W-NjD"/>
+                <constraint firstItem="M9C-gl-bOp" firstAttribute="leading" secondItem="gIy-pZ-VUg" secondAttribute="trailing" constant="5" id="wUM-Mi-cGN"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

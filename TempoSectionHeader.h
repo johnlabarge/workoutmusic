@@ -10,8 +10,5 @@
 #import "TableSectionExpansionDelegate.h"
 @interface TempoSectionHeader : UITableViewHeaderFooterView
 @property (weak, nonatomic) IBOutlet UILabel *sectionNameLabel;
-@property (weak, nonatomic) id<TableSectionExpansionDelegate> expansionDelegate;
 @property (nonatomic, assign) NSUInteger sectionNumber;
-@property (nonatomic, weak) IBOutlet UIButton * expansionButton;
-@property (nonatomic, assign) BOOL expansionState;
 @end

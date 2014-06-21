@@ -28,6 +28,9 @@
     return workoutsPath;
 
 }
++(BOOL) workoutsInDirectory {
+    return ([self list].count > 0);
+}
 +(NSArray *) list {
     NSLog(@"list.....");
     NSString * dirPath = [self path];
@@ -64,6 +67,16 @@
         
     
     
+}
+
++(void) copySampleWorkoutToDirectory
+{
+    NSString * destination = [self path];
+    NSString * sourcePath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"json"];
+    NSError * error;
+    [[NSFileManager defaultManager] copyItemAtPath:sourcePath
+                                            toPath:destination
+                                             error:&error];
 }
 
 @end

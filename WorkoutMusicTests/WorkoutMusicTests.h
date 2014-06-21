@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 John La Barge. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface WorkoutMusicTests : SenTestCase
+@interface WorkoutMusicTests : XCTestCase
 
 @end

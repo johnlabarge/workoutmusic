@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -14,11 +14,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Artwork :(" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="VQS-dd-PSF">
-                        <rect key="frame" x="106" y="5" width="209" height="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No Artwork :(" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="147" translatesAutoresizingMaskIntoConstraints="NO" id="VQS-dd-PSF">
+                        <rect key="frame" x="87" y="5" width="147" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="209" id="40O-RN-iLz"/>
+                            <constraint firstAttribute="width" constant="147" id="6y6-5F-7bi"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -66,7 +66,6 @@
                     <constraint firstItem="d7W-gw-PBJ" firstAttribute="bottom" secondItem="MWr-yP-RvY" secondAttribute="bottom" id="49n-ND-1oD"/>
                     <constraint firstItem="121" firstAttribute="top" secondItem="fVC-wJ-AdG" secondAttribute="top" constant="5" id="Ctu-SA-H2o"/>
                     <constraint firstItem="d7W-gw-PBJ" firstAttribute="leading" secondItem="MWr-yP-RvY" secondAttribute="trailing" constant="1" id="Dkn-BQ-Y4R"/>
-                    <constraint firstAttribute="trailing" secondItem="VQS-dd-PSF" secondAttribute="trailing" constant="5" id="EJS-5j-eQU"/>
                     <constraint firstItem="VQS-dd-PSF" firstAttribute="top" secondItem="fVC-wJ-AdG" secondAttribute="top" constant="5" id="MSi-8f-hYz"/>
                     <constraint firstItem="121" firstAttribute="leading" secondItem="fVC-wJ-AdG" secondAttribute="leading" constant="10" id="Mof-Gl-3rL"/>
                     <constraint firstAttribute="bottom" secondItem="MWr-yP-RvY" secondAttribute="bottom" constant="3" id="OPb-Y6-5cN"/>

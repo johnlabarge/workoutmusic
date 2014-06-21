@@ -15,5 +15,6 @@
 /*
  *   private UI outlets.
  */
+@property (nonatomic, strong) NSString * category;
  
 @end

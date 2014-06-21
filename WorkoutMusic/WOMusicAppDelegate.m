@@ -11,6 +11,7 @@
 #import "WorkoutList.h"
 #import "Splash.h"
 #import "WorkoutMusicSettings.h"
+#import "Workouts.h"
 #import <Crashlytics/Crashlytics.h>
 
 @interface WOMusicAppDelegate () {
@@ -28,7 +29,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [WorkoutMusicSettings sharedInstance]; 
+    [WorkoutMusicSettings sharedInstance];
+    [self checkCopySampleWorkout];
     _processqueue = dispatch_queue_create("music processor", NULL);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processMusicLibrary:) name:@"workoutsongschanged" object:nil];
     
@@ -103,7 +105,7 @@
 
     dispatch_async(_processqueue, ^{
         
-        [self.musicBPMLibrary processItunesLibrary];
+        [me.musicBPMLibrary processItunesLibrary];
         
        
        
@@ -207,5 +209,12 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     NSLog(@"should select View controller");
     return viewController != tabBarController.selectedViewController;
+}
+
+-(void) checkCopySampleWorkout
+{
+    if (![Workouts workoutsInDirectory]) {
+        [Workouts copySampleWorkoutToDirectory];
+    }
 }
 @end

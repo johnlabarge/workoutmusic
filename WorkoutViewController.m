@@ -44,9 +44,8 @@
 
     UINib * intervalCell = [UINib  nibWithNibName:@"SongTableCell" bundle:nil];
     [self.songTable registerNib:intervalCell forCellReuseIdentifier:@"songTableCell"];
-   /* self.songTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-   self.songTableContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
- */   UINib * headerCell = [UINib nibWithNibName:@"IntervalSectionCell" bundle:nil];
+
+    UINib * headerCell = [UINib nibWithNibName:@"IntervalSectionCell" bundle:nil];
     [self.songTable registerNib:headerCell
          forCellReuseIdentifier:@"sectionCell"];
     self.songTable.separatorColor = [UIColor clearColor];
@@ -234,6 +233,51 @@
 - (IBAction)forward:(id)sender {
     [self.sjPlayer next];
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    // Set itself as the first responder
+    [self becomeFirstResponder];
+}
+-(BOOL) canBecomeFirstResponder {
+    return YES;
+}
+-(void) viewWillDisappear:(BOOL)animated
+{
+    // Turn off remote control event delivery
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    
+    // Resign as first responder
+    [self resignFirstResponder];
+    
+    [super viewWillDisappear:animated];
+}
 
+- (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent {
+    
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        NSLog(@"Remote control event %d", receivedEvent.subtype);
+        switch (receivedEvent.subtype) {
+            case UIEventSubtypeRemoteControlPause:
+            case UIEventSubtypeRemoteControlPlay:
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                NSLog(@"play pause remote control\n");
+                [self play:nil];
+                break;
+                
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                [self back:nil];
+                break;
+                
+            case UIEventSubtypeRemoteControlNextTrack:
+                [self forward:nil];
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
 
 @end

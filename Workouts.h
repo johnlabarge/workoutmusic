@@ -12,5 +12,6 @@
 @interface Workouts : NSObject
 +(NSString *)path;
 +(NSArray *)list;
-
++(void) copySampleWorkoutToDirectory;
++(BOOL) workoutsInDirectory; 
 @end

@@ -1,0 +1,26 @@
+{
+  "name" : "killer",
+  "workoutSeconds" : 780,
+  "intervals" : [
+    {
+      "speed" : 1,
+      "intervalSeconds" : 60
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 60
+    },
+    {
+      "speed" : 3,
+      "intervalSeconds" : 300
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 300
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 60
+    }
+  ]
+}

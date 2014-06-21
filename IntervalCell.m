@@ -10,6 +10,9 @@
 #import "TimePickerVCViewController.h"
 #import "FXBlurView.h"
 
+@interface IntervalCell()
+@property (nonatomic, strong) UITapGestureRecognizer * widgetTapper;
+@end
 @implementation IntervalCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -35,14 +38,14 @@
 
     [self.timeLabel addGestureRecognizer:timeTap];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
+    [self.tempoSlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+    self.selectionStyle = UITableViewCellSelectionStyleBlue;
+    self.widgetTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWidget:)];
+    [self.timeLabel addGestureRecognizer:self.widgetTapper];
+    [self.tempoSlider addGestureRecognizer:self.widgetTapper];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
-}
 - (IBAction)setSpeed:(id)sender {
     
     UISegmentedControl * speedControl = (UISegmentedControl *) sender;
@@ -75,6 +78,22 @@
     [self.tempoSlider setValue:intVal animated:NO];
     self.workoutInterval.speed = intVal;
 }
+
+- (IBAction)tappedWidget:(id)sender {
+    NSIndexPath * indexPath = [self.parentTable indexPathForCell:self];
+
+    if (self.isSelected) {
+        self.isSelected = NO;
+         [self.parentTable deselectRowAtIndexPath:indexPath animated:YES    ];
+         [self.parent deSelectIndexPath:indexPath];
+        
+    } else {
+        self.isSelected = YES;
+                    [self.parentTable selectRowAtIndexPath:indexPath animated:YES    scrollPosition:UITableViewScrollPositionNone];
+        [self.parent selectIndexPath:indexPath];
+    }
+}
+
 
 
 

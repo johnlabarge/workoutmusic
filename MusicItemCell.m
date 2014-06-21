@@ -10,18 +10,17 @@
 #import "MusicLibraryBPMs.h"
 
 @interface MusicItemCell()
-@property (weak, nonatomic) IBOutlet UIButton *clear_override_button;
-@property (weak, nonatomic) IBOutlet UIButton *classificationButton;
-@property (weak, nonatomic) IBOutlet UILabel *overrideStatusLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *albumArtImageView;
-@property (weak, nonatomic) IBOutlet UILabel *energyAmt;
-@property (weak, nonatomic) IBOutlet UILabel *bpmAmt;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *intensityControl;
-@property (weak, nonatomic) IBOutlet UILabel *danceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *livelyLabel;
-
+@property (strong, nonatomic) UIColor * oldBackgroundColor;
+@property (strong, nonatomic) UIColor * glowColor;
+@property (weak, nonatomic) IBOutlet UISlider * intensitySlider;
+@property (weak, nonatomic) IBOutlet UIButton *clearSaveOverrideButton;
+@property (nonatomic, assign) OverrideState overrideState;
+@property (readonly) MusicLibraryBPMs * library;
+@property (weak, nonatomic) IBOutlet UILabel *curentIntensity;
 
 @end
 
@@ -29,19 +28,11 @@
 
 -(void) prepareCellWidgets
 {
-    NSDictionary * normal_attributes = @{UITextAttributeTextColor : [UIColor blueColor],
-                                         UITextAttributeTextShadowColor : [UIColor clearColor],
-                                         UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Thin" size:10.0]
-                                         };
-    NSDictionary * selected_attributes = @{UITextAttributeTextColor: [UIColor redColor],
-                                           UITextAttributeTextShadowColor: [UIColor clearColor],
-                                           UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0,1)],
-                                           UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Thin" size:13.0]};
+
     
-    
-    [[UISegmentedControl appearance] setTitleTextAttributes:normal_attributes forState:UIControlStateNormal];
-    
-    [[UISegmentedControl appearance] setTitleTextAttributes:selected_attributes forState:UIControlStateSelected];
+      [self.intensitySlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+    self.clearSaveOverrideButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.clearSaveOverrideButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     //self.intensityControl.apportionsSegmentWidthsByContent = YES;
    /* [self.intensityControl setWidth:70 forSegmentAtIndex:0];
@@ -57,68 +48,60 @@
     NSUInteger intensityIndex = [Tempo toIntensityNum:tempoClass];
     return intensityIndex;
 }
--(void) prepareClearOverrideButton
-{
-    /* because overridden need to setup each time. 
-     */
-    if (!self.musicItem.overridden) {
-        self.clear_override_button.enabled = NO;
-        self.clear_override_button.hidden = YES;
-    } else {
-        self.clear_override_button.enabled = YES;
-        self.clear_override_button.hidden = NO;
-    }
-}
+
 
 -(void) prepareIntensityWidget:(NSUInteger)intensityIndex
 {
    
     if ((self.musicItem.notfound || intensityIndex == UNKNOWN) && !self.musicItem.overridden) {
-        [self.intensityControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
+        self.intensitySlider.value = 0;
     } else {
-        [self.intensityControl setSelectedSegmentIndex:intensityIndex];
+        self.intensitySlider.value = intensityIndex;
     }
-    [self.intensityControl setSelected:NO];
     
+}
+- (void) updateOverrideIntensityButton {
+
+    if (self.intensitySlider.value  != [ Tempo toIntensityNum:self.musicItem.currentClassification] || (self.musicItem.notfound && !self.musicItem.overridden)) {
+        [self.clearSaveOverrideButton setTitle:@"Save Intensity Change?" forState:UIControlStateNormal];
+        self.clearSaveOverrideButton.hidden = NO;
+        self.overrideState=Execute_Override;
+    } else if (self.musicItem.overridden && !self.musicItem.notfound) {
+        [self.clearSaveOverrideButton setTitle:@"Reset to Suggested Intensity" forState:UIControlStateNormal];
+        self.overrideState = Clear_Override;
+    } else {
+        self.clearSaveOverrideButton.hidden = YES;
+        self.overrideState = No_Override;
+    }
 }
 - (void) setMusicItem:(MusicLibraryItem *)musicItem
 {
     _musicItem = musicItem;
 
-    [self prepareClearOverrideButton];
+    
     NSUInteger intensityIndex = [self musicItemIntensityIndex];
     [self prepareIntensityWidget:intensityIndex];
-
-    
-    self.overrideStatusLabel.text = (self.musicItem.overridden? @"intensity overriden by user" : @"suggested intensity");
-    self.artistLabel.text = musicItem.artist;
-    self.titleLabel.text = musicItem.title;
-
-    self.albumArtImageView.image = [musicItem.artwork imageWithSize:CGSizeMake(50.0,50.0)];
-    if (musicItem.overridden) {
-        self.backgroundColor = [UIColor colorWithRed:253.0/255.0 green:227.0/255.0 blue:137.0/255.0 alpha:0.75];
-    } else if (!musicItem.notfound && (intensityIndex!= UNKNOWN)) {
-        self.backgroundColor= [UIColor whiteColor];
-    } else if (!musicItem.overridden ){
-        self.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:0.5];
-        self.overrideStatusLabel.text = @"unable to suggest intensity";
-    }
-    self.danceLabel.text = [NSString stringWithFormat:@"%.2f", musicItem.danceability ];
-    self.bpmAmt.text = [NSString stringWithFormat:@"%.2f", musicItem.bpm];
-    self.energyAmt.text = [NSString stringWithFormat:@"%.2f", musicItem.energy];
+    [self updateOverrideIntensityButton];
     
  
+    self.artistLabel.text = musicItem.artist;
+    self.titleLabel.text = musicItem.title;
+    [self updateIntensityText];
+    self.albumArtImageView.image = [musicItem.artwork imageWithSize:CGSizeMake(70.0,70.0)];
+
     
+}
+-(void) updateIntensityText
+{
+        self.curentIntensity.text = [NSString stringWithFormat:@"%@ intensity (adjust above)", [Tempo intensities][(NSInteger)self.intensitySlider.value] ];
 }
 -(void)awakeFromNib {
     [super awakeFromNib];
     [self prepareCellWidgets];
-}
-- (IBAction)overrideIntensityForItem:(id)sender {
+     self.glowColor = [UIColor colorWithRed:252.0/255.0 green:136/255.0 blue:0.0 alpha:1.0];
     
-    
-    [self.musicItem overrideIntensityTo:self.intensityControl.selectedSegmentIndex];
 }
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -132,6 +115,13 @@
 - (IBAction)clearOverride:(id)sender {
     [self.musicItem clearOverride];
 }
+- (IBAction)sliderChanged:(id)sender {
+    NSInteger intVal = round(self.intensitySlider.value);
+    [self.intensitySlider setValue:intVal animated:NO];
+    
+    [self  updateOverrideIntensityButton];
+    [self updateIntensityText];
+}
  
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -140,5 +130,35 @@
 
     // Configure the view for the selected state
 }
-
+-(void) glow
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        self.oldBackgroundColor = self.backgroundColor;
+        self.contentView.backgroundColor = self.glowColor;
+    
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:1.0 animations:^{
+            self.contentView.backgroundColor = self.oldBackgroundColor;
+            }];
+        }
+        
+    }];
+}
+-(MusicLibraryBPMs *) library {
+    return [MusicLibraryBPMs currentInstance:nil];
+}
+    
+- (IBAction)clearSaveOverride:(id)sender {
+    switch (self.overrideState) {
+        case Clear_Override:
+            [self.musicItem clearOverride];
+            break;
+        case Execute_Override:
+            [self.musicItem overrideIntensityTo:self.intensitySlider.value];
+            break;
+        default:
+            break;
+    }
+}
 @end

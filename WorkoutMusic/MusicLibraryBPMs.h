@@ -59,6 +59,8 @@
 @property (nonatomic, assign) BOOL override_notfound;
 @property (nonatomic, assign) BOOL processed;
 @property (nonatomic, strong) NSMutableDictionary * classifiedItems;
+@property (nonatomic, assign) NSInteger numberOfOverriddenItems;
+@property (nonatomic, assign) NSInteger numberNotFound;
 +(instancetype) currentInstance:(id)instance;
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
@@ -95,7 +97,9 @@
 @property (nonatomic, assign) double loudness;
 @property (nonatomic, assign) NSUInteger overridden_intensity;
 @property (readonly) NSString * albumArtist;
-@property (nonatomic, strong) MusicBPMEntry * cacheEntry; 
+@property (nonatomic, strong) MusicBPMEntry * cacheEntry;
+@property (nonatomic, strong) NSString * currentClassification; 
+
 
 -(void) applyMusicBPMEntry:(MusicBPMEntry *)entry;
 -(BOOL) isICloudItem;

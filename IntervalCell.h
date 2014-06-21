@@ -11,10 +11,13 @@
 #import "WorkoutInterval.h"
 #import "WorkoutDesignerVC.h"
 #import "TimeLabel.h"
+#import "SelectionDelegate.h"
+#import "WOMSelectionBox.h"
 
 @interface IntervalCell : UITableViewCell <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet TimeLabel *timeLabel;
+@property (weak, nonatomic) IBOutlet WOMSelectionBox *selectionBox;
 
 
 @property (readwrite, assign) BOOL isSelected;
@@ -26,5 +29,6 @@
 @property (nonatomic, assign) NSInteger seconds; 
 @property (strong, nonatomic) IBOutlet UISlider *tempoSlider;
 @property (nonatomic, strong) WorkoutDesignerVC * parent;
+@property (nonatomic, weak) UITableView * parentTable; 
 
 @end

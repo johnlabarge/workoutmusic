@@ -32,10 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    WOMusicAppDelegate * app = [UIApplication sharedApplication].delegate;
-    
-    NSLog(@"app.tabs");
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

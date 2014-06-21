@@ -55,7 +55,7 @@
 }
 -(WOMusicAppDelegate *) app
 {
-    return [UIApplication sharedApplication].delegate;
+    return (WOMusicAppDelegate *)[UIApplication sharedApplication].delegate;
 }
 
 

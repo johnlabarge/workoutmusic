@@ -57,9 +57,10 @@
         [self newWorkout];
     }
     self.nameField.text = self.model.name;
+    self.intervalsTable.rowHeight = 70.0;
+    
+    
 
-    
-    
     //[self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
     //[self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -156,18 +157,20 @@
 {
     
     IntervalCell *cell = (IntervalCell *)[tableView dequeueReusableCellWithIdentifier:@"IntervalCell" forIndexPath:indexPath];
-    
+    cell.parentTable = self.intervalsTable; 
     
    WorkoutInterval * interval = (WorkoutInterval *)[self.model.intervals objectAtIndex:[indexPath indexAtPosition:1]];
     
     cell.workoutInterval = interval;
     cell.timeLabel.seconds = interval.intervalSeconds;
     cell.parent = self;
-    
-    
+    if ([self.selectedIndexes containsObject:indexPath]) {
+        cell.isSelected = YES;
+        cell.highlighted = YES;
+        [self.intervalsTable selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
     return cell;
 }
-
 - (IBAction)addInterval:(id)sender {
 
     [self.model newInterval];
@@ -205,26 +208,21 @@
     return answer; 
 }
 
+-(BOOL) isSelected:(NSIndexPath *)path
+{
+    return [self.selectedIndexes containsObject:path];
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndexes = [[self.intervalsTable indexPathsForSelectedRows] mutableCopy];
-     [self.selectedIndexes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSIndexPath * a = obj1;
-        NSIndexPath * b = obj2;
-        return [a compare:b];
-    }];
-
    
+   
+
+    [self updateStateForSelection];
 }
-- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
- 
-    [tableView reloadData];
-    return indexPath;
-}
+
 -(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+   
     [self updateStateForSelection];
     
 }
@@ -236,6 +234,7 @@
     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath * index = (NSIndexPath *)obj;
         [indexSet addIndex:index.row];
+        [self.selectedIndexes removeObject:index];
 
     }];
     [self.model  removeIntervalsAtIndexes:indexSet];
@@ -259,6 +258,15 @@
     
 }
 
+-(void) deSelectIndexPath:(NSIndexPath *)indexPath
+{
+    [self.selectedIndexes removeObject:indexPath];
+}
+
+-(void) selectIndexPath:(NSIndexPath *)indexPath
+{
+    [self.selectedIndexes addObject:indexPath];
+}
 -(void) keyboardDidShow:(NSNotification *)note;
 {
     self.originalCenter = self.view.center;
@@ -284,7 +292,7 @@
     timePicker.interval = interval;
     timePicker.selectedSeconds  = interval.intervalSeconds;
     self.presentedTimePicker = timePicker;
-    self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);
+    //self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);
     self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
     timePicker.blurView.blurRadius = 15.0; 
     [self.view addSubview:timePicker.blurView];

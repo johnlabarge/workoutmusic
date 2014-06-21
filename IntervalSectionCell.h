@@ -10,5 +10,5 @@
 
 @interface IntervalSectionCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *title;
-
+@property (weak, nonatomic) UITableView * parent;
 @end

@@ -1,0 +1,150 @@
+{
+  "name" : "weights",
+  "workoutSeconds" : 1270,
+  "intervals" : [
+    {
+      "speed" : 3,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 3,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 3,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 3,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 3,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 40
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 2,
+      "intervalSeconds" : 30
+    },
+    {
+      "speed" : 0,
+      "intervalSeconds" : 30
+    }
+  ]
+}

@@ -209,10 +209,15 @@
     }
     NSInteger startSeconds = currentSong.startSeconds;
     if (self.time > 0) {
+        NSLog(@"self.time = %ld",(long)self.time);
         startSeconds += self.time;
     } else {
         self.remainingSeconds = currentSong.seconds;
     }
+    
+    [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo =
+    @{MPMediaItemPropertyTitle: self.currentSong.songTitle};
+    
    
     [self playWhenReady];
     
@@ -255,7 +260,7 @@
         }
         me.currentPlayer.volume = 0.0;
         [me.currentPlayer play];
-        [me.currentPlayer seekToTime:CMTimeMake(me.currentSong.startSeconds,1)];
+        [me.currentPlayer seekToTime:CMTimeMake(me.currentSong.startSeconds+self.time,1)];
      
         [me.fadingQueue addOperationWithBlock:^{
             [me fadeIn];

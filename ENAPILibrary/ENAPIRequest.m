@@ -221,8 +221,7 @@ static NSMutableArray *EN_SECURED_ENDPOINTS = nil;
     if (body != nil) {
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[body length]] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:body];
-        NSString * bodyS = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-        //NSLog(@"%@", bodyS);
+        
     } else {
         NSLog(@"ENAPIRequest: post body is nil");
     }

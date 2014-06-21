@@ -10,5 +10,11 @@
 #import "MusicLibraryBPMs.h"
 
 @interface MusicItemCell : UITableViewCell
+typedef NS_ENUM(NSInteger, OverrideState) {
+        Clear_Override,
+        Execute_Override,
+        No_Override
+};
 @property (nonatomic, weak) MusicLibraryItem * musicItem;
+-(void)glow;
 @end
