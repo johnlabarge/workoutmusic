@@ -39,6 +39,7 @@
 
 -(void) setSeconds:(NSInteger) seconds
 {
+    NSLog(@"set seconds to: %@",@(seconds));
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     NSInteger minutes = _seconds/60;
     comps.minute = minutes;

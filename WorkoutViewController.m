@@ -13,10 +13,12 @@
 #import "INtervalSectionCell.h"
 #import "SongJockeyPlayer.h"
 #import "SJConstants.h"
+#import "TimeLabel.h"
 @interface WorkoutViewController ()
 @property (nonatomic, strong) NSDictionary * constraintMap;
 @property (nonatomic, strong) NSArray  * landscapeConstraints;
-
+@property (weak, nonatomic) IBOutlet TimeLabel *remainingTimeLabel;
+@property (nonatomic, strong) NSNumber * remainingTime;
 @property (nonatomic, strong) SongJockeyPlayer * sjPlayer;
 
 @property (nonatomic, assign) BOOL paused;
@@ -62,6 +64,8 @@
     [self.spinner startAnimating];
     self.songTable.hidden = YES;
     self.spinner.hidesWhenStopped = YES;
+    self.remainingTime = @(self.workout.workoutSeconds);
+    self.remainingTimeLabel.seconds = self.remainingTime.integerValue;
   
     __weak typeof(self) me = self;
 
@@ -143,12 +147,12 @@
         songCell.bpmLabel.text = [NSString stringWithFormat:@"%.2f",((NSNumber *)song.userInfo[@"bpm"]).doubleValue];
         if (playListIndex != self.sjPlayer.currentIndex) {
             songCell.backgroundColor = [UIColor whiteColor];
-            songCell.time.text = [NSString stringWithFormat:@"%d", (int) song.seconds];
+            songCell.time.seconds = song.seconds;
 
         } else {
             songCell.backgroundColor  = [UIColor orangeColor];
             NSInteger seconds = (self.sjPlayer.remainingSeconds > 0 ? self.sjPlayer.remainingSeconds : song.seconds);
-            songCell.time.text = [NSString stringWithFormat:@"%d", (int) seconds];
+            songCell.time.seconds = seconds; 
         }
 
         cell = songCell;
@@ -215,10 +219,17 @@
     [self.songTable scrollToRowAtIndexPath:self.sjPlayer.currentSong.userInfo[@"table_index_path"] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
     WorkoutInterval * interval = (WorkoutInterval *)self.sjPlayer.currentSong.userInfo[@"workoutInterval"];
-    
+    [self updateRemainingTime];
     
     self.graph.currentInterval = interval.position;
 }
+
+-(void) updateRemainingTime
+{
+    self.remainingTime = @(self.sjPlayer.totalRemainingTime);
+    self.remainingTimeLabel.seconds = self.remainingTime.integerValue;
+}
+
 - (IBAction)back:(id)sender {
     [self.sjPlayer previous];
 }

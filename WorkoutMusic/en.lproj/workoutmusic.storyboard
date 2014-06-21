@@ -223,16 +223,25 @@
                                     <constraint firstItem="jlA-ws-jH4" firstAttribute="leading" secondItem="uEK-kT-Utm" secondAttribute="leading" constant="10" id="wkU-2Q-G2L"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time Remaining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcL-4Z-zW8" customClass="TimeLabel">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="40"/>
+                                <color key="textColor" red="1" green="0.50217481018927956" blue="0.0020682545409024256" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="uEK-kT-Utm" secondAttribute="trailing" id="0Af-gb-YzN"/>
                             <constraint firstItem="uEK-kT-Utm" firstAttribute="top" secondItem="fQm-m5-DIE" secondAttribute="bottom" id="1kN-JT-ubj"/>
+                            <constraint firstItem="wcL-4Z-zW8" firstAttribute="top" secondItem="sdk-Vn-95u" secondAttribute="top" constant="80" id="72b-wE-mZJ"/>
                             <constraint firstAttribute="bottom" secondItem="uEK-kT-Utm" secondAttribute="bottom" constant="49" id="90c-rP-Hdp"/>
                             <constraint firstAttribute="trailing" secondItem="bGD-5I-DAA" secondAttribute="trailing" id="B8o-q6-Olu"/>
                             <constraint firstItem="bGD-5I-DAA" firstAttribute="leading" secondItem="sdk-Vn-95u" secondAttribute="leading" id="POM-TH-Z5M"/>
                             <constraint firstItem="fQm-m5-DIE" firstAttribute="leading" secondItem="sdk-Vn-95u" secondAttribute="leading" id="SDg-s5-6qt"/>
                             <constraint firstAttribute="trailing" secondItem="fQm-m5-DIE" secondAttribute="trailing" id="UAY-w7-ag6"/>
+                            <constraint firstAttribute="centerX" secondItem="wcL-4Z-zW8" secondAttribute="centerX" id="UHk-lX-W4Z"/>
                             <constraint firstItem="uEK-kT-Utm" firstAttribute="leading" secondItem="sdk-Vn-95u" secondAttribute="leading" id="eH2-bi-KQR"/>
                             <constraint firstItem="fQm-m5-DIE" firstAttribute="top" secondItem="bGD-5I-DAA" secondAttribute="bottom" id="sjT-lI-pF5"/>
                         </constraints>
@@ -242,6 +251,7 @@
                         <outlet property="controlsView" destination="uEK-kT-Utm" id="bmv-Ek-tpf"/>
                         <outlet property="graph" destination="bGD-5I-DAA" id="cNT-TG-exW"/>
                         <outlet property="playPause" destination="jbN-e4-IgV" id="szu-R5-J7z"/>
+                        <outlet property="remainingTimeLabel" destination="wcL-4Z-zW8" id="2EV-DX-3Da"/>
                         <outlet property="songTable" destination="fQm-m5-DIE" id="ZBm-QE-aBV"/>
                         <outlet property="tableView" destination="fQm-m5-DIE" id="aiw-1A-Ewd"/>
                     </connections>

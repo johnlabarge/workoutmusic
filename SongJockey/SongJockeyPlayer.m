@@ -80,9 +80,18 @@
     if (!success) {
         NSLog(@"audio session activation Error: %@",[activationError localizedDescription]);
     }
-
+    [self calculateTotalTime];
    
     return self;
+}
+
+-(void) calculateTotalTime
+{
+    __block NSInteger totalSeconds = 0;
+    [self.songQueue eachSong:^(SongJockeySong *song, NSUInteger index, BOOL *stop) {
+        totalSeconds+= song.seconds;
+    }];
+    self.totalRemainingTime = totalSeconds;
 }
 -(void) setIsPlaying:(BOOL)playing
 {
@@ -108,7 +117,13 @@
     
     if (self.remainingSeconds <= 0) {
         [self next];
+    } else {
+        
+        self.totalRemainingTime--;
+        NSLog(@"total remaining time : %@", @(self.totalRemainingTime));
     }
+    
+    
     [self tickNotification];
 }
 
@@ -218,10 +233,21 @@
     [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo =
     @{MPMediaItemPropertyTitle: self.currentSong.songTitle};
     
-   
+    [self calculateRemainingTime];
     [self playWhenReady];
     
     
+}
+-(void) calculateRemainingTime
+{
+    __block NSInteger remainingTime = 0;
+    [self.songQueue eachSong:^(SongJockeySong *song, NSUInteger index, BOOL *stop) {
+        if (index >= self.currentIndex) {
+            remainingTime += song.seconds;
+        }
+    }];
+    NSLog(@"remaining time = %@", @(remainingTime));
+    self.totalRemainingTime = remainingTime;
 }
 -(void) fadeIn
 {
