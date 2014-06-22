@@ -208,4 +208,28 @@
 {
     return [self startIndexForWorkoutListItem:item] + [item.songs indexOfObject:song];
 }
+
+-(MPMediaItemArtwork *) firstArtworkForCategory:(NSString *)category
+{
+    MPMediaItemArtwork * art = nil;
+    NSArray * songList;
+    if (category) {
+        songList = (NSArray *)self.shuffledSongsByIntensity[category];
+    } else {
+        songList = self.bpmLibrary.libraryItems;
+    }
+    MusicLibraryItem * item;
+    NSInteger index = 0;
+    if (songList != nil) {
+        while (!art) {
+            if (index < songList.count) {
+                item = (MusicLibraryItem *)songList[index];
+                art = item.artwork;
+                index++;
+            }
+        }
+    }
+    return art;
+    
+}
 @end

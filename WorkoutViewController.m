@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet TimeLabel *remainingTimeLabel;
 @property (nonatomic, strong) NSNumber * remainingTime;
 @property (nonatomic, strong) SongJockeyPlayer * sjPlayer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 
 @property (nonatomic, assign) BOOL paused;
 
@@ -152,7 +153,7 @@
         } else {
             songCell.backgroundColor  = [UIColor orangeColor];
             NSInteger seconds = (self.sjPlayer.remainingSeconds > 0 ? self.sjPlayer.remainingSeconds : song.seconds);
-            songCell.time.seconds = seconds; 
+            songCell.time.seconds = seconds;
         }
 
         cell = songCell;
@@ -164,7 +165,8 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"Interval %ld - %@",(long)section, [Tempo speedDescription:((WorkoutInterval *)[self.workout.intervals objectAtIndex:section]).speed]];
+    WorkoutInterval * interval = (WorkoutInterval *) self.workout.intervals[section];
+    return [NSString stringWithFormat:@"Interval %ld - %@ Intensity",(long)section, [Tempo intensities][interval.speed]];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -174,9 +176,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 25.0f;
+        return 40.0f;
     }
-    return 65.0f;
+    return 75.0f;
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
