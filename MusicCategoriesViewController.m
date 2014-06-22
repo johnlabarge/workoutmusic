@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *iCloudLabel;
 @property (nonatomic, weak) UIButton * changePlayListButton;
 @property (readonly) MusicLibraryBPMs * library;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @end
 
 @implementation MusicCategoriesViewController
@@ -64,6 +65,10 @@
      self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 63;
+}
+
 
 -(NSInteger) countForIntensity:(NSInteger)classNum
 {
@@ -110,10 +115,15 @@
     if (indexPath.row == 0) {
         mccell.categoryText = @"All Songs";
         mccell.count  = self.library.libraryItems.count;
+        MPMediaItemArtwork * art = [[WorkoutList sharedInstance] firstArtworkForCategory:nil];
+        mccell.firstArtworkImage.image = [art imageWithSize:CGSizeMake(50.0,50.0)];
+        
     } else {
         NSString * intensity = [Tempo intensities][indexPath.row - 1];
         mccell.categoryText = intensity;
         mccell.count = [self countForIntensity:indexPath.row-1];
+        MPMediaItemArtwork * art  = [[WorkoutList sharedInstance] firstArtworkForCategory:[Tempo classifications][indexPath.row-1]];
+        mccell.firstArtworkImage.image = [art imageWithSize:CGSizeMake(50.0,50.0)];
     }
     return mccell;
 }
@@ -139,6 +149,7 @@
     } else if (self.doOldDRMAlert) {
         self.alert = [[UIAlertView alloc] initWithTitle:@"Songs with Old DRM protection." message:@"Songs with Old DRM protection cannot be played by the WorkoutDJ.  Contact Apple to update these items and remove their DRM protection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     }
+    self.tableViewHeightConstraint.constant = self.tableView.contentSize.height;
     [self.alert show];
 }
 
@@ -177,6 +188,11 @@
 }
 - (IBAction)reProcess:(id)sender {
     [self.app reprocessSongs];
+}
+
+-(UIImage *) firstArtworkImageForCategory
+{
+    
 }
 /*
 #pragma mark - Navigation

@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet TimeLabel *remainingTimeLabel;
 @property (nonatomic, strong) NSNumber * remainingTime;
 @property (nonatomic, strong) SongJockeyPlayer * sjPlayer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 
 @property (nonatomic, assign) BOOL paused;
 
@@ -152,7 +153,7 @@
         } else {
             songCell.backgroundColor  = [UIColor orangeColor];
             NSInteger seconds = (self.sjPlayer.remainingSeconds > 0 ? self.sjPlayer.remainingSeconds : song.seconds);
-            songCell.time.seconds = seconds; 
+            songCell.time.seconds = seconds;
         }
 
         cell = songCell;

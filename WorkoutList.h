@@ -38,6 +38,6 @@
 -(SJPlaylist *)toSJPlaylist;
 -(NSInteger) playListIndex:(WorkoutListItem *) item andSong: (SongJockeySong *) song;
 -(void) reloadLibrary;
-
+-(MPMediaItemArtwork *) firstArtworkForCategory:(NSString *)category;
 
 @end

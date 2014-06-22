@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, strong) NSString * categoryText;
 @property (nonatomic, assign) NSInteger count;
+@property (weak, nonatomic) IBOutlet UIImageView *firstArtworkImage;
 @end
