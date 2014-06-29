@@ -11,6 +11,7 @@
 #import "WorkoutInterval.h"
 #import "IntervalCell.h"
 #import "TimePickerVCViewController.h"
+#import "ModalTransitioningControllerDelegate.h"
 
 @interface WorkoutDesignerVC ()
 @property WorkoutInterval * selectedInterval;
@@ -21,6 +22,8 @@
 @property TimePickerVCViewController * presentedTimePicker;
 @property (nonatomic, strong) NSMutableArray * selectedIndexes;
 @property (nonatomic, strong) UIAlertView * alert;
+@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
+@property (strong,nonatomic) id <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning> modalPresenter;
 @end
 
 @implementation WorkoutDesignerVC
@@ -51,15 +54,16 @@
     
         UINib * intervalCell = [UINib  nibWithNibName:@"intervalcell" bundle:nil];
     [self.intervalsTable registerNib:intervalCell forCellReuseIdentifier:@"IntervalCell"];
-    [self.navigationController setToolbarHidden:false animated:YES];
+     
   
     if (self.model == nil) {
         [self newWorkout];
     }
     self.nameField.text = self.model.name;
     self.intervalsTable.rowHeight = 70.0;
-    
-    
+    [self hideRepeat:YES];
+    self.intervalsTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.modalPresenter = [[ModalTransitioningControllerDelegate alloc] init];
 
     //[self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
     //[self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
@@ -72,6 +76,15 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+-(void) hideRepeat:(BOOL)yesOrNo
+{
+    self.repeatButton.hidden = yesOrNo;
+    self.repeatLabel.hidden = yesOrNo;
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    
 }
 
 - (IBAction)newWorkoutAction:(id)sender {
@@ -168,12 +181,16 @@
         cell.isSelected = YES;
         cell.highlighted = YES;
         [self.intervalsTable selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    } else {
+        cell.isSelected = NO;
+        cell.highlighted = NO;
     }
     return cell;
 }
 - (IBAction)addInterval:(id)sender {
 
     [self.model newInterval];
+    [self deselectAllRows];
 
 }
 
@@ -187,14 +204,15 @@
         NSIndexPath * b = obj2;
         return [a compare:b];
     }];
-     self.repeatButton.enabled = [self selectedIndexesAreConsecutive];
+    
+    [self hideRepeat:![self selectedIndexesAreConsecutive]];
     
 
 }
 -(BOOL) selectedIndexesAreConsecutive
 {
-    __weak NSIndexPath * previousIndexPath = nil;
-    __block BOOL answer = YES;
+    __block NSIndexPath * previousIndexPath = nil;
+    __block BOOL answer = !(self.selectedIndexes == nil);
     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath * nextIndexPath = obj;
         if (previousIndexPath) {
@@ -203,6 +221,7 @@
                 *stop = YES;
             }
         }
+        previousIndexPath = nextIndexPath;
         
     }];
     return answer; 
@@ -215,7 +234,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-   
+    if ([self.selectedIndexes containsObject:indexPath]) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 
     [self updateStateForSelection];
 }
@@ -234,10 +255,22 @@
     [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath * index = (NSIndexPath *)obj;
         [indexSet addIndex:index.row];
-        [self.selectedIndexes removeObject:index];
+        [self.intervalsTable deselectRowAtIndexPath:index animated:NO];
 
     }];
     [self.model  removeIntervalsAtIndexes:indexSet];
+    [self deselectAllRows];
+    
+}
+
+-(void) deselectAllRows
+{
+    [[self.intervalsTable indexPathsForSelectedRows]  enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSIndexPath * indexPath = (NSIndexPath *)obj;
+        [self.intervalsTable deselectRowAtIndexPath:indexPath animated:NO];
+        
+    }];
+    self.selectedIndexes = nil;
 }
 - (IBAction)repeatIntervals:(id)sender {
     BOOL consecutive = [self selectedIndexesAreConsecutive];
@@ -261,11 +294,15 @@
 -(void) deSelectIndexPath:(NSIndexPath *)indexPath
 {
     [self.selectedIndexes removeObject:indexPath];
+    [self.intervalsTable deselectRowAtIndexPath:indexPath animated:NO];
+    [self updateStateForSelection];
 }
 
 -(void) selectIndexPath:(NSIndexPath *)indexPath
 {
     [self.selectedIndexes addObject:indexPath];
+    [self.intervalsTable selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self updateStateForSelection];
 }
 -(void) keyboardDidShow:(NSNotification *)note;
 {
@@ -289,17 +326,27 @@
 -(void) presentTimePickerForInterval:(WorkoutInterval *)interval
 {
     TimePickerVCViewController * timePicker = [[TimePickerVCViewController alloc] initWithNibName:@"TimePickerVCViewController" bundle:nil];
+    
     timePicker.interval = interval;
+    NSInteger row = [self.model.intervals indexOfObject:interval];
+    
+    CGRect rect = [self.intervalsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow:row inSection:0]];
     timePicker.selectedSeconds  = interval.intervalSeconds;
     self.presentedTimePicker = timePicker;
+    timePicker.fromRect = CGRectMake(self.intervalsTable.frame.origin.x+rect.origin.x, self.intervalsTable.frame.origin.y+70+rect.origin.y,48,48);
     //self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);
-    self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
-    timePicker.blurView.blurRadius = 15.0; 
-    [self.view addSubview:timePicker.blurView];
-    
-    [self.view addSubview:self.presentedTimePicker.view];
+    //self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
+     
+    [self presentViewController:timePicker animated:YES completion:^{
+        
+        
+    }]; 
+ 
 }
 
  
+
+
+
 
 @end

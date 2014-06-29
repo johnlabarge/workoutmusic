@@ -7,21 +7,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimePickerVCViewController">
             <connections>
-                <outlet property="blurView" destination="d6y-3I-7co" id="CUD-on-FNh"/>
+                <outlet property="blurView" destination="nPC-Ko-eXn" id="7DD-7E-JSm"/>
+                <outlet property="chooseTimeLabel" destination="5Bs-yc-ETP" id="ZuB-mg-HiZ"/>
+                <outlet property="doneButton" destination="OP6-uS-4To" id="94W-sp-ovN"/>
                 <outlet property="timePicker" destination="FBI-SS-ixm" id="X2N-sb-lKz"/>
-                <outlet property="view" destination="Rg6-Eh-60U" id="oLE-wL-PII"/>
+                <outlet property="view" destination="Rg6-Eh-60U" id="soH-GW-Oyy"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="center" id="Rg6-Eh-60U">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="44" width="320" height="433"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FBI-SS-ixm">
-                    <rect key="frame" x="60" y="203" width="200" height="162"/>
+                <pickerView contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="FBI-SS-ixm">
+                    <rect key="frame" x="60" y="139" width="200" height="162"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="i3y-bT-qRJ"/>
                         <constraint firstAttribute="width" constant="200" id="pBx-pD-6iQ"/>
                     </constraints>
                     <connections>
@@ -30,7 +33,7 @@
                     </connections>
                 </pickerView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MINUTES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xLH-tB-FMd">
-                    <rect key="frame" x="70" y="189" width="73" height="23"/>
+                    <rect key="frame" x="77" y="129" width="73" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="73" id="DY5-vr-Dst"/>
@@ -39,7 +42,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlx-Ip-W6T">
-                    <rect key="frame" x="150" y="189" width="78" height="23"/>
+                    <rect key="frame" x="158" y="127" width="78" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="78" id="UIy-KD-oS6"/>
@@ -48,14 +51,17 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE INTERVAL TIME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Bs-yc-ETP">
-                    <rect key="frame" x="25" y="85" width="270" height="34"/>
+                    <rect key="frame" x="22" y="80" width="277" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="277" id="8gp-VR-b1X"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="28"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP6-uS-4To">
-                    <rect key="frame" x="134" y="390" width="52" height="42"/>
+                    <rect key="frame" x="134" y="316" width="52" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="25"/>
                     <state key="normal" title="Done">
@@ -68,24 +74,27 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="5Bs-yc-ETP" firstAttribute="top" secondItem="Rg6-Eh-60U" secondAttribute="top" constant="85" id="AN0-xK-ymp"/>
-                <constraint firstItem="dlx-Ip-W6T" firstAttribute="leading" secondItem="xLH-tB-FMd" secondAttribute="trailing" constant="7" id="FtO-eO-K1L"/>
-                <constraint firstAttribute="centerX" secondItem="5Bs-yc-ETP" secondAttribute="centerX" id="HCI-oF-i3N"/>
-                <constraint firstAttribute="centerY" secondItem="FBI-SS-ixm" secondAttribute="centerY" id="RWe-jr-jca"/>
-                <constraint firstItem="xLH-tB-FMd" firstAttribute="leading" secondItem="Rg6-Eh-60U" secondAttribute="leading" constant="70" id="Xlx-gp-fPS"/>
-                <constraint firstItem="FBI-SS-ixm" firstAttribute="top" secondItem="xLH-tB-FMd" secondAttribute="bottom" constant="-9" id="Zm7-7C-ptg"/>
-                <constraint firstItem="OP6-uS-4To" firstAttribute="top" secondItem="FBI-SS-ixm" secondAttribute="bottom" constant="25" id="o33-jE-GqH"/>
-                <constraint firstAttribute="centerX" secondItem="OP6-uS-4To" secondAttribute="centerX" id="oBb-kJ-V0Z"/>
-                <constraint firstItem="FBI-SS-ixm" firstAttribute="top" secondItem="dlx-Ip-W6T" secondAttribute="bottom" constant="-9" id="tLp-Z6-rXN"/>
-                <constraint firstAttribute="centerX" secondItem="FBI-SS-ixm" secondAttribute="centerX" id="tNt-RH-4Yb"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="OP6-uS-4To" secondAttribute="bottom" priority="800" constant="131" id="6JL-dK-G0h"/>
+                <constraint firstAttribute="centerX" secondItem="5Bs-yc-ETP" secondAttribute="centerX" id="7q8-Ct-lGg"/>
+                <constraint firstItem="xLH-tB-FMd" firstAttribute="top" secondItem="5Bs-yc-ETP" secondAttribute="bottom" constant="15" id="ACG-Pe-rPZ"/>
+                <constraint firstAttribute="bottom" secondItem="OP6-uS-4To" secondAttribute="bottom" constant="75" id="EcD-7f-xO1"/>
+                <constraint firstItem="xLH-tB-FMd" firstAttribute="leading" secondItem="Rg6-Eh-60U" secondAttribute="leading" constant="77" id="MfX-h5-mmS"/>
+                <constraint firstItem="xLH-tB-FMd" firstAttribute="centerY" secondItem="dlx-Ip-W6T" secondAttribute="centerY" id="OmW-IR-1FI"/>
+                <constraint firstAttribute="centerX" secondItem="OP6-uS-4To" secondAttribute="centerX" id="Qnt-aA-jTy"/>
+                <constraint firstItem="OP6-uS-4To" firstAttribute="top" secondItem="FBI-SS-ixm" secondAttribute="bottom" constant="15" id="VSQ-n9-4Gx"/>
+                <constraint firstItem="FBI-SS-ixm" firstAttribute="top" secondItem="xLH-tB-FMd" secondAttribute="bottom" constant="-9" id="cuv-hL-DWy"/>
+                <constraint firstItem="FBI-SS-ixm" firstAttribute="top" secondItem="5Bs-yc-ETP" secondAttribute="bottom" constant="25" id="iUU-xk-gKz"/>
+                <constraint firstAttribute="centerX" secondItem="FBI-SS-ixm" secondAttribute="centerX" id="llm-yF-eyJ"/>
+                <constraint firstItem="dlx-Ip-W6T" firstAttribute="leading" secondItem="xLH-tB-FMd" secondAttribute="trailing" constant="8" id="tSd-nb-PIN"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
-        <view contentMode="scaleToFill" id="d6y-3I-7co" customClass="FXBlurView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <view contentMode="scaleToFill" id="nPC-Ko-eXn" customClass="FXBlurView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="470"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
 </document>

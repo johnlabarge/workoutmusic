@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WorkoutInterval.h"
 #import "FXBlurView.h"
-@interface TimePickerVCViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface TimePickerVCViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate,UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
 
 @property (strong, nonatomic) IBOutlet UIPickerView *timePicker;
 @property (strong, nonatomic) WorkoutInterval *interval;
@@ -17,6 +18,10 @@
 @property (strong, nonatomic) IBOutlet FXBlurView *blurView;
 
 @property (strong, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UILabel *chooseTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UIView *pickerView;
+@property (nonatomic, assign) CGRect fromRect;
 
 
 @end

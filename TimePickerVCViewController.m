@@ -7,11 +7,14 @@
 //
 
 #import "TimePickerVCViewController.h"
+#import "FXBlurView.h"
+#import "ModalTransitioningControllerDelegate.h"
 
 @interface TimePickerVCViewController ()
 @property (nonatomic, strong) NSArray * minuteOptions;
 @property (nonatomic, strong) NSMutableArray * secondsOptions;
 @property (nonatomic, strong) NSMutableArray * timeLabels;
+@property (nonatomic, strong) ModalTransitioningControllerDelegate * modalPresenter;
 @end
 
 @implementation TimePickerVCViewController
@@ -48,18 +51,27 @@
     }
     self.timePicker.delegate = self;
     self.timePicker.dataSource =self;
-    
+        self.modalPresentationStyle = UIModalPresentationCustom;
+    self.transitioningDelegate = self;
+        
     
 
 }
 
+-(void) setFromRect:(CGRect)fromRect
+{
+    _fromRect = fromRect;
+    self.modalPresenter.fromRect = _fromRect;
+}
+-(void)viewDidAppear:(BOOL)animated {
+    
+}
 - (IBAction)doneAction:(id)sender {
     self.interval.intervalSeconds = 60*[self.timePicker selectedRowInComponent:0];
     self.interval.intervalSeconds+= [self.timePicker selectedRowInComponent:1];
     NSLog(@"new interval seconds = %ld", (long)self.interval.intervalSeconds);
-    [self.view removeFromSuperview];
-    [self.blurView removeFromSuperview];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 -(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
@@ -68,14 +80,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // self.blurView.frame = [UIApplication sharedApplication].keyWindow.frame;
+    //self.view.frame = CGRectMake(self.view.frame.origin.x,self.view.frame.origin.y, self.view.frame.size.width, self.blurView.frame.size.height);
+    //self.view.frame = self.blurView.frame;
+    
     self.timePicker.showsSelectionIndicator = YES;
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.backgroundColor = [UIColor grayColor];
-    }];
-    NSInteger minutes = self.interval.intervalSeconds/60;
+   NSInteger minutes = self.interval.intervalSeconds/60;
     NSInteger seconds = self.interval.intervalSeconds-(minutes*60);
     [self.timePicker selectRow:minutes inComponent:0 animated:NO];
     [self.timePicker selectRow:seconds inComponent:1 animated:NO];
+     
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -150,5 +165,59 @@
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return 40.0;
+}
+
+#pragma mark UIViewControllerTransitionDelegate
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return self;
+}
+
+// This is used for percent driven interactive transitions, as well as for container controllers that have companion animations that might need to
+// synchronize with the main animation.
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
+    return 0.5;
+}
+// This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+    UIViewController * toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController * fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    
+    BOOL presenting = (toViewController == self);
+    __weak typeof(self) weakSelf = self;
+    if (presenting) {
+        
+        
+        
+        //[[transitionContext containerView] addSubview:fromViewController.view];
+        
+        fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        self.blurView.frame = self.fromRect;
+        [[transitionContext containerView] addSubview:self.blurView];
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.35 initialSpringVelocity:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                weakSelf.blurView.frame = CGRectMake(0,0,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height);
+            
+        } completion:^(BOOL finished) {
+            
+            [transitionContext completeTransition:YES];
+            [weakSelf.blurView addSubview: weakSelf.view];
+        }];
+   
+        
+    } else {
+        [weakSelf.view removeFromSuperview];
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            weakSelf.blurView.frame = weakSelf.fromRect;
+            toViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+        } completion:^(BOOL finished) {
+            [weakSelf.blurView removeFromSuperview];
+            [transitionContext completeTransition:YES];
+        }];
+        
+    }
+}
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    return self;
 }
 @end

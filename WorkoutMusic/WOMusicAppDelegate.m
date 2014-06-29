@@ -12,6 +12,7 @@
 #import "Splash.h"
 #import "WorkoutMusicSettings.h"
 #import "Workouts.h"
+#import "FXBlurView.h"
 #import <Crashlytics/Crashlytics.h>
 
 @interface WOMusicAppDelegate () {
@@ -45,7 +46,7 @@
     }
 
     [Crashlytics startWithAPIKey:@"53e6ee98d2eea1210fba97747d3e1ea5ad02d119"];
-    
+    //[FXBlurView setUpdatesDisabled];
     return YES;
    
 }
@@ -53,6 +54,8 @@
 {
     _tabs = t;
     _tabs.delegate = self;
+    _tabs.modalPresentationStyle = UIModalPresentationCustom;
+    //_tabs.modalInPopover = YES;
 }
 
 -(UITabBarController *) tabs

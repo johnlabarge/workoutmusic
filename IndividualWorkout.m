@@ -46,7 +46,9 @@
     [self dismissViewControllerAnimated:YES completion:^{
     }];
 }
-
+-(void)viewDidAppear:(BOOL)animated {
+    
+}
 -(NSString *)timeText
 {
     NSString * text = nil;
