@@ -111,6 +111,7 @@
 		63D66A661947BDBB007B24EC /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D66A651947BDBB007B24EC /* refresh@2x.png */; };
 		63D66A6819488361007B24EC /* WOMSelectionBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D66A6719488361007B24EC /* WOMSelectionBox.xib */; };
 		63D66A6B19488491007B24EC /* WOMSelectionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D66A6A19488491007B24EC /* WOMSelectionBox.m */; };
+		63D771701960BC49000CB24F /* ModalTransitioningControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D7716F1960BC49000CB24F /* ModalTransitioningControllerDelegate.m */; };
 		63E7F99F193AA7B7007D1FD9 /* BackgroundSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E7F99C193AA7B7007D1FD9 /* BackgroundSlider.m */; };
 		63E7F9A0193AA7B7007D1FD9 /* thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E7F99D193AA7B7007D1FD9 /* thumb@2x.png */; };
 		63E7F9A6193BD4A5007D1FD9 /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 63E7F9A5193BD4A5007D1FD9 /* sample.json */; };
@@ -320,6 +321,8 @@
 		63D66A6919488491007B24EC /* WOMSelectionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOMSelectionBox.h; sourceTree = "<group>"; };
 		63D66A6A19488491007B24EC /* WOMSelectionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOMSelectionBox.m; sourceTree = "<group>"; };
 		63D66A6C19488625007B24EC /* SelectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectionDelegate.h; sourceTree = "<group>"; };
+		63D7716E1960BC49000CB24F /* ModalTransitioningControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalTransitioningControllerDelegate.h; sourceTree = "<group>"; };
+		63D7716F1960BC49000CB24F /* ModalTransitioningControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalTransitioningControllerDelegate.m; sourceTree = "<group>"; };
 		63E7F99C193AA7B7007D1FD9 /* BackgroundSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundSlider.m; sourceTree = "<group>"; };
 		63E7F99D193AA7B7007D1FD9 /* thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumb@2x.png"; sourceTree = "<group>"; };
 		63E7F99E193AA7B7007D1FD9 /* BackgroundSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundSlider.h; sourceTree = "<group>"; };
@@ -645,6 +648,8 @@
 				63B3F64F189D4B160087460A /* SongJockeySong.h */,
 				63B3F650189D4B160087460A /* SongJockeySong.m */,
 				63B3F651189D4B160087460A /* SongJockeyPlayer.m */,
+				63D7716E1960BC49000CB24F /* ModalTransitioningControllerDelegate.h */,
+				63D7716F1960BC49000CB24F /* ModalTransitioningControllerDelegate.m */,
 				63B3F652189D4B160087460A /* SJPlaylists.h */,
 				63B3F653189D4B160087460A /* SongJockeyPlayer.h */,
 				63B3F654189D4B160087460A /* SJConstants.m */,
@@ -1132,6 +1137,7 @@
 				E5C452AF182991210073A8B3 /* WorkoutDesignerVC.m in Sources */,
 				6335410118DD05680007F093 /* PlaylistChooserViewController.m in Sources */,
 				63B3F657189D4B160087460A /* SongJockeySong.m in Sources */,
+				63D771701960BC49000CB24F /* ModalTransitioningControllerDelegate.m in Sources */,
 				63B0AAF31857507A00B0A40F /* IntervalSectionCell.m in Sources */,
 				636F96D119435D4000D5ACEC /* MusicCategoryCell.m in Sources */,
 				63D66A6B19488491007B24EC /* WOMSelectionBox.m in Sources */,

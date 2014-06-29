@@ -18,7 +18,8 @@
     WOMusicAppDelegate * app = (WOMusicAppDelegate *) [UIApplication sharedApplication].delegate;
     UITabBarController * parent = app.tabs;
     IndividualWorkout * iw = (IndividualWorkout *) self.sourceViewController;
-    WorkoutDesignerVC * designer = parent.viewControllers[1];
+    UINavigationController * designerNav = (UINavigationController *) parent.viewControllers[1];
+    WorkoutDesignerVC * designer = (WorkoutDesignerVC *)designerNav.topViewController;
     designer.model = iw.workout;
     [iw dismissViewControllerAnimated:YES completion:^{
         parent.selectedIndex = 1;

@@ -84,13 +84,14 @@
 
     if (self.isSelected) {
         self.isSelected = NO;
-         [self.parentTable deselectRowAtIndexPath:indexPath animated:YES    ];
          [self.parent deSelectIndexPath:indexPath];
+    
         
     } else {
         self.isSelected = YES;
-                    [self.parentTable selectRowAtIndexPath:indexPath animated:YES    scrollPosition:UITableViewScrollPositionNone];
         [self.parent selectIndexPath:indexPath];
+        
+        
     }
 }
 

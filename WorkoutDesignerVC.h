@@ -12,7 +12,7 @@
 #import "TimePickerVCViewController.h"
 #import "SelectionDelegate.h"
 
-@interface WorkoutDesignerVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, SelectionDelegate>
+@interface WorkoutDesignerVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, SelectionDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 
 @property (strong, nonatomic) IBOutlet UITextField *nameField; 
 @property (strong, nonatomic) IBOutlet UITableView *intervalsTable;
