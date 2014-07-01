@@ -8,7 +8,7 @@
 			<key>Key</key>
 			<string>workoutsongsplaylist</string>
 			<key>DefaultValue</key>
-			<string>workoutsongs</string>
+			<string></string>
 			<key>Title</key>
 			<string>Playlist</string>
 			<key>Type</key>

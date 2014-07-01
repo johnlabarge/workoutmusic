@@ -13,34 +13,23 @@
 
 
 - (void) perform {
-    
-    
-    
-    UIViewController *src = (UIViewController *) self.sourceViewController;
-    UIViewController *dst = (UIViewController *) self.destinationViewController;
-    
-    [UIView transitionWithView:src.view duration:0.5 options:UIViewAnimationOptionCurveEaseOut animations:NULL completion:^(BOOL finished) {
-        if (finished) {
-            __weak WOMusicAppDelegate * app = (WOMusicAppDelegate *)[[UIApplication sharedApplication] delegate];
-            if ([dst isMemberOfClass:[UITabBarController class]]) {
-                /*Since the splash is the rootViewController hanging the tabs on during this transition.
-                 TODO : do this a better way.
-                 */
-                app.tabs = (UITabBarController *)dst;
-                
-            }
-            NSArray *subViewArray = [app.window subviews];
-            for (id obj in subViewArray)
-            {
-                [obj removeFromSuperview];
-            }
-            app.window.rootViewController = dst;
-            
-            NSLog(@"app.tabs.delegate %@", [app.tabs.delegate description]);
-            NSLog(@"app.tabs %@",[app.tabs description]);
-        }
-    }];
+    WOMusicAppDelegate * app = (WOMusicAppDelegate *)[[UIApplication sharedApplication] delegate];
 
+    UIWindow * window = app.window;
+    UITabBarController *dst = (UITabBarController *) self.destinationViewController;
+    [UIView transitionWithView:window
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        window.rootViewController = dst;
+                        
+                    } completion:^(BOOL finished) {
+                        
+                        if( finished )  {
+                            app.tabs = dst;
+                        }
+                    }];
+    
     
 }
 

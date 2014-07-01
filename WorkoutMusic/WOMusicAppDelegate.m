@@ -69,8 +69,9 @@
 -(void) processedMusicLibrary:(NSNotification *)note
 {
     NSLog(@"Done processing songs calling after splash ... \n\n");
-    [self.splashScreen afterSplash];
     [WorkoutList setInstance:[[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary]];
+    [self.splashScreen afterSplash];
+  
 
     
 }
