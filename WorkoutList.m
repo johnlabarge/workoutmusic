@@ -221,7 +221,7 @@
     MusicLibraryItem * item;
     NSInteger index = 0;
     if (songList != nil) {
-        while (!art) {
+        while (!art && index < songList.count) {
             if (index < songList.count) {
                 item = (MusicLibraryItem *)songList[index];
                 art = item.artwork;

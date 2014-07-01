@@ -10,7 +10,7 @@
 #import "SJPlaylists.h"
 
 @interface PlaylistChooserViewController ()
-@property (nonatomic, strong) NSString * chosen;
+
 @end
 
 @implementation PlaylistChooserViewController
@@ -35,11 +35,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)chooseAndClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate optionChosen:self.chosen];
-    }];
-}
+
 
 #pragma mark UIPickerViewDataSource
 
@@ -61,6 +57,6 @@
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.chosen = [[SJPlaylists availablePlaylists] objectAtIndex:row];
+    self.selectedPlaylist = [[SJPlaylists availablePlaylists] objectAtIndex:row];
 }
 @end

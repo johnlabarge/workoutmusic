@@ -57,7 +57,7 @@
     }
     
     [self.playListButton setTitle:playListTitle forState:UIControlStateNormal];
-    self.totalNumberSongsLabel.text = [NSString stringWithFormat:@"Workout DJ is using %lu Songs",self.library.libraryItems.count];
+    self.totalNumberSongsLabel.text = [NSString stringWithFormat:@"WorkoutDJ is using %lu songs from playlist:",self.library.libraryItems.count];
  
     
     self.numberOverriddenLabel.text = [NSString stringWithFormat:@"%lu",self.library.numberOfOverriddenItems];
@@ -136,20 +136,25 @@
         mvc.category = self.category;
     } else {
         PlaylistChooserViewController * playlistChooser = (PlaylistChooserViewController *) segue.destinationViewController;
-        playlistChooser.delegate = self;
+     
     }
 }
 
+- (IBAction)unwindFromPlayListChooser:(UIStoryboardSegue *)segue {
+    PlaylistChooserViewController * playListChooser = segue.sourceViewController;
+    [WorkoutMusicSettings setWorkoutSongsPlaylist:playListChooser.selectedPlaylist ];
+}
 -(void) viewDidAppear:(BOOL)animated
 {
     if (self.doNoPlaylistAlert) {
-        self.alert = [[UIAlertView alloc] initWithTitle:@"No playlist selected." message:@"Please choose a playlist that contains the songs you want to listen to during your workouts." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [self performSegueWithIdentifier:@"choosePlaylist" sender:self];
     } else if (self.doICloudAlert) {
         self.alert = [[UIAlertView alloc] initWithTitle:@"Cloud Items need to be downloaded" message:@"Apps cannot play music from iTunes Match/iCloud.  To use these songs in your workout playlists, go back to the Music application, select the playlist you are using for workout songs and touch \"Download All\"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     } else if (self.doOldDRMAlert) {
         self.alert = [[UIAlertView alloc] initWithTitle:@"Songs with Old DRM protection." message:@"Songs with Old DRM protection cannot be played by the WorkoutDJ.  Contact Apple to update these items and remove their DRM protection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     }
     self.tableViewHeightConstraint.constant = self.tableView.contentSize.height;
+    
     [self.alert show];
 }
 
@@ -170,13 +175,6 @@
 }
 
 
-
-
--(void)optionChosen:(NSObject *)option
-{
-    NSString * playListName = (NSString *)option;
-    [WorkoutMusicSettings setWorkoutSongsPlaylist:playListName];
-}
 
 -(WOMusicAppDelegate *)app {
     return (WOMusicAppDelegate *)[UIApplication sharedApplication].delegate;
