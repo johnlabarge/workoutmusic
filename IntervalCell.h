@@ -25,6 +25,7 @@
 @property (weak, nonatomic) WorkoutInterval * workoutInterval;
 @property (strong, nonatomic) IBOutlet UIView *timeView;
 
+@property (weak, nonatomic) IBOutlet UIButton *repeatButton;
 
 @property (nonatomic, assign) NSInteger seconds; 
 @property (strong, nonatomic) IBOutlet UISlider *tempoSlider;

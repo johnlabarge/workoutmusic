@@ -107,6 +107,10 @@
 		63B3F657189D4B160087460A /* SongJockeySong.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F650189D4B160087460A /* SongJockeySong.m */; };
 		63B3F658189D4B160087460A /* SongJockeyPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F651189D4B160087460A /* SongJockeyPlayer.m */; };
 		63B3F659189D4B160087460A /* SJConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3F654189D4B160087460A /* SJConstants.m */; };
+		63B8BEBB198BCE19002B0C05 /* UIView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B8BEBA198BCE19002B0C05 /* UIView+Util.m */; };
+		63B8BEBF198E9202002B0C05 /* add_interval@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B8BEBE198E9202002B0C05 /* add_interval@2x.png */; };
+		63B8BEC1198E93AA002B0C05 /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B8BEC0198E93AA002B0C05 /* delete@2x.png */; };
+		63B8BEC3198E995C002B0C05 /* repeat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B8BEC2198E995C002B0C05 /* repeat@2x.png */; };
 		63D194491902A5C300EA5DCA /* runningTabBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D194481902A5C300EA5DCA /* runningTabBar@2x.png */; };
 		63D66A661947BDBB007B24EC /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D66A651947BDBB007B24EC /* refresh@2x.png */; };
 		63D66A6819488361007B24EC /* WOMSelectionBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D66A6719488361007B24EC /* WOMSelectionBox.xib */; };
@@ -115,6 +119,7 @@
 		63E7F99F193AA7B7007D1FD9 /* BackgroundSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E7F99C193AA7B7007D1FD9 /* BackgroundSlider.m */; };
 		63E7F9A0193AA7B7007D1FD9 /* thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E7F99D193AA7B7007D1FD9 /* thumb@2x.png */; };
 		63E7F9A6193BD4A5007D1FD9 /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 63E7F9A5193BD4A5007D1FD9 /* sample.json */; };
+		63EFF5721996729B00F41947 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EFF5711996729B00F41947 /* close@2x.png */; };
 		63F8AD0519337BB0002B3DE1 /* TempoSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63F8AD0419337BB0002B3DE1 /* TempoSectionHeader.xib */; };
 		63F8AD08193384B6002B3DE1 /* TempoSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F8AD07193384B6002B3DE1 /* TempoSectionHeader.m */; };
 		63F8AD0C1933BB33002B3DE1 /* contract_section@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F8AD0A1933BB33002B3DE1 /* contract_section@2x.png */; };
@@ -315,6 +320,11 @@
 		63B3F653189D4B160087460A /* SongJockeyPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongJockeyPlayer.h; path = SongJockey/SongJockeyPlayer.h; sourceTree = "<group>"; };
 		63B3F654189D4B160087460A /* SJConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SJConstants.m; path = SongJockey/SJConstants.m; sourceTree = "<group>"; };
 		63B3F655189D4B160087460A /* SJConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SJConstants.h; path = SongJockey/SJConstants.h; sourceTree = "<group>"; };
+		63B8BEB9198BCE19002B0C05 /* UIView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Util.h"; sourceTree = "<group>"; };
+		63B8BEBA198BCE19002B0C05 /* UIView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Util.m"; sourceTree = "<group>"; };
+		63B8BEBE198E9202002B0C05 /* add_interval@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_interval@2x.png"; sourceTree = "<group>"; };
+		63B8BEC0198E93AA002B0C05 /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete@2x.png"; path = "images/delete@2x.png"; sourceTree = "<group>"; };
+		63B8BEC2198E995C002B0C05 /* repeat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repeat@2x.png"; sourceTree = "<group>"; };
 		63D194481902A5C300EA5DCA /* runningTabBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "runningTabBar@2x.png"; path = "images/runningTabBar@2x.png"; sourceTree = "<group>"; };
 		63D66A651947BDBB007B24EC /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
 		63D66A6719488361007B24EC /* WOMSelectionBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOMSelectionBox.xib; sourceTree = "<group>"; };
@@ -328,6 +338,7 @@
 		63E7F99E193AA7B7007D1FD9 /* BackgroundSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundSlider.h; sourceTree = "<group>"; };
 		63E7F9A5193BD4A5007D1FD9 /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
 		63E7F9A7193BD4BB007D1FD9 /* sample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
+		63EFF5711996729B00F41947 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		63F8AD0419337BB0002B3DE1 /* TempoSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TempoSectionHeader.xib; sourceTree = "<group>"; };
 		63F8AD06193384B6002B3DE1 /* TempoSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempoSectionHeader.h; sourceTree = "<group>"; };
 		63F8AD07193384B6002B3DE1 /* TempoSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempoSectionHeader.m; sourceTree = "<group>"; };
@@ -472,6 +483,9 @@
 		5271504C1651DF0200111078 = {
 			isa = PBXGroup;
 			children = (
+				63B8BEBE198E9202002B0C05 /* add_interval@2x.png */,
+				63B8BEB9198BCE19002B0C05 /* UIView+Util.h */,
+				63B8BEBA198BCE19002B0C05 /* UIView+Util.m */,
 				63D66A6919488491007B24EC /* WOMSelectionBox.h */,
 				63D66A6A19488491007B24EC /* WOMSelectionBox.m */,
 				63D66A6719488361007B24EC /* WOMSelectionBox.xib */,
@@ -686,6 +700,9 @@
 		63FE019619263BE60085E6D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63EFF5711996729B00F41947 /* close@2x.png */,
+				63B8BEC2198E995C002B0C05 /* repeat@2x.png */,
+				63B8BEC0198E93AA002B0C05 /* delete@2x.png */,
 				63594A4518FC151A0058D9EB /* Shuffle@2x.png */,
 				527150791651DF0300111078 /* first.png */,
 				5271507B1651DF0300111078 /* first@2x.png */,
@@ -975,6 +992,8 @@
 				527150701651DF0200111078 /* Default@2x.png in Resources */,
 				527150721651DF0300111078 /* Default-568h@2x.png in Resources */,
 				5271507A1651DF0300111078 /* first.png in Resources */,
+				63EFF5721996729B00F41947 /* close@2x.png in Resources */,
+				63B8BEC1198E93AA002B0C05 /* delete@2x.png in Resources */,
 				63AF6744190D80A20043F8FD /* appIcon@2x.png in Resources */,
 				63B336E0193575610090A9C9 /* images.xcassets in Resources */,
 				5271507C1651DF0300111078 /* first@2x.png in Resources */,
@@ -1007,6 +1026,7 @@
 				63594A4018F9E2530058D9EB /* music.png in Resources */,
 				632C061718BA5D82000EBFBE /* forward.png in Resources */,
 				6307EE13183164130034D0CB /* TimePickerVCViewController.xib in Resources */,
+				63B8BEBF198E9202002B0C05 /* add_interval@2x.png in Resources */,
 				E553399516EA115F00255C67 /* SlowToFast.png in Resources */,
 				52DB39A417E229E400800260 /* retract.png in Resources */,
 				63114E3018BA734100A43892 /* backward.png in Resources */,
@@ -1015,6 +1035,7 @@
 				E5CD0D2B16EBC80B00332141 /* note.jpeg in Resources */,
 				E5CD0D2E16EBC86900332141 /* musicSettings.png in Resources */,
 				E50C234E17011DDF00BEA02C /* set.png in Resources */,
+				63B8BEC3198E995C002B0C05 /* repeat@2x.png in Resources */,
 				634B015B193249B200B78820 /* noteTab2@2x.png in Resources */,
 				E5113E7B1724175900A52F5A /* background.png in Resources */,
 				E5113E7C1724175900A52F5A /* background@2x.png in Resources */,
@@ -1123,6 +1144,7 @@
 				6370AD2818B6C6B100C71512 /* Base64Transcoder.c in Sources */,
 				E5DDAC8216F4F3470042D146 /* NSMutableArray+Shuffle.m in Sources */,
 				E5C452B0182991210073A8B3 /* WorkoutInterval.m in Sources */,
+				63B8BEBB198BCE19002B0C05 /* UIView+Util.m in Sources */,
 				63F8AD08193384B6002B3DE1 /* TempoSectionHeader.m in Sources */,
 				63197C47184A5CA10004F7E0 /* WorkoutViewController.m in Sources */,
 				E5C452A4182990E60073A8B3 /* Workout.m in Sources */,

@@ -64,6 +64,7 @@
     if (self.userInteractionEnabled) {
         [self.parent presentTimePickerForInterval:self.workoutInterval];
     }
+    
 
     
     /* [self.parent presentViewController:timePickerVC animated:YES completion:^{
@@ -77,11 +78,13 @@
     NSInteger intVal = round(self.tempoSlider.value);
     [self.tempoSlider setValue:intVal animated:NO];
     self.workoutInterval.speed = intVal;
+    self.isSelected = YES;
+    [self.parent selectIndexPath:[self.parentTable indexPathForCell:self]];
 }
 
 - (IBAction)tappedWidget:(id)sender {
     NSIndexPath * indexPath = [self.parentTable indexPathForCell:self];
-
+    
     if (self.isSelected) {
         self.isSelected = NO;
          [self.parent deSelectIndexPath:indexPath];

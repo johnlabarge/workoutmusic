@@ -50,13 +50,17 @@
     [super viewDidLoad];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     [self.tableView setSeparatorColor:[UIColor grayColor]];
-    
+     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+   // self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 0.01f)];
+    self.tableView.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0);
     self.navigationItem.title = [NSString stringWithFormat:@"%@ Intensity",  self.category];
     UINib * intervalCell = [UINib  nibWithNibName:@"MusicItemCell" bundle:nil];
     //UINib * tempoHeader = [UINib nibWithNibName:@"TempoSectionHeader" bundle:nil];
     [self.tableView registerClass:[TempoSectionHeader class] forHeaderFooterViewReuseIdentifier:@"TempoHeader"];
 
     [self.tableView registerNib:intervalCell forCellReuseIdentifier:@"musicItemCell"];
+    
     [self.tableView setRowHeight:140.0];
   /*  dispatch_async(
                    dispatch_queue_create("sortq", NULL) , ^{

@@ -66,7 +66,7 @@
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 63;
+    return tableView.bounds.size.height/5;
 }
 
 

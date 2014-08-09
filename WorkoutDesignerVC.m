@@ -12,6 +12,7 @@
 #import "IntervalCell.h"
 #import "TimePickerVCViewController.h"
 #import "ModalTransitioningControllerDelegate.h"
+#import "UIView+Util.h"
 
 @interface WorkoutDesignerVC ()
 @property WorkoutInterval * selectedInterval;
@@ -54,28 +55,35 @@
     
         UINib * intervalCell = [UINib  nibWithNibName:@"intervalcell" bundle:nil];
     [self.intervalsTable registerNib:intervalCell forCellReuseIdentifier:@"IntervalCell"];
-     
+    self.modalPresentationStyle = UIModalPresentationFormSheet;
   
+    
     if (self.model == nil) {
         [self newWorkout];
     }
     self.nameField.text = self.model.name;
     self.intervalsTable.rowHeight = 70.0;
     [self hideRepeat:YES];
-    self.intervalsTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    UIView * footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    UIButton * button =  [footer add:[[UIButton alloc] init]];
+    footer.userInteractionEnabled = YES;
+    [footer expandToWidth:button];
+    [footer expandToHeight:button];
+ 
+    [button setImage:[UIImage imageNamed:@"add_interval"] forState:UIControlStateNormal];
+    button.titleLabel.textColor = [UIColor blackColor];
+ 
+    button.userInteractionEnabled = YES;
+    [button addTarget:self action:@selector(addInterval:) forControlEvents:UIControlEventTouchUpInside];
+ 
+    
+    
+    self.intervalsTable.tableFooterView = footer;
+    
+    
     self.modalPresenter = [[ModalTransitioningControllerDelegate alloc] init];
-
-    //[self.model addObserver:self forKeyPath:@"intervals" options:NSKeyValueObservingOptionNew context:nil];
-    //[self.model addObserver:self forKeyPath:@"workoutSeconds" options:NSKeyValueObservingOptionNew context:nil];
-    
-    
-
-    
-    
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+ 
 }
 -(void) hideRepeat:(BOOL)yesOrNo
 {
@@ -126,7 +134,7 @@
 
 -(void) update
 {
-    self.workoutTimeLabel.text = [NSString stringWithFormat:@"%ld minutes",self.model.workoutSeconds/60];
+    self.workoutTimeLabel.text = [NSString stringWithFormat:@"%d minutes",self.model.workoutSeconds/60];
     if (self.model.name) {
         self.nameField.text = self.model.name;
     } else {
@@ -155,7 +163,13 @@
 }
 
 #pragma mark - Table view data source
-
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -185,6 +199,15 @@
         cell.isSelected = NO;
         cell.highlighted = NO;
     }
+    cell.editingAccessoryType = UITableViewCellEditingStyleDelete;
+    
+    if ([self selectedIndexesAreConsecutive] && indexPath.row == [self lastSelectedIndex]) {
+        cell.repeatButton.hidden = NO;
+        [cell.repeatButton addTarget:self action:@selector(repeatIntervals:)                     forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [cell.repeatButton removeTarget:self action:@selector(repeatIntervals:) forControlEvents:UIControlEventTouchUpInside];
+        cell.repeatButton.hidden = YES;
+    }
     return cell;
 }
 - (IBAction)addInterval:(id)sender {
@@ -194,7 +217,14 @@
 
 }
 
-
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        NSIndexSet * indexes = [[NSIndexSet alloc] initWithIndex:indexPath.row];
+        [self.model  removeIntervalsAtIndexes:indexes];
+    }
+}
 
 -(void) updateStateForSelection
 {
@@ -205,7 +235,7 @@
         return [a compare:b];
     }];
     
-    [self hideRepeat:![self selectedIndexesAreConsecutive]];
+    [self.intervalsTable reloadData];
     
 
 }
@@ -231,6 +261,35 @@
 {
     return [self.selectedIndexes containsObject:path];
 }
+
+-(NSInteger) lastSelectedIndex
+{
+    __block NSInteger maxRow = -1;
+    [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSIndexPath * path = (NSIndexPath *)obj;
+        if (path.row > maxRow) {
+            maxRow = path.row;
+        }
+    }];
+    return maxRow;
+}
+
+/*-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView * footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+    UIButton * button =  [footer add:[[UIButton alloc] init]];
+    [footer expandToWidth:button];
+    [footer expandToHeight:button];
+    
+    button.titleLabel.text = @"Add Interval";
+    
+    footer.backgroundColor = [UIColor redColor];
+    return footer;
+}*/
+
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
@@ -334,8 +393,11 @@
     timePicker.selectedSeconds  = interval.intervalSeconds;
     self.presentedTimePicker = timePicker;
     timePicker.fromRect = CGRectMake(self.intervalsTable.frame.origin.x+rect.origin.x, self.intervalsTable.frame.origin.y+70+rect.origin.y,48,48);
-    //self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);
+  /*  timePicker.view.frame = CGRectMake(self.intervalsTable.frame.origin.x, self.intervalsTable.frame.size.height*.33, self.intervalsTable.frame.size.width, self.intervalsTable.frame.size.height*.67);
+    timePicker.blurView.frame = CGRectMake(self.intervalsTable.frame.origin.x, self.intervalsTable.frame.size.height*.33, self.intervalsTable.frame.size.width, self.intervalsTable.frame.size.height*.67);
+    //self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);*/
     //self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
+    timePicker.intervalNumber = row;
      
     [self presentViewController:timePicker animated:YES completion:^{
         
@@ -343,6 +405,7 @@
     }]; 
  
 }
+
 
  
 

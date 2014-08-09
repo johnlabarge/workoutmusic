@@ -12,6 +12,7 @@
 @interface TimePickerVCViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate,UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIPickerView *timePicker;
 @property (strong, nonatomic) WorkoutInterval *interval;
 @property (nonatomic, assign) NSInteger selectedSeconds;
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (strong, nonatomic) IBOutlet UIView *pickerView;
 @property (nonatomic, assign) CGRect fromRect;
+@property (nonatomic, assign) NSInteger intervalNumber;
 
 
 @end

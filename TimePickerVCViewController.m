@@ -35,6 +35,7 @@
     return self;
 }
 
+ 
 -(void) setup {
     
     self.minuteOptions = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7", @"8", @"9",@"10"];
@@ -49,13 +50,12 @@
         }
         [self.secondsOptions addObject:secondsOption];
     }
-    self.timePicker.delegate = self;
-    self.timePicker.dataSource =self;
+
         self.modalPresentationStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
-        
-    
 
+    
+  
 }
 
 -(void) setFromRect:(CGRect)fromRect
@@ -67,7 +67,7 @@
     
 }
 - (IBAction)doneAction:(id)sender {
-    self.interval.intervalSeconds = 60*[self.timePicker selectedRowInComponent:0];
+    self.interval.intervalSeconds = 60*([self.timePicker selectedRowInComponent:0]);
     self.interval.intervalSeconds+= [self.timePicker selectedRowInComponent:1];
     NSLog(@"new interval seconds = %ld", (long)self.interval.intervalSeconds);
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -90,9 +90,22 @@
     NSInteger seconds = self.interval.intervalSeconds-(minutes*60);
     [self.timePicker selectRow:minutes inComponent:0 animated:NO];
     [self.timePicker selectRow:seconds inComponent:1 animated:NO];
-     
     
+    
+    self.timePicker.delegate = self;
+    self.timePicker.dataSource =self;
+    self.titleLabel.text = [NSString stringWithFormat:@"%@ %@",self.titleLabel.text, @(self.intervalNumber+1)];
+    self.blurView.alpha = 1.0;
+    self.blurView.blurRadius = 12;
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.7 constant:1.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:1.0]];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,6 +135,11 @@
    
     
 }
+-(void)viewWillLayoutSubviews
+{
+    
+   
+}
 - (NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     
@@ -136,12 +154,24 @@
     
     if (!label) {
         label = [[UILabel alloc] init];
-        label.font = [UIFont fontWithName:@"HelveticaNeue" size:34.0];
+        label.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
     }
+    
     if (component == 0) {
-        label.text = self.minuteOptions[row];
+        if (row == 0) {
+            
+            //label.font = [label.font fontWithSize:12.0];
+            label.text = [NSString stringWithFormat:@"%@ Min",self.minuteOptions[row]];
+        } else {
+            label.text =  self.minuteOptions[row];
+        }
     } else {
-        label.text = self.secondsOptions[row];
+        if (row == 0){
+           // label.font = [label.font fontWithSize:12.0];
+             label.text = [NSString stringWithFormat:@"%@ Sec",self.minuteOptions[row]];
+        } else {
+            label.text = self.secondsOptions[row];
+        }
     }
     return label;
     
@@ -193,8 +223,8 @@
         fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         self.blurView.frame = self.fromRect;
         [[transitionContext containerView] addSubview:self.blurView];
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.35 initialSpringVelocity:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                weakSelf.blurView.frame = CGRectMake(0,0,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height);
+        [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:0.25 initialSpringVelocity:4.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                weakSelf.blurView.frame = CGRectMake(0,fromViewController.view.frame.size.height*.5,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.4);
             
         } completion:^(BOOL finished) {
             
