@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WorkoutInterval.h"
 #import "FXBlurView.h"
+#import "TimeLabel.h"
 @interface TimePickerVCViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate,UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIView *pickerView;
 @property (nonatomic, assign) CGRect fromRect;
 @property (nonatomic, assign) NSInteger intervalNumber;
+@property (nonatomic, weak) TimeLabel * viewLabel;
 
 
 @end

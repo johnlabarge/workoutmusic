@@ -229,10 +229,12 @@
     } else {
         self.remainingSeconds = currentSong.seconds;
     }
-    
-    [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo =
-    @{MPMediaItemPropertyTitle: self.currentSong.songTitle};
-    
+    NSMutableDictionary * playInfo = [NSMutableDictionary dictionaryWithDictionary:@{MPMediaItemPropertyTitle: (self.currentSong.songTitle? self.currentSong.songTitle : @"Untitled")}];
+    NSObject * artwork = [self.currentSong.mediaItem valueForProperty:MPMediaItemPropertyArtwork];
+    if (artwork) {
+        playInfo[MPMediaItemPropertyArtwork] = artwork;
+    }
+    [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo =playInfo;
     [self calculateRemainingTime];
     [self playWhenReady];
     

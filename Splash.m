@@ -30,8 +30,26 @@
     
     self.wasLoaded = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaProcessedNotificationHandler:) name:@"media_processed" object:nil];
+    self.image.image = nil;
+    self.image.animationImages = @[
+                                   [UIImage imageNamed:@"rd-1"],
+                                   [UIImage imageNamed:@"rd-2"],
+                                   [UIImage imageNamed:@"rd-3"],
+                                   [UIImage imageNamed:@"rd-4"],
+                                   [UIImage imageNamed:@"rd-5"],
+                                   [UIImage imageNamed:@"rd-6"],
+                                   [UIImage imageNamed:@"rd-7"],
+                                   [UIImage imageNamed:@"rd-8"]
+                                   ];
+    
        
 
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.image.animationDuration = 1.0;
+    [self.image startAnimating];
+    
 }
 -(void) mediaProcessedNotificationHandler:(NSNotification *)note
 {

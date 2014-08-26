@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableArray * secondsOptions;
 @property (nonatomic, strong) NSMutableArray * timeLabels;
 @property (nonatomic, strong) ModalTransitioningControllerDelegate * modalPresenter;
+@property (nonatomic, strong) UIColor * oldLabelColor;
 @end
 
 @implementation TimePickerVCViewController
@@ -57,7 +58,12 @@
     
   
 }
-
+-(NSInteger) pickerSeconds
+{
+    NSInteger seconds = 60*([self.timePicker selectedRowInComponent:0]);
+    seconds += [self.timePicker selectedRowInComponent:1];
+    return seconds;
+}
 -(void) setFromRect:(CGRect)fromRect
 {
     _fromRect = fromRect;
@@ -65,11 +71,13 @@
 }
 -(void)viewDidAppear:(BOOL)animated {
     
+    
+    
 }
 - (IBAction)doneAction:(id)sender {
-    self.interval.intervalSeconds = 60*([self.timePicker selectedRowInComponent:0]);
-    self.interval.intervalSeconds+= [self.timePicker selectedRowInComponent:1];
+    self.interval.intervalSeconds = self.pickerSeconds;
     NSLog(@"new interval seconds = %ld", (long)self.interval.intervalSeconds);
+    self.viewLabel.textColor = self.oldLabelColor;
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }
@@ -96,15 +104,14 @@
     self.timePicker.dataSource =self;
     self.titleLabel.text = [NSString stringWithFormat:@"%@ %@",self.titleLabel.text, @(self.intervalNumber+1)];
     self.blurView.alpha = 1.0;
-    self.blurView.blurRadius = 12;
+    self.blurView.blurRadius = 99;
     // Do any additional setup after loading the view from its nib.
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.7 constant:1.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:1.0]];
+    
 
 }
 
@@ -128,11 +135,9 @@
     return label;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
- //   NSLog(@"number of rows :%lu",(unsigned long)self.timeOptions.count);
-  //  NSLog(@"did select row");
-   //  self.selectedSeconds = ([self.timePicker selectedRowInComponent:0]+1)*10;
-    //[self.blurView removeFromSuperview];
-   
+    self.oldLabelColor= self.viewLabel.textColor;
+    self.viewLabel.textColor = [UIColor blueColor];
+    self.viewLabel.seconds = self.pickerSeconds; 
     
 }
 -(void)viewWillLayoutSubviews
@@ -151,10 +156,12 @@
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel * label = (UILabel *)view;
+   // label.textColor = [UIColor whiteColor];
     
     if (!label) {
         label = [[UILabel alloc] init];
         label.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
+        label.textColor = [UIColor orangeColor];
     }
     
     if (component == 0) {
@@ -221,29 +228,43 @@
         //[[transitionContext containerView] addSubview:fromViewController.view];
         
         fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-        self.blurView.frame = self.fromRect;
-        [[transitionContext containerView] addSubview:self.blurView];
-        [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:0.25 initialSpringVelocity:4.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                weakSelf.blurView.frame = CGRectMake(0,fromViewController.view.frame.size.height*.5,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.4);
+        //self.blurView.frame = self.fromRect;
+        [[transitionContext containerView] addSubview:self.view];
+        weakSelf.view.frame = CGRectMake(0,fromViewController.view.frame.size.height,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.4);
+        [UIView animateWithDuration:0.3 animations: ^{
+            weakSelf.view.frame = CGRectMake(0,fromViewController.view.frame.size.height*.63,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.37);
+            fromViewController.view.frame = CGRectMake(fromViewController.view.frame.origin.x,fromViewController.view.frame.origin.y-weakSelf.view.frame.size.height,fromViewController.view.frame.size.width, fromViewController.view.frame.size.height);
             
         } completion:^(BOOL finished) {
             
             [transitionContext completeTransition:YES];
-            [weakSelf.blurView addSubview: weakSelf.view];
+            //[weakSelf.blurView addSubview: weakSelf.view];
         }];
    
         
     } else {
-        [weakSelf.view removeFromSuperview];
-        [UIView animateWithDuration:0.25 animations:^{
+        
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.25 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            toViewController.view.frame = CGRectMake(0,0,toViewController.view.frame.size.width, toViewController.view.frame.size.height);
             
-            weakSelf.blurView.frame = weakSelf.fromRect;
-            toViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
         } completion:^(BOOL finished) {
-            [weakSelf.blurView removeFromSuperview];
+            [weakSelf.view removeFromSuperview];
+            [transitionContext completeTransition:YES];
+            //[weakSelf.blurView addSubview: weakSelf.view];
+        }];
+
+        
+    /*    [UIView animateWithDuration:0.25 animations:^{
+            
+           // weakSelf.blurView.frame = weakSelf.fromRect;
+            toViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+            //fromViewController.view.frame = [UIApplication sharedApplication].keyWindow.frame;
+            toViewController.view.frame = CGRectMake(0,0,toViewController.view.frame.size.width, toViewController.bottomLayoutGuide.length);
+        } completion:^(BOOL finished) {
+            [weakSelf.view removeFromSuperview];
             [transitionContext completeTransition:YES];
         }];
-        
+        */
     }
 }
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed

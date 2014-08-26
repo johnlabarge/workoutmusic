@@ -398,6 +398,7 @@
                     </view>
                     <connections>
                         <outlet property="currentlyProcessing" destination="h5z-0u-CkV" id="G3W-ci-uqP"/>
+                        <outlet property="image" destination="bYB-VI-Rs3" id="r55-DE-vON"/>
                         <outlet property="progressView" destination="4oS-Fu-rct" id="1Jm-mB-kyS"/>
                         <segue destination="Ku6-r7-AGl" kind="custom" identifier="splashOut" customClass="TransitionSegue" id="iCe-mS-RfB"/>
                     </connections>
@@ -683,7 +684,7 @@
                             <userLayoutGuide location="65" affinity="minY"/>
                         </userGuides>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXh-6P-dXS">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXh-6P-dXS">
                                 <rect key="frame" x="0.0" y="163" width="320" height="405"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

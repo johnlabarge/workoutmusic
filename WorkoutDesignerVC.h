@@ -11,7 +11,8 @@
 #import "WorkoutGraph.h"
 #import "TimePickerVCViewController.h"
 #import "SelectionDelegate.h"
-
+#import "IntervalCell.h"
+@class IntervalCell;
 @interface WorkoutDesignerVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, SelectionDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 
 @property (strong, nonatomic) IBOutlet UITextField *nameField; 
@@ -23,8 +24,8 @@
 
 
 @property (strong, nonatomic) Workout * model;
+-(void) presentTimePickerForInterval:(WorkoutInterval *)interval intervalCell:(IntervalCell *)cell;
 
--(void) presentTimePickerForInterval:(WorkoutInterval *) interval;
 -(void) deSelectIndexPath:(NSIndexPath *)indexPath;
 -(void) selectIndexPath:(NSIndexPath *)indexPath; 
 @end

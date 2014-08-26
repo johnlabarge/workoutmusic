@@ -9,10 +9,10 @@
 #import "WorkoutDesignerVC.h"
 #import "Workout.h" 
 #import "WorkoutInterval.h"
-#import "IntervalCell.h"
 #import "TimePickerVCViewController.h"
 #import "ModalTransitioningControllerDelegate.h"
 #import "UIView+Util.h"
+#import "NSIndexPath+Equality.h"
 
 @interface WorkoutDesignerVC ()
 @property WorkoutInterval * selectedInterval;
@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIAlertView * alert;
 @property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 @property (strong,nonatomic) id <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning> modalPresenter;
+@property (nonatomic, assign) BOOL doDeselect; 
 @end
 
 @implementation WorkoutDesignerVC
@@ -49,7 +50,7 @@
     [super viewDidLoad];
     self.intervalsTable.allowsMultipleSelection = YES;
     
-    self.selectedIndexes = [[NSMutableArray alloc] initWithCapacity:10];
+   // self.selectedIndexes = [[NSMutableArray alloc] initWithCapacity:10];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
@@ -70,7 +71,7 @@
     footer.userInteractionEnabled = YES;
     [footer expandToWidth:button];
     [footer expandToHeight:button];
- 
+    footer.backgroundColor = [UIColor blackColor];
     [button setImage:[UIImage imageNamed:@"add_interval"] forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor blackColor];
  
@@ -90,10 +91,7 @@
     self.repeatButton.hidden = yesOrNo;
     self.repeatLabel.hidden = yesOrNo;
 }
--(void)viewDidAppear:(BOOL)animated
-{
-    
-}
+
 
 - (IBAction)newWorkoutAction:(id)sender {
     [self newWorkout];
@@ -141,9 +139,10 @@
         self.nameField.text = nil;
     }
     [self.model recalculate];
-    [self.intervalsTable reloadData];
+    [self updateStateForSelection];
     [self.workoutGraph reloadData];
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -161,7 +160,6 @@
     
     return YES;
 }
-
 #pragma mark - Table view data source
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -169,6 +167,24 @@
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
+}
+-(void) keyboardDidShow:(NSNotification *)note;
+{
+    self.originalCenter = self.view.center;
+    if (!self.nameField.isEditing) {
+        CGRect myRect = [self.selectedCell convertRect:self.selectedCell.frame toView:nil];
+        NSLog(@"%2.f", myRect.origin.y);
+        self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 180);
+        [self.intervalsTable scrollToRowAtIndexPath:self.selectedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [self.intervalsTable setUserInteractionEnabled:NO];
+        [self setCellInteraction:NO];
+    }
+}
+-(void) keyboardDidHide:(NSNotification *)note;
+{
+    self.view.center = self.originalCenter;
+    [self.intervalsTable setUserInteractionEnabled:YES];
+    [self setCellInteraction:YES];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -191,16 +207,8 @@
     cell.workoutInterval = interval;
     cell.timeLabel.seconds = interval.intervalSeconds;
     cell.parent = self;
-    if ([self.selectedIndexes containsObject:indexPath]) {
-        cell.isSelected = YES;
-        cell.highlighted = YES;
-        [self.intervalsTable selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    } else {
-        cell.isSelected = NO;
-        cell.highlighted = NO;
-    }
-    cell.editingAccessoryType = UITableViewCellEditingStyleDelete;
-    
+
+
     if ([self selectedIndexesAreConsecutive] && indexPath.row == [self lastSelectedIndex]) {
         cell.repeatButton.hidden = NO;
         [cell.repeatButton addTarget:self action:@selector(repeatIntervals:)                     forControlEvents:UIControlEventTouchUpInside];
@@ -236,7 +244,15 @@
     }];
     
     [self.intervalsTable reloadData];
-    
+
+    [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSIndexPath *index = (NSIndexPath *)obj;
+        [self.intervalsTable selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+        UITableViewCell * cell = [self.intervalsTable cellForRowAtIndexPath:index];
+        cell.highlighted = YES;
+        NSLog(@"selecting row :%@ ", @(index.row));
+    }];
+
 
 }
 -(BOOL) selectedIndexesAreConsecutive
@@ -261,6 +277,12 @@
 {
     return [self.selectedIndexes containsObject:path];
 }
+-(NSMutableArray *) selectedIndexes
+{
+    if (!_selectedIndexes)
+        _selectedIndexes = [[self.intervalsTable indexPathsForSelectedRows] mutableCopy];
+    return _selectedIndexes;
+}
 
 -(NSInteger) lastSelectedIndex
 {
@@ -275,31 +297,43 @@
     return maxRow;
 }
 
-/*-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+
+
+-(void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIView * footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
-    UIButton * button =  [footer add:[[UIButton alloc] init]];
-    [footer expandToWidth:button];
-    [footer expandToHeight:button];
-    
-    button.titleLabel.text = @"Add Interval";
-    
-    footer.backgroundColor = [UIColor redColor];
-    return footer;
+    NSLog(@"did unhighlight...");
+}
+
+-(void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"did highlight");
+}
+
+/*- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"should highlight");
+    return [[tableView indexPathsForSelectedRows] containsObject:indexPath];
 }*/
-
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-    if ([self.selectedIndexes containsObject:indexPath]) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.doDeselect) {
+      [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        self.doDeselect = NO;
+        NSLog(@"deselecting");
+    } else {
+       [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        NSLog(@"selecting");
     }
+    
 
     [self updateStateForSelection];
 }
-
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView.indexPathsForSelectedRows containsObject:indexPath]) {
+        self.doDeselect = YES;
+    }
+    return indexPath; 
+}
 -(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
@@ -329,7 +363,7 @@
         [self.intervalsTable deselectRowAtIndexPath:indexPath animated:NO];
         
     }];
-    self.selectedIndexes = nil;
+    [self.selectedIndexes removeAllObjects];
 }
 - (IBAction)repeatIntervals:(id)sender {
     BOOL consecutive = [self selectedIndexesAreConsecutive];
@@ -339,6 +373,7 @@
         NSUInteger length = self.selectedIndexes.count;
         [self.model repeatIntervalsInRange:NSMakeRange(location,length)];
     }
+    
 }
 -(void) setCellInteraction:(BOOL) allowed
 {
@@ -352,51 +387,38 @@
 
 -(void) deSelectIndexPath:(NSIndexPath *)indexPath
 {
-    [self.selectedIndexes removeObject:indexPath];
+    //[self.selectedIndexes removeObject:indexPath];
     [self.intervalsTable deselectRowAtIndexPath:indexPath animated:NO];
     [self updateStateForSelection];
 }
 
 -(void) selectIndexPath:(NSIndexPath *)indexPath
 {
-    [self.selectedIndexes addObject:indexPath];
-    [self.intervalsTable selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
+    [self.intervalsTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    //[self.selectedIndexes addObject:indexPath];
+    
     [self updateStateForSelection];
 }
--(void) keyboardDidShow:(NSNotification *)note;
-{
-    self.originalCenter = self.view.center;
-    if (!self.nameField.isEditing) {
-        CGRect myRect = [self.selectedCell convertRect:self.selectedCell.frame toView:nil];
-        NSLog(@"%2.f", myRect.origin.y);
-        self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 180);
-        [self.intervalsTable scrollToRowAtIndexPath:self.selectedIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [self.intervalsTable setUserInteractionEnabled:NO];
-        [self setCellInteraction:NO];
-    }
-}
--(void) keyboardDidHide:(NSNotification *)note;
-{
-    self.view.center = self.originalCenter;
-    [self.intervalsTable setUserInteractionEnabled:YES];
-    [self setCellInteraction:YES];
-}
 
--(void) presentTimePickerForInterval:(WorkoutInterval *)interval
+
+-(void) presentTimePickerForInterval:(WorkoutInterval *)interval intervalCell:(IntervalCell *)cell
 {
     TimePickerVCViewController * timePicker = [[TimePickerVCViewController alloc] initWithNibName:@"TimePickerVCViewController" bundle:nil];
     
     timePicker.interval = interval;
+    NSIndexPath * cellIndex = [self.intervalsTable indexPathForCell:cell];
+    [self.intervalsTable scrollToRowAtIndexPath:cellIndex atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
     NSInteger row = [self.model.intervals indexOfObject:interval];
     
     CGRect rect = [self.intervalsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow:row inSection:0]];
     timePicker.selectedSeconds  = interval.intervalSeconds;
+    timePicker.viewLabel = cell.timeLabel;
     self.presentedTimePicker = timePicker;
-    timePicker.fromRect = CGRectMake(self.intervalsTable.frame.origin.x+rect.origin.x, self.intervalsTable.frame.origin.y+70+rect.origin.y,48,48);
-  /*  timePicker.view.frame = CGRectMake(self.intervalsTable.frame.origin.x, self.intervalsTable.frame.size.height*.33, self.intervalsTable.frame.size.width, self.intervalsTable.frame.size.height*.67);
-    timePicker.blurView.frame = CGRectMake(self.intervalsTable.frame.origin.x, self.intervalsTable.frame.size.height*.33, self.intervalsTable.frame.size.width, self.intervalsTable.frame.size.height*.67);
-    //self.presentedTimePicker.view.frame = CGRectMake(0,200,320,250);*/
-    //self.presentedTimePicker.view.backgroundColor = [UIColor clearColor];
+    
+    timePicker.fromRect = CGRectMake(self.intervalsTable.frame.origin.x+rect.origin.x, [[UIApplication sharedApplication] keyWindow].frame.size.height+50,320,48);
+  
     timePicker.intervalNumber = row;
      
     [self presentViewController:timePicker animated:YES completion:^{

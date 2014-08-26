@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimePickerVCViewController">
             <connections>
-                <outlet property="blurView" destination="nPC-Ko-eXn" id="7DD-7E-JSm"/>
                 <outlet property="chooseTimeLabel" destination="5Bs-yc-ETP" id="ZuB-mg-HiZ"/>
                 <outlet property="doneButton" destination="OP6-uS-4To" id="94W-sp-ovN"/>
                 <outlet property="timePicker" destination="FBI-SS-ixm" id="X2N-sb-lKz"/>
@@ -20,8 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="323" height="237"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <pickerView contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="FBI-SS-ixm">
-                    <rect key="frame" x="-79" y="23" width="480" height="162"/>
+                <pickerView contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FBI-SS-ixm">
+                    <rect key="frame" x="1.5" y="23" width="320" height="162"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
@@ -36,12 +35,12 @@
                     <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP6-uS-4To">
-                    <rect key="frame" x="133" y="185" width="57" height="42"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP6-uS-4To">
+                    <rect key="frame" x="126" y="185" width="72" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="26"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26"/>
                     <state key="normal" title="Done">
-                        <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -49,21 +48,17 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="5Bs-yc-ETP" firstAttribute="top" secondItem="Rg6-Eh-60U" secondAttribute="top" constant="5" id="0Lp-5l-pof"/>
                 <constraint firstAttribute="centerX" secondItem="OP6-uS-4To" secondAttribute="centerX" id="4ld-QN-0kh"/>
                 <constraint firstAttribute="centerX" secondItem="5Bs-yc-ETP" secondAttribute="centerX" id="7q8-Ct-lGg"/>
+                <constraint firstAttribute="trailing" secondItem="FBI-SS-ixm" secondAttribute="trailing" id="WJQ-Zq-SF6"/>
                 <constraint firstAttribute="centerX" secondItem="FBI-SS-ixm" secondAttribute="centerX" id="bYC-XG-vez"/>
+                <constraint firstItem="FBI-SS-ixm" firstAttribute="leading" secondItem="Rg6-Eh-60U" secondAttribute="leading" id="daf-dl-ODm"/>
                 <constraint firstItem="FBI-SS-ixm" firstAttribute="top" secondItem="5Bs-yc-ETP" secondAttribute="bottom" constant="-8" id="iUU-xk-gKz"/>
                 <constraint firstAttribute="bottom" secondItem="OP6-uS-4To" secondAttribute="bottom" constant="10" id="j5q-28-mh2"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-        </view>
-        <view contentMode="scaleToFill" id="nPC-Ko-eXn" customClass="FXBlurView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="470"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>

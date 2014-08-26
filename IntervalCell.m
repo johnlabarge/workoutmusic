@@ -12,6 +12,7 @@
 
 @interface IntervalCell()
 @property (nonatomic, strong) UITapGestureRecognizer * widgetTapper;
+@property (nonatomic, assign) BOOL sliderJustChanged;
 @end
 @implementation IntervalCell
 
@@ -23,7 +24,11 @@
     }
     return self;
 }
+-(void)prepareForReuse
+{
+    self.timeLabel.textColor = [UIColor blackColor];
 
+}
 -(void) setWorkoutInterval:(WorkoutInterval *)workoutInterval
 {
     _workoutInterval = workoutInterval;
@@ -37,7 +42,7 @@
     timeTap.delaysTouchesBegan = NO;
 
     [self.timeLabel addGestureRecognizer:timeTap];
-    self.selectionStyle = UITableViewCellSelectionStyleGray;
+    self.selectionStyle = UITableViewCellSelectionStyleBlue;
     [self.tempoSlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
     self.widgetTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWidget:)];
@@ -62,40 +67,37 @@
 
 - (IBAction)editTime {
     if (self.userInteractionEnabled) {
-        [self.parent presentTimePickerForInterval:self.workoutInterval];
+        
+        [self.parent presentTimePickerForInterval:self.workoutInterval intervalCell:self];
     }
-    
-
-    
-    /* [self.parent presentViewController:timePickerVC animated:YES completion:^{
-        theInterval.intervalSeconds = timePickerVC.selectedSeconds;
-    }];*/
-    //FXBlurView * blur = [[FXBlurView alloc] initWithFrame:CGRectMake(0,0,320,568)];
-    //[self.parent.view addSubview:blur];
     
 }
 - (IBAction)sliderChanged:(id)sender {
     NSInteger intVal = round(self.tempoSlider.value);
     [self.tempoSlider setValue:intVal animated:NO];
     self.workoutInterval.speed = intVal;
-    self.isSelected = YES;
+   
     [self.parent selectIndexPath:[self.parentTable indexPathForCell:self]];
+    self.sliderJustChanged = YES;
 }
 
 - (IBAction)tappedWidget:(id)sender {
     NSIndexPath * indexPath = [self.parentTable indexPathForCell:self];
-    
-    if (self.isSelected) {
-        self.isSelected = NO;
-         [self.parent deSelectIndexPath:indexPath];
-    
-        
-    } else {
-        self.isSelected = YES;
-        [self.parent selectIndexPath:indexPath];
-        
-        
+    if (!self.sliderJustChanged) {
+        BOOL selected = [[self.parentTable indexPathsForSelectedRows] containsObject:indexPath];
+        if (selected) {
+            // self.isSelected = NO;
+            NSLog(@"deselecting from tapped..");
+            [self.parent deSelectIndexPath:indexPath];
+            
+            
+        } else {
+            // self.isSelected = YES;
+            NSLog(@"selecting from tapped...");
+            [self.parent selectIndexPath:indexPath];
+        }
     }
+    self.sliderJustChanged = NO;
 }
 
 
