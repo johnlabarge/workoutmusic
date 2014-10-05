@@ -57,6 +57,8 @@
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.selectedPlaylist = [[SJPlaylists availablePlaylists] objectAtIndex:row];
+    if ([SJPlaylists availablePlaylists].count > row) {
+        self.selectedPlaylist = [[SJPlaylists availablePlaylists] objectAtIndex:row];
+    }
 }
 @end

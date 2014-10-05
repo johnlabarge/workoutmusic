@@ -230,10 +230,17 @@
         fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         //self.blurView.frame = self.fromRect;
         [[transitionContext containerView] addSubview:self.view];
-        weakSelf.view.frame = CGRectMake(0,fromViewController.view.frame.size.height,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.4);
+        UITabBarController * tabBarController = (UITabBarController *)fromViewController;
+        UIViewController * from = tabBarController.selectedViewController;
+        weakSelf.view.frame = CGRectMake(0,from.view.frame.size.height,from.view.bounds.size.width, 0);
         [UIView animateWithDuration:0.3 animations: ^{
-            weakSelf.view.frame = CGRectMake(0,fromViewController.view.frame.size.height*.63,fromViewController.view.bounds.size.width, fromViewController.view.bounds.size.height*.37);
-            fromViewController.view.frame = CGRectMake(fromViewController.view.frame.origin.x,fromViewController.view.frame.origin.y-weakSelf.view.frame.size.height,fromViewController.view.frame.size.width, fromViewController.view.frame.size.height);
+            weakSelf.view.frame =
+            CGRectMake(0,
+                       from.view.frame.size.height*.53,
+                       from.view.bounds.size.width,
+                       from.view.bounds.size.height*.47-[from.bottomLayoutGuide length]
+                       );
+            from.view.frame = CGRectMake(from.view.frame.origin.x,from.view.frame.origin.y-weakSelf.view.frame.size.height,from.view.frame.size.width, from.view.frame.size.height);
             
         } completion:^(BOOL finished) {
             
@@ -243,9 +250,12 @@
    
         
     } else {
-        
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.25 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            toViewController.view.frame = CGRectMake(0,0,toViewController.view.frame.size.width, toViewController.view.frame.size.height);
+        UITabBarController * tabs = (UITabBarController *)toViewController;
+        UIViewController * to = tabs.selectedViewController;
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.75 initialSpringVelocity:.25 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            to.view.frame = CGRectMake(0,0,to.view.frame.size.width, to.view.frame.size.height);
+            fromViewController.view.frame = CGRectMake(0,to.view.frame.size.height, to.view.frame.size.width, 0);
+            fromViewController.view.alpha = 0.0;
             
         } completion:^(BOOL finished) {
             [weakSelf.view removeFromSuperview];

@@ -67,10 +67,19 @@
 
 -(NSLayoutConstraint *)layoutView:(UIView *)view atHeightProportion:(CGFloat)heightProportion
 {
-    NSLayoutConstraint * heightConstraint =  [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:heightProportion constant:1.0];
+    NSLayoutConstraint * heightConstraint =  [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:heightProportion constant:0.0];
     [self addConstraint:heightConstraint];
     return heightConstraint;
 }
+
+-(NSLayoutConstraint *)layoutView:(UIView *)view atWidthProportion:(CGFloat)widthProportion
+{
+    NSLayoutConstraint * widthConstraint =  [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:widthProportion constant:0.0];
+    [self addConstraint:widthConstraint];
+    return widthConstraint;
+}
+
+
 -(NSLayoutConstraint *)layoutView:(UIView *)view underView:(UIView *)upperView atDistance:(CGFloat)distance {
     NSLayoutConstraint * topConstraint =  [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:upperView  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:distance];
     [self addConstraint:topConstraint];
@@ -80,7 +89,15 @@
 -(NSLayoutConstraint *)layoutView:(UIView *)view atWidth:(CGFloat)widthConstant
 {
     NSLayoutConstraint * widthConstraint =  [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:widthConstant];
+    [self addConstraint:widthConstraint];
     return widthConstraint;
+}
+
+-(NSLayoutConstraint *)trailingSpaceFrom:(UIView *)subView1 toView:(UIView *)subView2 equals:(CGFloat)space
+{
+    NSLayoutConstraint * trailConstraint = [NSLayoutConstraint constraintWithItem:subView1 attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:subView2 attribute:NSLayoutAttributeLeading multiplier:1.0 constant:space];
+    [self addConstraint:trailConstraint];
+    return trailConstraint;
 }
 -(NSArray *)layoutView:(UIView *)view atHeightProportion:(CGFloat)heightProportion withAspectRatio:(CGFloat)aspect
 {
@@ -92,16 +109,18 @@
     
     return theConstraints;
 }
+
+
 -(NSLayoutConstraint *)layoutView:(UIView *)view leading:(CGFloat)leadingSpace
 {
-    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:leadingSpace];
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeading multiplier:1.0 constant:leadingSpace];
     [self addConstraint:constraint];
     
     return constraint;
 }
 -(NSLayoutConstraint *)layoutView:(UIView *)view trailing:(CGFloat)trailingSpace
 {
-    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:trailingSpace];
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:trailingSpace];
     [self addConstraint:constraint];
     
     return constraint;

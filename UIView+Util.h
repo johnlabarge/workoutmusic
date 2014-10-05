@@ -40,6 +40,7 @@
  */
 -(NSLayoutConstraint *)layoutView:(UIView *)view atHeightProportion:(CGFloat)heightProportion;
 
+-(NSLayoutConstraint *)layoutView:(UIView *)view atWidthProportion:(CGFloat)widthProportion; 
 /**
  * adds layout constraint that puts a view under another at a distance, distance.
  */
@@ -69,4 +70,6 @@
  * set the top space to self of this subview
  */
 -(NSLayoutConstraint *)layoutView:(UIView *)view top:(CGFloat)topSpace;
+
+-(NSLayoutConstraint *)trailingSpaceFrom:(UIView *)subView1 toView:(UIView *)subView2 equals:(CGFloat)space;
 @end

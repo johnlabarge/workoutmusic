@@ -30,7 +30,7 @@
 {
 
     
-      [self.intensitySlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+      //[self.intensitySlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
     self.clearSaveOverrideButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.clearSaveOverrideButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     

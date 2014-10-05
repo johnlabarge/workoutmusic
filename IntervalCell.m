@@ -26,8 +26,11 @@
 }
 -(void)prepareForReuse
 {
+    [super prepareForReuse];
     self.timeLabel.textColor = [UIColor blackColor];
-
+    self.editing = NO;
+    self.selected = NO;
+    
 }
 -(void) setWorkoutInterval:(WorkoutInterval *)workoutInterval
 {
@@ -43,7 +46,7 @@
 
     [self.timeLabel addGestureRecognizer:timeTap];
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
-    [self.tempoSlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+   // [self.tempoSlider setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
     self.widgetTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedWidget:)];
     [self.timeLabel addGestureRecognizer:self.widgetTapper];

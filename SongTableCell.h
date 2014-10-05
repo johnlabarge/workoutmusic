@@ -16,7 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *artworkImageView;
 @property (nonatomic, strong) UIImage * artworkImage;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, copy) NSString *songDescription;
 @property (weak, nonatomic) IBOutlet UILabel *bpmLabel;
 
 @end

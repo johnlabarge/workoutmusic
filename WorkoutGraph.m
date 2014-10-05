@@ -134,7 +134,7 @@
         
         
         
-        CGContextSetFillColorWithColor(context, getAdjustedColor(self.backgroundColor.CGColor, 0.05f));
+        CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
         CGContextFillRect(context, theLayer.bounds);
         
         CGFloat space = self.horizontalOffset/self.workout.intervals.count;

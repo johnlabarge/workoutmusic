@@ -13,25 +13,20 @@
 @implementation StartWorkoutSegue
 -(void) perform
 {
-    IndividualWorkout * iw = (IndividualWorkout *) self.sourceViewController;
+  
     WorkoutViewController *workoutVC = (WorkoutViewController *) self.destinationViewController;
    /* UIViewController * parent = [iw presentingViewController];*/
     WOMusicAppDelegate * app = (WOMusicAppDelegate *) [UIApplication sharedApplication].delegate;
     UITabBarController * parent = app.tabs;
     
-    
-    
-    NSLog(@" start workout segue : %lu", (unsigned long)iw.workout.intervals.count);
     /*UINavigationController *parentNav =(UINavigationController *) parent;
     [iw dismissViewControllerAnimated:YES completion:^{
         workoutVC.workout = iw.workout;
     }];*/
     
     UINavigationController * nav = (UINavigationController *) parent.selectedViewController;
-    [iw dismissViewControllerAnimated:YES completion:^{
-        workoutVC.workout = iw.workout;
-        [nav pushViewController:workoutVC animated:YES];
-    }];
+    [nav pushViewController:workoutVC animated:YES];
+ 
   
   
         

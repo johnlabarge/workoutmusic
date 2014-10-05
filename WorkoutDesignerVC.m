@@ -19,6 +19,7 @@
 @property CGPoint originalCenter;
 @property NSIndexPath * selectedIndexPath;
 @property IntervalCell * selectedCell;
+@property (weak, nonatomic) IBOutlet UILabel *workoutNameLabel;
 @property UITextField * editingField;
 @property TimePickerVCViewController * presentedTimePicker;
 @property (nonatomic, strong) NSMutableArray * selectedIndexes;
@@ -48,12 +49,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UINavigationItem * navItem = self.navigationItem;
+    self.navigationItem.title = self.model.name;
     self.intervalsTable.allowsMultipleSelection = YES;
     
    // self.selectedIndexes = [[NSMutableArray alloc] initWithCapacity:10];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-    
+        
         UINib * intervalCell = [UINib  nibWithNibName:@"intervalcell" bundle:nil];
     [self.intervalsTable registerNib:intervalCell forCellReuseIdentifier:@"IntervalCell"];
     self.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -71,7 +72,7 @@
     footer.userInteractionEnabled = YES;
     [footer expandToWidth:button];
     [footer expandToHeight:button];
-    footer.backgroundColor = [UIColor blackColor];
+    footer.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     [button setImage:[UIImage imageNamed:@"add_interval"] forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor blackColor];
  
@@ -83,8 +84,13 @@
     self.intervalsTable.tableFooterView = footer;
     
     
-    self.modalPresenter = [[ModalTransitioningControllerDelegate alloc] init];
+   self.modalPresenter = [[ModalTransitioningControllerDelegate alloc] init];
  
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    
 }
 -(void) hideRepeat:(BOOL)yesOrNo
 {
@@ -143,23 +149,6 @@
     [self.workoutGraph reloadData];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    
-    if (self.editingField == self.nameField) {
-        self.model.name = textField.text;
-    }
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    self.editingField = textField;
-    
-    return YES;
-}
 #pragma mark - Table view data source
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {

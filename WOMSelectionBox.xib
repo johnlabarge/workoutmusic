@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOMSelectionBox">
@@ -16,7 +17,6 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLx-rH-jQq">
                     <rect key="frame" x="3" y="3" width="25" height="25"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <gestureRecognizers/>
                     <constraints>
@@ -28,12 +28,13 @@
                     </connections>
                 </view>
             </subviews>
-            <color key="backgroundColor" patternImage="AF2B585F-C398-426F-AB7D-9A2BDF7FF772" colorSpace="pattern"/>
+            <color key="backgroundColor" patternImage="AFA2CC3F-9CFA-4EC0-8DD2-7C988042567A" colorSpace="pattern"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="JLx-rH-jQq" secondAttribute="centerX" id="NRf-4i-eVZ"/>
                 <constraint firstAttribute="centerY" secondItem="JLx-rH-jQq" secondAttribute="centerY" id="eGy-3q-9iS"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="FvL-cv-Tqp" appends="YES" id="lvz-yC-ZTs"/>
@@ -46,7 +47,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="AF2B585F-C398-426F-AB7D-9A2BDF7FF772" width="320" height="460">
+        <image name="AFA2CC3F-9CFA-4EC0-8DD2-7C988042567A" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9934,4 +9935,9 @@ AAAAAAAAAAAJCvs
 </mutableData>
         </image>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

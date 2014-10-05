@@ -30,6 +30,8 @@
 	<array>
 		<string>audio</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>workoutmusic</string>
 	<key>UIMainStoryboardFile</key>
 	<string>workoutmusic</string>
 	<key>UIRequiredDeviceCapabilities</key>

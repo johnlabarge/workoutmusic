@@ -87,6 +87,10 @@
             }];
             [[NSNotificationCenter defaultCenter] addObserverForName:kSJPlayingNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                 [me makePlaying];
+                [me selectPlayingSong];
+            }];
+            [[NSNotificationCenter defaultCenter] addObserverForName:kSJNextSong object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                [me selectPlayingSong];
             }];
             [[NSNotificationCenter defaultCenter] addObserverForName:kSJPausedNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                 [me makePaused];
@@ -106,6 +110,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) selectPlayingSong
+{
+    [self.songTable scrollToRowAtIndexPath:self.sjPlayer.currentSong.userInfo[@"table_index_path"] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.workout.intervals.count;
 }
@@ -143,8 +151,8 @@
         UIImage *albumArtworkImage = [artwork imageWithSize:CGSizeMake(85.0, 85.0)];
         songCell.artworkImage = albumArtworkImage;
         /*TODO : fix this */
-        songCell.description = [NSString stringWithFormat:@"%@ - %@",song.songArtist, song.songTitle];
-        songCell.descriptionLabel.text = songCell.description;
+        songCell.songDescription = [NSString stringWithFormat:@"%@ - %@",song.songArtist, song.songTitle];
+        songCell.descriptionLabel.text = songCell.songDescription;
         songCell.bpmLabel.text = [NSString stringWithFormat:@"%.2f",((NSNumber *)song.userInfo[@"bpm"]).doubleValue];
         if (playListIndex != self.sjPlayer.currentIndex) {
             songCell.backgroundColor = [UIColor whiteColor];
@@ -218,7 +226,7 @@
     
     [self.songTable reloadData];
     
-    [self.songTable scrollToRowAtIndexPath:self.sjPlayer.currentSong.userInfo[@"table_index_path"] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
     
     WorkoutInterval * interval = (WorkoutInterval *)self.sjPlayer.currentSong.userInfo[@"workoutInterval"];
     [self updateRemainingTime];

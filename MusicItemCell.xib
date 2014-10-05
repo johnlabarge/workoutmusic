@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,7 +15,6 @@
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="129" translatesAutoresizingMaskIntoConstraints="NO" id="a7U-bZ-AxI">
                         <rect key="frame" x="91" y="39" width="129" height="15"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="136" id="51u-wJ-97Z"/>
                         </constraints>
@@ -25,7 +23,6 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="onh-ZI-Ktq">
                         <rect key="frame" x="2" y="2" width="70" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="97c-1Q-qeB"/>
                             <constraint firstAttribute="height" constant="70" id="Nq5-PX-0ci"/>
@@ -33,29 +30,25 @@
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Artist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4J-ZI-9sV">
                         <rect key="frame" x="91" y="11" width="136" height="15"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="136" id="ayv-no-qb1"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="KrH-u8-elj" customClass="BackgroundSlider">
-                        <rect key="frame" x="10" y="80" width="276" height="31"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="KrH-u8-elj" customClass="BackgroundSlider">
+                        <rect key="frame" x="10" y="80" width="303" height="31"/>
                         <connections>
                             <action selector="sliderChanged:" destination="UN7-86-90j" eventType="valueChanged" id="Bhm-8V-e0g"/>
                         </connections>
                     </slider>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Current Intensity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ody-SB-Nvk">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Current Intensity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ody-SB-Nvk">
                         <rect key="frame" x="79" y="108" width="128" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNx-2R-fBk">
                         <rect key="frame" x="243" y="29" width="76" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="76" id="rdF-wX-6zT"/>
                         </constraints>
@@ -72,9 +65,11 @@
                     <constraint firstItem="a7U-bZ-AxI" firstAttribute="leading" secondItem="onh-ZI-Ktq" secondAttribute="trailing" constant="10" id="57E-Xx-8ct"/>
                     <constraint firstItem="KrH-u8-elj" firstAttribute="top" secondItem="onh-ZI-Ktq" secondAttribute="bottom" constant="8" id="HCk-fX-cjG"/>
                     <constraint firstItem="ody-SB-Nvk" firstAttribute="top" secondItem="KrH-u8-elj" secondAttribute="bottom" constant="-2" id="NPu-KN-vFD"/>
+                    <constraint firstItem="KrH-u8-elj" firstAttribute="leading" secondItem="rs9-TP-zpv" secondAttribute="leading" constant="12" id="QOq-5P-mTg"/>
                     <constraint firstItem="ZNx-2R-fBk" firstAttribute="top" secondItem="rs9-TP-zpv" secondAttribute="top" constant="30" id="Uml-QX-nqI"/>
                     <constraint firstItem="onh-ZI-Ktq" firstAttribute="top" secondItem="rs9-TP-zpv" secondAttribute="top" constant="2" id="Xt6-WP-Qba"/>
                     <constraint firstItem="onh-ZI-Ktq" firstAttribute="leading" secondItem="rs9-TP-zpv" secondAttribute="leading" constant="2" id="ZEK-yz-Fha"/>
+                    <constraint firstAttribute="trailing" secondItem="KrH-u8-elj" secondAttribute="trailing" constant="8" id="ZsL-wf-G99"/>
                     <constraint firstAttribute="trailing" secondItem="ZNx-2R-fBk" secondAttribute="trailing" id="kzm-0f-EJe"/>
                     <constraint firstItem="KrH-u8-elj" firstAttribute="centerX" secondItem="ody-SB-Nvk" secondAttribute="centerX" id="mzz-wI-wWl"/>
                     <constraint firstItem="a7U-bZ-AxI" firstAttribute="top" secondItem="O4J-ZI-9sV" secondAttribute="bottom" constant="8" id="xT8-o2-1Jn"/>
@@ -91,4 +86,9 @@
             </connections>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
