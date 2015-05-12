@@ -35,7 +35,7 @@ class WorkoutNameViewController : UIViewController, UITextFieldDelegate
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "editNewWorkout") {
-            let designer: WorkoutDesignerVC = segue.destinationViewController as WorkoutDesignerVC
+            let designer: WorkoutDesignerVC = segue.destinationViewController as! WorkoutDesignerVC
             workout.name = workoutNameField.text
             designer.model = workout
         }

@@ -16,6 +16,8 @@
 @implementation Workout
 
 
+
+
 +(NSString *) pathToWorkout:(NSString *)workoutName
 
 {
@@ -37,6 +39,18 @@
     return self;
 }
 
+-(NSArray *)getCategories
+{
+    NSMutableArray * categories = [[NSMutableArray alloc] initWithCapacity:10];
+    [self.intervals enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        WorkoutInterval * interval = (WorkoutInterval *)obj;
+        if (![categories containsObject:@(interval.speed)]) {
+            [categories addObject:@(interval.speed)];
+        }
+        
+    }];
+    return [NSArray arrayWithArray:categories];
+}
 -(id) initFromDict:(NSDictionary *) dict
 {
     

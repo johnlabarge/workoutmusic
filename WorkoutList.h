@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSString * workoutType;
 @property (nonatomic, strong) NSNumber * currentIntervalIndex;
 @property (nonatomic, strong) NSNumber * actualWorkoutTime;
+@property (nonatomic, readonly) NSArray * missingCategories;
 
 +(id) sharedInstance;
 +(id) instantiateForLibrary:(MusicLibraryBPMs *) library;
@@ -39,5 +40,6 @@
 -(NSInteger) playListIndex:(WorkoutListItem *) item andSong: (SongJockeySong *) song;
 -(void) reloadLibrary;
 -(MPMediaItemArtwork *) firstArtworkForCategory:(NSString *)category;
+-(BOOL)canGenerateWorkout:(Workout *)workout;
 
 @end

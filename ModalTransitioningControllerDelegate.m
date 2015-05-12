@@ -39,7 +39,7 @@
 
         //[[transitionContext containerView] addSubview:fromViewController.view];
        
-        fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        //fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         if (self.fromRect.size.height == 0) {
             toViewController.view.frame = CGRectMake(0,-fromViewController.view.bounds.size.height,fromViewController.view.bounds.size.width,fromViewController.view.bounds.size.height);
             [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{

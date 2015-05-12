@@ -21,8 +21,9 @@
 @property (nonatomic, strong) NSNumber * remainingTime;
 @property (nonatomic, strong) SongJockeyPlayer * sjPlayer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-
+@property (nonatomic, assign) BOOL cantGenerateWorkout;
 @property (nonatomic, assign) BOOL paused;
+
 
 
 @end
@@ -69,41 +70,77 @@
     self.remainingTimeLabel.seconds = self.remainingTime.integerValue;
   
     __weak typeof(self) me = self;
-
-    [self.workoutList generateListForWorkout:self.workout afterGenerated:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [me.spinner stopAnimating];
-             me.songTable.hidden = NO;
-            [me.songTable reloadData];
-            SJPlaylist * list = [me.workoutList toSJPlaylist];
-            [list eachSong:^(SongJockeySong *song, NSUInteger index, BOOL *stop) {
-                NSLog(@"list %lu: %@ %@", (unsigned long)index, song.songTitle,(song.isICloudItem ? @"icloud" : @"non-icloud"));
+    
+    if ([self.workoutList canGenerateWorkout:self.workout]) {
+        [self.workoutList generateListForWorkout:self.workout afterGenerated:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [me.spinner stopAnimating];
+                me.songTable.hidden = NO;
+                [me.songTable reloadData];
+                SJPlaylist * list = [me.workoutList toSJPlaylist];
+                [list eachSong:^(SongJockeySong *song, NSUInteger index, BOOL *stop) {
+                    NSLog(@"list %lu: %@ %@", (unsigned long)index, song.songTitle,(song.isICloudItem ? @"icloud" : @"non-icloud"));
+                    
+                }];
                 
-            }];
+                me.sjPlayer = [[SongJockeyPlayer alloc] initWithSJPlaylist:[me.workoutList toSJPlaylist]];
+                [[NSNotificationCenter defaultCenter] addObserverForName:kSJTimerNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                    [me timeTick];
+                }];
+                [[NSNotificationCenter defaultCenter] addObserverForName:kSJPlayingNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                    [me makePlaying];
+                    [me selectPlayingSong];
+                }];
+                [[NSNotificationCenter defaultCenter] addObserverForName:kSJNextSong object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                    [me selectPlayingSong];
+                }];
+                [[NSNotificationCenter defaultCenter] addObserverForName:kSJPausedNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                    [me makePaused];
+                }];
+                [me.spinner removeFromSuperview];
+                [me.songTable setHidden:NO];
+                [me presentWarningModalIfNeeded];
+            });
             
-            me.sjPlayer = [[SongJockeyPlayer alloc] initWithSJPlaylist:[me.workoutList toSJPlaylist]];
-            [[NSNotificationCenter defaultCenter] addObserverForName:kSJTimerNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                [me timeTick];
-            }];
-            [[NSNotificationCenter defaultCenter] addObserverForName:kSJPlayingNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                [me makePlaying];
-                [me selectPlayingSong];
-            }];
-            [[NSNotificationCenter defaultCenter] addObserverForName:kSJNextSong object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                [me selectPlayingSong];
-            }];
-            [[NSNotificationCenter defaultCenter] addObserverForName:kSJPausedNotice object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                [me makePaused];
-            }];
-            [me.spinner removeFromSuperview];
-            [me.songTable setHidden:NO];
-        });
-        
-    }];
+        }];
+    } else {
+        self.cantGenerateWorkout = YES;
+    }
 
  
 }
- 
+-(void) viewDidAppear:(BOOL)animated
+{
+    if (self.cantGenerateWorkout) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Can't generate workout." message:@"There is insufficient music in the selected playlist to generate this workout.  Consider adding more songs to the selected playlist or reclassifying songs." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }
+ }
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)alertViewCancel:(UIAlertView *)alertView {
+    NSLog(@"alertViewCancel");
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void) presentWarningModalIfNeeded
+{
+    NSArray * missingCategories =  self.workoutList.missingCategories;
+    if (missingCategories && missingCategories.count > 0) {
+        __block NSMutableString * missing = [[NSMutableString alloc] init];
+        [missingCategories enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString * category = (NSString *)obj;
+            [missing appendFormat:@"%@ \n",category];
+        }];
+        NSString * message = [NSString stringWithFormat:@"WorkoutDJ is missing songs in the following categories:\n %@ Songs must be in the playlist that WorkoutDJ uses to DJ your workout. You can add more songs to your playlist or recatgorize your songs manually using the Music Manager.",missing];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Missing Music Categories" message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:^{
+            NSLog(@" missing categories alert shown.");
+        }];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

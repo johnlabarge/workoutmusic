@@ -27,7 +27,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    self.okButton.enabled = NO;
+#if TARGET_IPHONE_SIMULATOR
+    self.okButton.enabled = YES;
+#endif
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,6 +40,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 #pragma mark UIPickerViewDataSource
@@ -59,6 +65,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if ([SJPlaylists availablePlaylists].count > row) {
         self.selectedPlaylist = [[SJPlaylists availablePlaylists] objectAtIndex:row];
+        self.okButton.enabled = YES;
     }
 }
 @end

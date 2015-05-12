@@ -68,8 +68,9 @@
 }
 -(void) processedMusicLibrary:(NSNotification *)note
 {
-    NSLog(@"Done processing songs calling after splash ... \n\n");
+   
     [WorkoutList setInstance:[[WorkoutList alloc] initWithLibrary:self.musicBPMLibrary]];
+     NSLog(@"Done processing songs calling after splash ... \n\n");
     [self.splashScreen afterSplash];
   
 
@@ -106,20 +107,14 @@
     self.musicBPMLibrary = [[MusicLibraryBPMs alloc] initWithManagedObjectContext:[self managedObjectContext]];
     [MusicLibraryBPMs currentInstance:self.musicBPMLibrary];
     self.musicBPMLibrary.shouldPruneICloudItems = YES;
-
+    [self splash];
     dispatch_async(_processqueue, ^{
-        
         [me.musicBPMLibrary processItunesLibrary];
-        
-       
-       
-        
-        
         NSLog(@"#####\n\n DONE PROCESSING WORKOUT SONGS \n\n######");
               [[NSRunLoop currentRunLoop]run];
     });
     self.workout = [WorkoutList sharedInstance];
-    [self splash];
+    
 
 }
 

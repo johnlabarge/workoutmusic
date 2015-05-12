@@ -12,7 +12,7 @@
 #import "Workout.h"
 #import "SongJockeySong.h"
 
-@interface WorkoutViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface WorkoutViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property WorkoutList * workoutList;
 @property (weak, nonatomic) IBOutlet UIView *songTableContainer;
 @property (strong, nonatomic) Workout * workout;

@@ -9,6 +9,7 @@
 #import "TimeLabel.h"
 @interface TimeLabel()
 @property (nonatomic, strong) NSDateFormatter * myDateFormatter;
+@property (nonatomic, strong) NSDateFormatter * myDateFormatterWithHours; 
 
 @end
 
@@ -34,20 +35,23 @@
     self.myDateFormatter = [[NSDateFormatter alloc] init];
     [self.myDateFormatter setDateFormat:@"mm:ss"];
     
-   
+    self.myDateFormatterWithHours = [[NSDateFormatter alloc] init];
+    self.myDateFormatterWithHours.dateFormat = @"hh:mm:ss";
 }
 
 -(void) setSeconds:(NSInteger) seconds
 {
     NSLog(@"set seconds to: %@",@(seconds));
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    NSInteger minutes = _seconds/60;
-    comps.minute = minutes;
+    NSInteger hours = seconds/3600;
     comps.second = seconds;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *periodDate = [calendar dateFromComponents:comps];
-
-    self.text = [self.myDateFormatter stringFromDate:periodDate];
+    if (hours > 0) {
+        self.text = [self.myDateFormatterWithHours stringFromDate:periodDate];
+    } else {
+        self.text = [self.myDateFormatter stringFromDate:periodDate];
+    }
 }
 
 /*

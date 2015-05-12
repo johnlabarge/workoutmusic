@@ -33,8 +33,8 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let workoutCell : WorkoutTableCell = tableView.dequeueReusableCellWithIdentifier("workoutCell", forIndexPath:indexPath ) as WorkoutTableCell
-        let workout : Workout = Workouts.list()[indexPath.row] as Workout
+        let workoutCell : WorkoutTableCell = tableView.dequeueReusableCellWithIdentifier("workoutCell", forIndexPath:indexPath ) as! WorkoutTableCell
+        let workout : Workout = Workouts.list()[indexPath.row] as! Workout
         workoutCell.graph.workout = workout
         workoutCell.workoutName.text = workout.name!
         workoutCell.timeLabel.seconds = workout.workoutSeconds
@@ -58,19 +58,20 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "doWorkout") {
-                let workout_player :WorkoutViewController = segue.destinationViewController as WorkoutViewController
+                let workout_player :WorkoutViewController = segue.destinationViewController as! WorkoutViewController
                 workout_player.workout = selectedWorkout()!
 
         } else if (segue.identifier == "editWorkout") {
-            let designer : WorkoutDesignerVC = segue.destinationViewController as WorkoutDesignerVC
+            let designer : WorkoutDesignerVC = segue.destinationViewController as! WorkoutDesignerVC
                 designer.model = selectedWorkout()!
         } else if (segue.identifier == "newWorkout") {
-            let namer : WorkoutNameViewController = segue.destinationViewController as WorkoutNameViewController
+            let namer : WorkoutNameViewController = segue.destinationViewController as! WorkoutNameViewController
             namer.workout = Workout()
         }
         
     }
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+   override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        
         var should = true
         println("Trying to segue to \(identifier) ")
         if (identifier == "editWorkout" || identifier == "doWorkout") {
@@ -87,7 +88,7 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell: WorkoutTableCell = tableView.cellForRowAtIndexPath(indexPath) as WorkoutTableCell
+        let cell: WorkoutTableCell = tableView.cellForRowAtIndexPath(indexPath) as! WorkoutTableCell
         var delay : dispatch_time_t = NSEC_PER_SEC*6
         dispatch_after(
             delay,
@@ -113,9 +114,9 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
         tableView.reloadData();
         
     }
-    
+ 
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-       var editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title:"Edit", { (action, indexPath) -> Void in
+       var editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title:"Edit", handler: { (action, indexPath) -> Void in
             println("edit workout at row: \(indexPath.row)")
             self.tableView.selectRowAtIndexPath(indexPath,animated: false, scrollPosition: UITableViewScrollPosition.None)
             self.performSegueWithIdentifier("editWorkout", sender: self);
@@ -123,7 +124,7 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
         editAction.backgroundColor = UIColor(red: 58/255.0, green: 169/255.0, blue: 242/255.0, alpha: 1.0)
         return [editAction,
             
-            UITableViewRowAction(style: UITableViewRowActionStyle.Default, title:"Delete",{ (action, indexPath ) -> Void in
+            UITableViewRowAction(style: UITableViewRowActionStyle.Default, title:"Delete",handler: { (action, indexPath ) -> Void in
                 println("delete workout at row : \(indexPath.row)")
                 self.tableView.selectRowAtIndexPath(indexPath,animated: false, scrollPosition: UITableViewScrollPosition.None)
                 var alerter: UIAlertController = UIAlertController(title:"Delete Workout?", message: "Delete this workout forever?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -150,23 +151,24 @@ class WorkoutListViewController :  UIViewController, UITableViewDelegate, UITabl
         view.backgroundColor = UIColor.blackColor()
         
         
-        let goButton: UIButton = view.add(UIButton()) as UIButton
+        let goButton: UIButton = view.add(UIButton()) as! UIButton
         goButton.setTitle("Go", forState: UIControlState.Normal)
         view.layoutView(goButton, atWidthProportion: 1.0/2.0)
         view.layoutView(goButton, atHeightProportion: 1.0)
         goButton.backgroundColor = UIColor.greenColor();
         view.layoutView(goButton, leading:0.0)
         
-        let editButton: UIButton = view.add(UIButton()) as UIButton
+        let editButton: UIButton = view.add(UIButton()) as! UIButton
         editButton.setTitle("Edit", forState: UIControlState.Normal)
         view.layoutView(editButton,atWidthProportion: 1.0/3.0);
         view.trailingSpaceFrom(goButton, toView: editButton, equals: 0.0); 
         
-        let deleteButton: UIButton = view.add(UIButton()) as UIButton
+        let deleteButton: UIButton = view.add(UIButton()) as! UIButton
         deleteButton.setTitle("Delete", forState: UIControlState.Normal)
         view.layoutView(deleteButton, atWidthProportion: 1.0/3.0)
         view.layoutView(deleteButton, trailing: 0.0)
         
         return view;
     }
+ 
 }

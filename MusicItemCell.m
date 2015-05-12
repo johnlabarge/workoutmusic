@@ -22,6 +22,7 @@
 @property (readonly) MusicLibraryBPMs * library;
 @property (weak, nonatomic) IBOutlet UILabel *curentIntensity;
 
+
 @end
 
 @implementation MusicItemCell
@@ -62,6 +63,7 @@
 }
 - (void) updateOverrideIntensityButton {
 
+    
     if (self.intensitySlider.value  != [ Tempo toIntensityNum:self.musicItem.currentClassification] || (self.musicItem.notfound && !self.musicItem.overridden)) {
         [self.clearSaveOverrideButton setTitle:@"Save Intensity Change?" forState:UIControlStateNormal];
         self.clearSaveOverrideButton.hidden = NO;
@@ -73,6 +75,8 @@
         self.clearSaveOverrideButton.hidden = YES;
         self.overrideState = No_Override;
     }
+    
+    NSLog(@"Update override intensity button for %@ clearSave = %@ musicItem.overridden = %@, ", self.musicItem.title, @(self.clearSaveOverrideButton.hidden), @(self.musicItem.overridden));
 }
 - (void) setMusicItem:(MusicLibraryItem *)musicItem
 {
@@ -81,8 +85,8 @@
     
     NSUInteger intensityIndex = [self musicItemIntensityIndex];
     [self prepareIntensityWidget:intensityIndex];
-    [self updateOverrideIntensityButton];
     
+    [self updateOverrideIntensityButton];
  
     self.artistLabel.text = musicItem.artist;
     self.titleLabel.text = musicItem.title;
@@ -90,6 +94,10 @@
     self.albumArtImageView.image = [musicItem.artwork imageWithSize:CGSizeMake(70.0,70.0)];
 
     
+}
+-(void) prepareForReuse
+{
+    [self updateOverrideIntensityButton];
 }
 -(void) updateIntensityText
 {
@@ -113,7 +121,7 @@
 }
 
 - (IBAction)clearOverride:(id)sender {
-    [self.musicItem clearOverride];
+    [self.musicItem clearOverride:@{@"row": @(self.row)}];
 }
 - (IBAction)sliderChanged:(id)sender {
     NSInteger intVal = round(self.intensitySlider.value);
@@ -152,10 +160,10 @@
 - (IBAction)clearSaveOverride:(id)sender {
     switch (self.overrideState) {
         case Clear_Override:
-            [self.musicItem clearOverride];
+            [self.musicItem clearOverride:@{@"row":@(self.row)}];
             break;
         case Execute_Override:
-            [self.musicItem overrideIntensityTo:self.intensitySlider.value];
+            [self.musicItem overrideIntensityTo:self.intensitySlider.value userInfo:@{@"row":@(self.row)}];
             break;
         default:
             break;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOMMediaReclassifiedViewController">
+            <connections>
+                <outlet property="artImageView" destination="KZ9-tC-zTd" id="xnp-Vm-nLQ"/>
+                <outlet property="artistLabel" destination="QJE-Uy-0iQ" id="HKU-n6-utI"/>
+                <outlet property="titleLabel" destination="3Or-sg-enJ" id="UXU-QU-5sY"/>
+                <outlet property="view" destination="Tp7-9R-nph" id="Isk-Jd-911"/>
+                <outlet property="viewTitle" destination="kxQ-7p-1LU" id="sqT-xk-Jp4"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Tp7-9R-nph">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KZ9-tC-zTd">
+                    <rect key="frame" x="-1" y="32" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="8a1-mL-kHu"/>
+                        <constraint firstAttribute="height" constant="60" id="Y9D-8Q-Y6g"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media Moved to #New Classification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxQ-7p-1LU">
+                    <rect key="frame" x="13" y="3" width="295" height="21"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                    <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Or-sg-enJ">
+                    <rect key="frame" x="67" y="71" width="245" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="245" id="h96-DS-KJO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJE-Uy-0iQ">
+                    <rect key="frame" x="67" y="32" width="245" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="245" id="K4k-QP-iJy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="KZ9-tC-zTd" secondAttribute="bottom" constant="8" id="G08-U9-m3B"/>
+                <constraint firstAttribute="bottom" secondItem="3Or-sg-enJ" secondAttribute="bottom" constant="8" id="Gra-qS-PlD"/>
+                <constraint firstItem="kxQ-7p-1LU" firstAttribute="top" secondItem="Tp7-9R-nph" secondAttribute="top" constant="3" id="Qee-fz-C9C"/>
+                <constraint firstItem="QJE-Uy-0iQ" firstAttribute="top" secondItem="kxQ-7p-1LU" secondAttribute="bottom" constant="8" id="dJK-gP-oKw"/>
+                <constraint firstItem="KZ9-tC-zTd" firstAttribute="leading" secondItem="Tp7-9R-nph" secondAttribute="leadingMargin" constant="-9" id="jax-Ko-gwx"/>
+                <constraint firstItem="3Or-sg-enJ" firstAttribute="leading" secondItem="KZ9-tC-zTd" secondAttribute="trailing" constant="8" id="osS-Hr-OzC"/>
+                <constraint firstItem="QJE-Uy-0iQ" firstAttribute="leading" secondItem="KZ9-tC-zTd" secondAttribute="trailing" constant="8" id="pvh-YF-KFf"/>
+                <constraint firstAttribute="centerX" secondItem="kxQ-7p-1LU" secondAttribute="centerX" id="rME-Aj-4Ab"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="197" y="-63"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

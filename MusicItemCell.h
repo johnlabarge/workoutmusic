@@ -16,5 +16,6 @@ typedef NS_ENUM(NSInteger, OverrideState) {
         No_Override
 };
 @property (nonatomic, weak) MusicLibraryItem * musicItem;
+@property (nonatomic, assign) NSInteger row;
 -(void)glow;
 @end

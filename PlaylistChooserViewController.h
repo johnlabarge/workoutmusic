@@ -11,7 +11,7 @@
 
 @interface PlaylistChooserViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic, weak) UIPickerView * pickerView;
-@property (nonatomic, weak) UIButton * okButton;
+@property (nonatomic, weak) IBOutlet UIButton * okButton;
 @property (nonatomic, strong) NSString * selectedPlaylist;
 
 

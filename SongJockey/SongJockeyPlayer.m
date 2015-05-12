@@ -30,6 +30,7 @@
 
 @property (nonatomic, assign) NSInteger readyPlayers;
 @property (nonatomic, weak) NSTimer * readyTimer;
+@property (nonatomic, assign) BOOL isPaused;
 
 @end
 @implementation SongJockeyPlayer
@@ -160,6 +161,7 @@
 {
     [self.currentPlayer pause];
     self.isPlaying = NO;
+    self.isPaused = YES;
     [self killTimer];
 }
 -(void) fixIndex
@@ -226,8 +228,10 @@
     if (self.time > 0) {
         NSLog(@"self.time = %ld",(long)self.time);
         startSeconds += self.time;
+        
     } else {
         self.remainingSeconds = currentSong.seconds;
+        [self calculateRemainingTime];
     }
     NSMutableDictionary * playInfo = [NSMutableDictionary dictionaryWithDictionary:@{MPMediaItemPropertyTitle: (self.currentSong.songTitle? self.currentSong.songTitle : @"Untitled")}];
     NSObject * artwork = [self.currentSong.mediaItem valueForProperty:MPMediaItemPropertyArtwork];
@@ -235,7 +239,7 @@
         playInfo[MPMediaItemPropertyArtwork] = artwork;
     }
     [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo =playInfo;
-    [self calculateRemainingTime];
+
     [self playWhenReady];
     
     

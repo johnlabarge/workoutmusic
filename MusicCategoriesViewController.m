@@ -22,6 +22,7 @@
 @property (nonatomic, weak) UIButton * changePlayListButton;
 @property (readonly) MusicLibraryBPMs * library;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *helpView;
 @end
 
 @implementation MusicCategoriesViewController
@@ -40,6 +41,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Music Manager";
     NSString * playListTitle = @"none selected!";
+    self.helpView.alpha = 0.0;
     NSLog(@"library processed status=%d",self.library.processed);
     if (self.library.didContainICloudItems) {
         self.iCloudLabel.hidden = NO;
@@ -63,7 +65,9 @@
     self.numberOverriddenLabel.text = [NSString stringWithFormat:@"%lu",self.library.numberOfOverriddenItems];
     self.numberCantDetermine.text  = [NSString stringWithFormat:@"%lu",self.library.numberNotFound];
      self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
+    if (![self showMusicManagerHelp]) {
+        [self.helpView removeFromSuperview];
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return tableView.bounds.size.height/5;
@@ -149,21 +153,45 @@
     if (self.doNoPlaylistAlert) {
         [self performSegueWithIdentifier:@"choosePlaylist" sender:self];
     } else if (self.doICloudAlert) {
-        self.alert = [[UIAlertView alloc] initWithTitle:@"Cloud Items need to be downloaded" message:@"Apps cannot play music from iTunes Match/iCloud.  To use these songs in your workout playlists, go back to the Music application, select the playlist you are using for workout songs and touch \"Download All\"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        self.alert = [[UIAlertView alloc] initWithTitle:@"Download Your Music" message:@"To use all the songs in this playlist, use the Music application, select the playlist you are using for workout songs and touch \"Download All\"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     } else if (self.doOldDRMAlert) {
         self.alert = [[UIAlertView alloc] initWithTitle:@"Songs with Old DRM protection." message:@"Songs with Old DRM protection cannot be played by the WorkoutDJ.  Contact Apple to update these items and remove their DRM protection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     }
     self.tableViewHeightConstraint.constant = self.tableView.contentSize.height;
-    
-    [self.alert show];
+    if (self.alert) {
+        [self.alert show];
+    } else if ([self showMusicManagerHelp]) {
+        [self showHelp];
+    }
 }
 
 -(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     self.alert = nil;
     self.doNoPlaylistAlert = NO;
     self.doICloudAlert = NO;
+    if ([self showMusicManagerHelp]) {
+        [self showHelp];
+    }
 }
 
+-(void) showHelp {
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         self.helpView.alpha = 1.0;
+                     }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:1.0 animations:^{
+            self.helpView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.helpView removeFromSuperview];
+            }
+            
+        }];
+        
+    });
+    
+}
 -(void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         self.category = @"All Songs";
@@ -193,5 +221,20 @@
     
 }
 
+- (IBAction)dontShowHelpAgain:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"showMusicManagerHelp"];
+    self.helpView.alpha = 0.0;
+    [self.helpView removeFromSuperview];
+}
+
+-(BOOL) showMusicManagerHelp {
+    BOOL result = YES;
+    NSNumber * num = [[NSUserDefaults standardUserDefaults] objectForKey:@"showMusicManagerHelp"];
+    if (num) {
+        result = num.boolValue;
+    }
+    return result;
+    
+}
 
 @end

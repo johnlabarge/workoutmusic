@@ -2,12 +2,13 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="138" id="UN7-86-90j" customClass="MusicItemCell">
-            <rect key="frame" x="0.0" y="0.0" width="319" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UN7-86-90j" id="rs9-TP-zpv">
                 <rect key="frame" x="0.0" y="0.0" width="319" height="149"/>
@@ -37,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="KrH-u8-elj" customClass="BackgroundSlider">
-                        <rect key="frame" x="10" y="80" width="303" height="31"/>
+                        <rect key="frame" x="56" y="80" width="208" height="31"/>
                         <connections>
                             <action selector="sliderChanged:" destination="UN7-86-90j" eventType="valueChanged" id="Bhm-8V-e0g"/>
                         </connections>
@@ -64,14 +65,15 @@
                     <constraint firstItem="O4J-ZI-9sV" firstAttribute="leading" secondItem="onh-ZI-Ktq" secondAttribute="trailing" constant="10" id="17F-qc-x78"/>
                     <constraint firstItem="a7U-bZ-AxI" firstAttribute="leading" secondItem="onh-ZI-Ktq" secondAttribute="trailing" constant="10" id="57E-Xx-8ct"/>
                     <constraint firstItem="KrH-u8-elj" firstAttribute="top" secondItem="onh-ZI-Ktq" secondAttribute="bottom" constant="8" id="HCk-fX-cjG"/>
+                    <constraint firstItem="KrH-u8-elj" firstAttribute="leading" secondItem="rs9-TP-zpv" secondAttribute="leadingMargin" constant="50" id="MyP-Lz-Tvu"/>
                     <constraint firstItem="ody-SB-Nvk" firstAttribute="top" secondItem="KrH-u8-elj" secondAttribute="bottom" constant="-2" id="NPu-KN-vFD"/>
-                    <constraint firstItem="KrH-u8-elj" firstAttribute="leading" secondItem="rs9-TP-zpv" secondAttribute="leading" constant="12" id="QOq-5P-mTg"/>
                     <constraint firstItem="ZNx-2R-fBk" firstAttribute="top" secondItem="rs9-TP-zpv" secondAttribute="top" constant="30" id="Uml-QX-nqI"/>
                     <constraint firstItem="onh-ZI-Ktq" firstAttribute="top" secondItem="rs9-TP-zpv" secondAttribute="top" constant="2" id="Xt6-WP-Qba"/>
                     <constraint firstItem="onh-ZI-Ktq" firstAttribute="leading" secondItem="rs9-TP-zpv" secondAttribute="leading" constant="2" id="ZEK-yz-Fha"/>
-                    <constraint firstAttribute="trailing" secondItem="KrH-u8-elj" secondAttribute="trailing" constant="8" id="ZsL-wf-G99"/>
                     <constraint firstAttribute="trailing" secondItem="ZNx-2R-fBk" secondAttribute="trailing" id="kzm-0f-EJe"/>
                     <constraint firstItem="KrH-u8-elj" firstAttribute="centerX" secondItem="ody-SB-Nvk" secondAttribute="centerX" id="mzz-wI-wWl"/>
+                    <constraint firstAttribute="centerX" secondItem="KrH-u8-elj" secondAttribute="centerX" id="pn9-1d-Ytt"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KrH-u8-elj" secondAttribute="trailing" constant="50" id="v0G-69-nl5"/>
                     <constraint firstItem="a7U-bZ-AxI" firstAttribute="top" secondItem="O4J-ZI-9sV" secondAttribute="bottom" constant="8" id="xT8-o2-1Jn"/>
                     <constraint firstItem="O4J-ZI-9sV" firstAttribute="top" secondItem="rs9-TP-zpv" secondAttribute="top" constant="10" id="xgF-U9-76K"/>
                 </constraints>

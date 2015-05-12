@@ -549,17 +549,20 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     NSLog(@"saving managed object for: %@-%@", entry.artist,entry.title);
      NSError * error;
     [self.managedObjectContext save:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
 }
 
 
--(void) reclassify:(MusicLibraryItem *)item from:(NSInteger) oldIntensity as:(NSInteger)newIntensity  {
+-(void) reclassify:(MusicLibraryItem *)item from:(NSInteger) oldIntensity as:(NSInteger)newIntensity userInfo:(NSDictionary *)userInfo  {
     
     NSString * old = [Tempo speedDescription:oldIntensity];
     [self.classifiedItems[old] removeObject:item];
-    NSString * new = [Tempo speedDescription:newIntensity];
-    [self.classifiedItems[new] addObject:item];
+    NSString * newClass = [Tempo speedDescription:newIntensity];
+    [self.classifiedItems[newClass] addObject:item];
     item.currentClassification = [Tempo speedDescription:newIntensity];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reclassified_media" object:nil userInfo:@{@"musicItem":item, @"newIntensity":[NSNumber numberWithInteger:newIntensity]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reclassified_media" object:nil userInfo:@{@"musicItem":item, @"newIntensity":[NSNumber numberWithInteger:newIntensity], @"info":userInfo}];
 
 }
 
@@ -610,6 +613,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     [self.managedObjectContext unlock];
     
 }
+
 
 -(MusicBPMEntry *) findBPMEntryInCacheFor:(NSString *)artist andTitle:(NSString *)title
 {
@@ -761,11 +765,17 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
     }
     NSArray * workoutItems;
     if (workOutPlaylist != nil) {
+        NSMutableArray * filteredItems = [[NSMutableArray alloc] initWithCapacity:workoutItems.count];
+        
         workoutItems = [workOutPlaylist items];
-        for (MPMediaItem *song in workoutItems) {
-            NSString *songTitle = [song valueForProperty: MPMediaItemPropertyTitle];
-            NSLog (@"%@", songTitle);
+        for (MPMediaItem *potentialSong in workoutItems) {
+            if ( ((NSNumber *)[potentialSong valueForProperty:MPMediaItemPropertyMediaType]).integerValue & MPMediaTypeMusic) {
+                NSString *songTitle = [potentialSong valueForProperty: MPMediaItemPropertyTitle];
+                [filteredItems addObject:potentialSong];
+                NSLog (@"%@", songTitle);
+            }
         }
+        workoutItems = filteredItems;
     }
  
     
@@ -817,15 +827,15 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         } else if (item.notfound) {
             return [Tempo speedDescription:UNKNOWN];
         }else {
-            double item_liveliness = liveliness(item.bpm, item.loudness, item.energy);
-            NSLog(@"\n item artist = %@ item title = %@  ### loudness = %.2f liveliness = %.2f\n", item.artist, item.title, item.loudness, item_liveliness);
-            if ( item_liveliness > 0.1 && item_liveliness <= 0.3) {
+            double item_liveliness = liveliness(item.bpm, item.loudness, item.energy, item.danceability);
+            NSLog(@"\n item artist = %@ item title = %@ ## enerfy = %.2f  ### loudness = %.2f liveliness = %.2f\n", item.artist, item.title, item.energy, item.loudness, item_liveliness);
+            if ( item_liveliness > 0.1 && item_liveliness <= 0.67) {
                 return [Tempo speedDescription:SLOW];
-            } else if (item_liveliness  >  0.3 && item_liveliness <= 0.65) {
+            } else if (item_liveliness  >  0.67 && item_liveliness <= 0.80) {
                 return [Tempo speedDescription:MEDIUM];
-            } else if (item_liveliness > 0.65 && item_liveliness <= 0.85) {
+            } else if (item_liveliness > 0.80 && item_liveliness <= 0.99) {
                 return [Tempo speedDescription:FAST];
-            } else if (item_liveliness >= 0.85) {
+            } else if (item_liveliness > 0.99) {
                 return [Tempo speedDescription:VERYFAST];
             }
         }
@@ -855,7 +865,7 @@ typedef ItemUpdater(^Updater)(MusicLibraryItem *, ItemUpdatedCallback);
         }
     };
 }
--(NSString *) tempoClassificationForItem:(MusicLibraryItem *)item {
+-(Classifier)tempoClassificationForItem:(MusicLibraryItem *)item {
     
     return ^NSString *(MusicLibraryItem * item) {
         
@@ -955,9 +965,25 @@ double nclamp(double n, double mn, double mx){
     return norm(clamp(n,mn,mx),mn,mx);
 }
 
-double liveliness(double tempo, double loudness, double energy)
+double liveliness(double tempo, double loudness, double energy, double danceability)
 {
-    return (0.75*nclamp(tempo, MIN_TEMPO, MAX_TEMPO) + 1.25*nclamp(loudness, -25, 0) + 1.75*energy)/3.75;
+    NSLog(@"log of silence: %.2f, log of 5: %.2f,  loudness : %.2f",log(60), log(0), loudness);
+    NSLog(@"bpm = %.2f, energy=%.2f, dance = %.2f, bpm fraction: %.2f", tempo, energy, danceability, nclamp(tempo,MIN_TEMPO, MAX_TEMPO) );
+    
+    double result =  MAX(energy,danceability);
+    
+    if (tempo < 80) {
+        result *= 0.9;
+    } else if (tempo >= 125) {
+        result *=1.15;
+    } else if (tempo > 130 ) {
+        result *=1.25;
+    }
+    
+    if (loudness > -5) {
+        result *=1.2;
+    }
+    return result;
 }
 @end
 
@@ -999,7 +1025,7 @@ double liveliness(double tempo, double loudness, double energy)
 }
 
 
--(void)overrideIntensityTo:(NSInteger)intensityNum
+-(void)overrideIntensityTo:(NSInteger)intensityNum userInfo:(NSDictionary *)info
 {
     MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
     MusicBPMEntry * cacheEntry = [self findCacheEntry];
@@ -1014,10 +1040,10 @@ double liveliness(double tempo, double loudness, double energy)
     self.overridden = YES;
     self.overridden_intensity = intensityNum;
     [library saveCacheEntry:cacheEntry];
-    [library reclassify:self from:oldIntensity as:intensityNum];
+    [library reclassify:self from:oldIntensity as:intensityNum userInfo:info];
     library.numberOfOverriddenItems++;
 }
--(void) clearOverride {
+-(void) clearOverride:(NSDictionary *)info {
     if (self.overridden) {
         MusicLibraryBPMs * library = [MusicLibraryBPMs currentInstance:nil];
         MusicBPMEntry * cacheEntry = [self findCacheEntry];
@@ -1028,7 +1054,7 @@ double liveliness(double tempo, double loudness, double energy)
         NSString * newClass = library.musicClassifier(self);
         NSUInteger intensityNum = [Tempo toIntensityNum:newClass];
         [library saveCacheEntry:cacheEntry];
-        [library reclassify:self from:oldIntensity as:intensityNum];
+        [library reclassify:self from:oldIntensity as:intensityNum userInfo:info];
         library.numberOfOverriddenItems--;
     }
 }

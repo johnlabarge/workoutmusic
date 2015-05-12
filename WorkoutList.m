@@ -69,7 +69,30 @@
     }];
 
 }
-
+-(NSArray *) missingCategories
+{
+    NSArray * intensities = [Tempo classifications];
+    NSMutableArray * missing = [[NSMutableArray alloc] initWithCapacity:5];
+    [intensities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSString * classification = (NSString *) obj;
+        NSArray * songsForClassification = (NSArray *)self.shuffledSongsByIntensity[classification];
+        if  (!songsForClassification || songsForClassification.count == 0)
+        {
+            [missing addObject:obj];
+        }
+    }];
+    NSMutableArray * result = [[NSMutableArray alloc] initWithCapacity:5];
+    [missing enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString * classification  = (NSString *)obj;
+       
+        if (![classification isEqualToString:@"Unknown"]) {
+            [result addObject:intensities[[Tempo toIntensityNum:classification]]];
+        }
+        
+    }];
+    return result;
+}
 -(NSArray *) randomItemsForClassification:(NSString *) classification andDuration:(NSInteger)secondsLength {
     NSMutableArray * array  = [[NSMutableArray alloc] initWithCapacity:3];
     __weak NSMutableArray *list = array;
@@ -231,5 +254,21 @@
     }
     return art;
     
+}
+
+-(BOOL)canGenerateWorkout:(Workout *)workout {
+    __block BOOL result = YES;
+    NSArray * categories = [workout getCategories];
+    NSArray * intensities = [Tempo classifications]; 
+    [categories enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSInteger categoryIndex = [((NSNumber *)obj) integerValue];
+        NSString * classification = intensities[categoryIndex];
+        NSArray * songsForClassification = (NSArray *)self.shuffledSongsByIntensity[classification];
+        if (!songsForClassification.count) {
+                    result = NO;
+                    *stop = YES;
+        }
+    }];
+    return result;
 }
 @end

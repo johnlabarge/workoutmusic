@@ -80,24 +80,29 @@
     
  
     
-    backgroundLayer.frame = CGRectMake(3.0,CGRectGetMidY(self.bounds)-2.5,self.bounds.size.width-5.0,8.0);
+    backgroundLayer.frame = CGRectMake(3.0,CGRectGetMidY(self.bounds)-2.5,self.frame.size.width-6.0,8.0);
      [self.layer insertSublayer:backgroundLayer atIndex:0];
     if (self.maskLayer) {
         [self.layer insertSublayer:self.maskLayer atIndex:1];
     }
  
-
 }
+-(void) layoutSubviews
+{
+    [super layoutSubviews];
+    [self createGradientLayer];
+}
+
+
 -(void)willMoveToSuperview:(UIView *)newSuperview
 {
-    [super willMoveToSuperview:newSuperview];
+
+     [super willMoveToSuperview:newSuperview];
     [self createCoverImage];
     [self createRevealImage];
-    [self createGradientLayer];
+
     [self setMinimumTrackImage:self.revealImage forState:UIControlStateNormal];
     [self setMaximumTrackImage:self.coverImage forState:UIControlStateNormal];
-    
-    
 }
 
 

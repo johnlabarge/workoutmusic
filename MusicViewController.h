@@ -11,7 +11,7 @@
 #import "OptionDelegate.h"
 #import "TableSectionExpansionDelegate.h"
 
-@interface MusicViewController : UIViewController <OptionDelegate, UIAlertViewDelegate,TableSectionExpansionDelegate>
+@interface MusicViewController : UIViewController < UIAlertViewDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 /*
  *   private UI outlets.
  */

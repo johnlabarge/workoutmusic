@@ -7,7 +7,6 @@
 //
 
 #import "TimePickerVCViewController.h"
-#import "FXBlurView.h"
 #import "ModalTransitioningControllerDelegate.h"
 
 @interface TimePickerVCViewController ()
@@ -16,6 +15,8 @@
 @property (nonatomic, strong) NSMutableArray * timeLabels;
 @property (nonatomic, strong) ModalTransitioningControllerDelegate * modalPresenter;
 @property (nonatomic, strong) UIColor * oldLabelColor;
+@property (nonatomic, strong) UIColor * oldTint;
+@property (nonatomic, assign) CGRect oldFrame;
 @end
 
 @implementation TimePickerVCViewController
@@ -103,8 +104,8 @@
     self.timePicker.delegate = self;
     self.timePicker.dataSource =self;
     self.titleLabel.text = [NSString stringWithFormat:@"%@ %@",self.titleLabel.text, @(self.intervalNumber+1)];
-    self.blurView.alpha = 1.0;
-    self.blurView.blurRadius = 99;
+   // self.blurView.alpha = 1.0;
+   // self.blurView.blurRadius = 99;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -218,20 +219,25 @@
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
     UIViewController * toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController * fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+
     
     BOOL presenting = (toViewController == self);
     __weak typeof(self) weakSelf = self;
+    
+    
+        NSLog(@"%@ %@ %@ %@", @(fromViewController.view.frame.origin.x), @(fromViewController.view.frame.origin.y), @(fromViewController.view.frame.size.width), @(fromViewController.view.frame.size.height));
     if (presenting) {
-        
+            UINavigationController * nav = (UINavigationController *)((UITabBarController *)fromViewController).selectedViewController;
         
         
         //[[transitionContext containerView] addSubview:fromViewController.view];
         
-        fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+       // fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         //self.blurView.frame = self.fromRect;
         [[transitionContext containerView] addSubview:self.view];
         UITabBarController * tabBarController = (UITabBarController *)fromViewController;
         UIViewController * from = tabBarController.selectedViewController;
+        self.oldFrame = from.view.frame;
         weakSelf.view.frame = CGRectMake(0,from.view.frame.size.height,from.view.bounds.size.width, 0);
         [UIView animateWithDuration:0.3 animations: ^{
             weakSelf.view.frame =
@@ -240,7 +246,7 @@
                        from.view.bounds.size.width,
                        from.view.bounds.size.height*.47-[from.bottomLayoutGuide length]
                        );
-            from.view.frame = CGRectMake(from.view.frame.origin.x,from.view.frame.origin.y-weakSelf.view.frame.size.height,from.view.frame.size.width, from.view.frame.size.height);
+             from.view.frame = CGRectMake(from.view.frame.origin.x,from.view.frame.origin.y-weakSelf.view.frame.size.height,from.view.frame.size.width, from.view.frame.size.height);
             
         } completion:^(BOOL finished) {
             
@@ -252,17 +258,33 @@
     } else {
         UITabBarController * tabs = (UITabBarController *)toViewController;
         UIViewController * to = tabs.selectedViewController;
+        
         [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.75 initialSpringVelocity:.25 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            to.view.frame = CGRectMake(0,0,to.view.frame.size.width, to.view.frame.size.height);
+            
+            [tabs.view setNeedsLayout];
             fromViewController.view.frame = CGRectMake(0,to.view.frame.size.height, to.view.frame.size.width, 0);
             fromViewController.view.alpha = 0.0;
+           // to.view.frame = self.oldFrame;
+           // [to.view setNeedsLayout];
             
         } completion:^(BOOL finished) {
-            [weakSelf.view removeFromSuperview];
-            [transitionContext completeTransition:YES];
+            if (finished) {
+                tabs.tabBar.translucent = NO;
+                tabs.tabBar.tintColor = self.oldTint;
+                [weakSelf.view removeFromSuperview];
+            
+                [transitionContext completeTransition:YES];
+            }
+      
             //[weakSelf.blurView addSubview: weakSelf.view];
         }];
-
+        
+        
+        NSLog(@"%@ %@ %@ %@", @(to.view.frame.origin.x), @(to.view.frame.origin.y), @(to.view.frame.size.width), @(to.view.frame.size.height));
+        
+        UINavigationController * nav = (UINavigationController *)to;
+    
+        
         
     /*    [UIView animateWithDuration:0.25 animations:^{
             

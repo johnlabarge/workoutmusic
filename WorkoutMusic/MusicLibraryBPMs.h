@@ -61,6 +61,7 @@
 @property (nonatomic, strong) NSMutableDictionary * classifiedItems;
 @property (nonatomic, assign) NSInteger numberOfOverriddenItems;
 @property (nonatomic, assign) NSInteger numberNotFound;
+@property (nonatomic, readonly) NSArray * missingCategories; 
 +(instancetype) currentInstance:(id)instance;
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext *)moc;
@@ -105,7 +106,7 @@
 -(BOOL) isICloudItem;
 -(BOOL) isOldDRM;
 
--(void) overrideIntensityTo:(NSInteger)intensityNum;
--(void) clearOverride;
+-(void) overrideIntensityTo:(NSInteger)intensityNum userInfo:(NSDictionary *)info;
+-(void) clearOverride:(NSDictionary *)info;
 
 @end;

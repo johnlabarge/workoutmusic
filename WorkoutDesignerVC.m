@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIAlertView * alert;
 @property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 @property (strong,nonatomic) id <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning> modalPresenter;
+@property (weak, nonatomic) IBOutlet UIView *promptView;
 @property (nonatomic, assign) BOOL doDeselect; 
 @end
 
@@ -45,11 +46,15 @@
     [self listenForModelChanges];
     [self update];
 }
+- (IBAction)doneAction:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     UINavigationItem * navItem = self.navigationItem;
+    navItem.hidesBackButton = YES; 
     self.navigationItem.title = self.model.name;
     self.intervalsTable.allowsMultipleSelection = YES;
     
@@ -90,7 +95,14 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    
+    [super viewDidAppear:animated];
+    [UIView animateWithDuration:1.5 animations:^{
+        self.promptView.alpha = 0.0;
+        
+    } completion:^(BOOL finished) {
+        
+        [self.promptView removeFromSuperview];
+    }];
 }
 -(void) hideRepeat:(BOOL)yesOrNo
 {
@@ -414,7 +426,8 @@
         
         
     }]; 
- 
+    
+
 }
 
 
